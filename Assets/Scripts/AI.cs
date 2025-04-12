@@ -26,6 +26,9 @@ public class AI : MonoBehaviour
     // Variables
     private NavMeshAgent agent;
     private bool isHandlingLink = false;
+    private bool isClimbingLadder = false;
+    private Vector3 _navMeshLinkStartPos;
+    private Vector3 _navMeshLinkEndPos;
     
     void Start()
     {
@@ -41,17 +44,13 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        // Call Patrol method
         PatrolWaypoints();
 
-        // Control AI's speed
         SpeedControl(walkingSpeed, runningSpeed, rotationSpeed);
 
-        // If we have a path, draw the line to it
         if (agent.hasPath && !agent.isPathStale)
             DEBUG_DrawLinePath(debugPathColor);
 
-        // If on an OffMeshLink, call Jump method
         if (!isHandlingLink && agent.isOnOffMeshLink)
             StartCoroutine(Jump(jumpHeight, jumpDuration));
     }
@@ -104,7 +103,7 @@ public class AI : MonoBehaviour
         }
     }
 
-    IEnumerator MoveToNavMeshLinkStart(Vector3 target, float duration=0.2f)
+    IEnumerator MoveToNavMeshLink(Vector3 target, float duration=0.2f)
     {
         Vector3 initialPos = transform.position;
 
@@ -122,24 +121,41 @@ public class AI : MonoBehaviour
 
     IEnumerator Jump(float height, float duration)
     {
+        yield return StartCoroutine(PreNavMeshLinkTraversal());
+
+        // Lerp (jump) between positions
+        float normalizedTime = 0.0f;
+        while (normalizedTime < 1.0f)
+        {
+            float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
+            transform.position = Vector3.Lerp(_navMeshLinkStartPos, _navMeshLinkEndPos, normalizedTime) + yOffset * Vector3.up;
+            normalizedTime += Time.deltaTime / duration;
+            yield return null;
+        }
+
+        PostNavMeshLinkTraversal();
+    }
+
+    IEnumerator PreNavMeshLinkTraversal()
+    {
         isHandlingLink = true;
 
         // Get OffMeshLinkData
         OffMeshLinkData data = agent.currentOffMeshLinkData;
 
         // Calculate start and end positions of OffMeshLinks
-        Vector3 startPos = data.startPos + Vector3.up * agent.baseOffset;
-        Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+        _navMeshLinkStartPos = data.startPos + Vector3.up * agent.baseOffset;
+        _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
 
         // Disable NavMesh movement
         agent.isStopped = true;
         agent.updatePosition = false;
         agent.updateRotation = false;
 
-        yield return StartCoroutine(MoveToNavMeshLinkStart(startPos, 0.25f));
+        yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
 
         // Face direction of startPos
-        Vector3 dir = endPos - startPos;
+        Vector3 dir = _navMeshLinkEndPos - _navMeshLinkStartPos;
         dir.y = 0f;
         Quaternion lookRot = Quaternion.LookRotation(dir);
 
@@ -153,18 +169,11 @@ public class AI : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+    }
 
-        // Lerp (jump) between positions
-        float normalizedTime = 0.0f;
-        while (normalizedTime < 1.0f)
-        {
-            float yOffset = height * 4.0f * (normalizedTime - normalizedTime * normalizedTime);
-            transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
-            normalizedTime += Time.deltaTime / duration;
-            yield return null;
-        }
-
-        transform.position = endPos;
+    private void PostNavMeshLinkTraversal()
+    {
+        transform.position = _navMeshLinkEndPos;
 
         agent.updatePosition = true;
         agent.updateRotation = true;
@@ -174,4 +183,28 @@ public class AI : MonoBehaviour
 
         isHandlingLink = false;
     }
+
+    // IEnumerator TraverseLadder()
+    // {
+    //     isClimbingLadder = true;
+
+    //     // Get OffMeshLinkData
+    //     OffMeshLinkData data = agent.currentOffMeshLinkData;
+
+    //     // Calculate start and end positions of OffMeshLinks
+    //     Vector3 startPos = data.startPos + Vector3.up * agent.baseOffset;
+    //     Vector3 endPos = data.endPos + Vector3.up * agent.baseOffset;
+
+    //     // Disable NavMesh movement
+    //     agent.isStopped = true;
+    //     agent.updatePosition = false;
+    //     agent.updateRotation = false;
+
+    //     yield return StartCoroutine(MoveToNavMeshLinkStart(startPos, 0.25f));
+
+    //     // Face direction of startPos
+    //     Vector3 dir = endPos - startPos;
+    //     dir.y = 0f;
+    //     Quaternion lookRot = Quaternion.LookRotation(dir);
+    // }
 }
