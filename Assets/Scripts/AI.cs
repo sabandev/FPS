@@ -31,6 +31,7 @@ public class AI : MonoBehaviour
     private bool isHandlingLink = false;
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
+    private bool _recoveringFromNavMeshLink = false;
     
     void Start()
     {
@@ -42,6 +43,8 @@ public class AI : MonoBehaviour
 
         // Turn off automatic OffMeshLink traversal
         agent.autoTraverseOffMeshLink = false;
+
+        _recoveringFromNavMeshLink = false;
     }
 
     void Update()
@@ -72,7 +75,7 @@ public class AI : MonoBehaviour
     private void SpeedControl(float wSpeed, float rSpeed, float rotSpeed)
     {
         // Speed control
-        if ((agent.hasPath && agent.remainingDistance > stoppingDistance + 4f))
+        if ((agent.hasPath && agent.remainingDistance > stoppingDistance + 4f) && !_recoveringFromNavMeshLink)
         {
             agent.speed = runningSpeed;
             running = true;
@@ -135,7 +138,7 @@ public class AI : MonoBehaviour
 
     IEnumerator Jump(float height, float duration)
     {
-        yield return StartCoroutine(PreNavMeshLinkTraversal(false));
+        yield return StartCoroutine(PreNavMeshLinkTraversal());
 
         // Lerp (jump) between positions
         float normalizedTime = 0.0f;
@@ -147,10 +150,10 @@ public class AI : MonoBehaviour
             yield return null;
         }
 
-        PostNavMeshLinkTraversal();
+        yield return StartCoroutine(PostNavMeshLinkTraversal());
     }
 
-    IEnumerator PreNavMeshLinkTraversal(bool invertLookDirection)
+    IEnumerator PreNavMeshLinkTraversal()
     {
         isHandlingLink = true;
 
@@ -167,7 +170,12 @@ public class AI : MonoBehaviour
         agent.updateRotation = false;
 
         yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
+        yield return StartCoroutine(LookAtNavMeshLink(false));
 
+    }
+
+    IEnumerator LookAtNavMeshLink(bool invertLookDirection)
+    {
         // Face direction of startPos
         Vector3 dir;
 
@@ -191,7 +199,7 @@ public class AI : MonoBehaviour
         }
     }
 
-    private void PostNavMeshLinkTraversal()
+    IEnumerator PostNavMeshLinkTraversal()
     {
         transform.position = _navMeshLinkEndPos;
 
@@ -202,6 +210,12 @@ public class AI : MonoBehaviour
         agent.CompleteOffMeshLink();
 
         isHandlingLink = false;
+
+        _recoveringFromNavMeshLink = true;
+
+        yield return new WaitForSeconds(1);
+
+        _recoveringFromNavMeshLink = false;
     }
 
     IEnumerator TraverseLadder()
@@ -216,38 +230,68 @@ public class AI : MonoBehaviour
         // Check if we're going down or up the ladder
         bool goingDown = _navMeshLinkEndPos.y < _navMeshLinkStartPos.y;
 
-        yield return StartCoroutine(PreNavMeshLinkTraversal(goingDown));
+        yield return StartCoroutine(PreNavMeshLinkTraversal());
 
-        Vector3 climbPosition = _navMeshLinkStartPos;
+        // Anchor positions
+        Vector3 verticalStart = goingDown
+            ? new Vector3(_navMeshLinkEndPos.x, _navMeshLinkStartPos.y, _navMeshLinkEndPos.z)  // Top Y, but bottom XZ
+            : new Vector3(_navMeshLinkStartPos.x, _navMeshLinkStartPos.y, _navMeshLinkStartPos.z); // Normal up climb
 
-        float climbDuration = ladderClimbDuration * 0.8f;
-        float stepDuration = ladderClimbDuration * 0.2f;
+        Vector3 verticalEnd = goingDown
+            ? new Vector3(_navMeshLinkEndPos.x, _navMeshLinkEndPos.y, _navMeshLinkEndPos.z)    // Bottom position
+            : new Vector3(_navMeshLinkStartPos.x, _navMeshLinkEndPos.y, _navMeshLinkStartPos.z); // Normal up climb
 
-        float timer = 0f;
+        // Timings
+        float climbDuration = ladderClimbDuration * 0.6f;
+        float stepDuration = ladderClimbDuration * 0.4f;
+        float timer;
+
+        // If going down, step onto ladder
+        if (goingDown)
+        {
+            timer = 0f;
+
+            while (timer < stepDuration)
+            {
+                float t = timer / stepDuration;
+                transform.position = Vector3.Lerp(transform.position, verticalStart, t);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            // Face the ladder
+            yield return StartCoroutine(LookAtNavMeshLink(goingDown));
+        }
+
+        // Climbing/descending ladder
+        timer = 0f;
         while (timer < climbDuration)
         {
             float t = timer / climbDuration;
-            climbPosition.y = Mathf.Lerp(_navMeshLinkStartPos.y, _navMeshLinkEndPos.y, t);
-
-            transform.position = climbPosition;
+            transform.position = Vector3.Lerp(verticalStart, verticalEnd, t);
 
             timer += Time.deltaTime;
             yield return null;
         }
 
-        timer = 0f;
-        Vector3 horizontalStart = transform.position;
-        Vector3 horizontalEnd = new Vector3(_navMeshLinkEndPos.x, _navMeshLinkEndPos.y, _navMeshLinkEndPos.z);
-
-        while (timer < stepDuration)
+        // If going up, step onto platform from the ladder
+        if (!goingDown)
         {
-            float t = timer / stepDuration;
-            transform.position = Vector3.Lerp(horizontalStart, horizontalEnd, t);
+            timer = 0f;
+            Vector3 exitStart = transform.position;
+            Vector3 exitEnd = _navMeshLinkEndPos;
 
-            timer += Time.deltaTime;
-            yield return null;
+            while (timer < stepDuration)
+            {
+                float t = timer / stepDuration;
+                transform.position = Vector3.Lerp(exitStart, exitEnd, t);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
         }
 
-        PostNavMeshLinkTraversal();
+        yield return StartCoroutine(PostNavMeshLinkTraversal());
     }
 }

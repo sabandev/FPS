@@ -4282,7 +4282,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &700516498
 Transform:
   m_ObjectHideFlags: 0
@@ -9822,7 +9822,7 @@ Transform:
   m_GameObject: {fileID: 998620928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -13.378031, y: 8.092, z: -14.017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9850,11 +9850,11 @@ MonoBehaviour:
   - {fileID: 1268432719}
   walkingSpeed: 2
   runningSpeed: 7.5
-  rotationSpeed: 5
+  rotationSpeed: 10
   stoppingDistance: 1
   jumpHeight: 3
   jumpDuration: 1
-  ladderClimbDuration: 3
+  ladderClimbDuration: 3.5
   debugPathColor: {r: 1, g: 0, b: 0.6606407, a: 1}
   running: 0
   currentWaypointIndex: 0
@@ -15638,7 +15638,7 @@ Transform:
   m_GameObject: {fileID: 1193542707}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.181, y: 7.174, z: -14.419}
+  m_LocalPosition: {x: -12.632, y: 0.222, z: -3.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17944,7 +17944,7 @@ Transform:
   m_GameObject: {fileID: 1268432718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: 2, z: -13}
+  m_LocalPosition: {x: -3.44, y: 2, z: -7.397}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
