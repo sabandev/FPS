@@ -34,6 +34,7 @@ public class AI : MonoBehaviour
     [Header("Debug:")]
     [SerializeField] private bool running = false;
     [SerializeField] private int currentWaypointIndex = 0;
+    [SerializeField] private float currentSpeed;
 
     // Variables
     private NavMeshAgent agent;
@@ -42,8 +43,6 @@ public class AI : MonoBehaviour
     private Vector3 _navMeshLinkEndPos;
     private bool _recoveringFromNavMeshLink = false;
     private bool _isIdle = false;
-    private bool _lastPatrolState;
-    // private Coroutine _IdleWaitTimeCoroutine;
 
     private Vector3 RandomNavMeshPoint(Vector3 origin, float radius)
     {
@@ -72,8 +71,6 @@ public class AI : MonoBehaviour
 
         // Ensure we are not recovering from a NavMeshLink on the first frame
         _recoveringFromNavMeshLink = false;
-
-        _lastPatrolState = randomPatrol;
     }
 
     void Update()
@@ -120,7 +117,7 @@ public class AI : MonoBehaviour
     private void PatrolWaypoints()
     {
         // If no waypoints, cancel
-        if (waypoints.Count == 0 || agent.pathPending || agent.remainingDistance > stoppingDistance) { return; }
+        if (waypoints.Count == 0 || agent.pathPending) { return; }
 
         // If close to waypoint or waypoint is not active, cycle through waypoints
         if (agent.hasPath && agent.remainingDistance <= stoppingDistance)
@@ -148,7 +145,7 @@ public class AI : MonoBehaviour
 
     private void PatrolRandom()
     {
-        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance) { return; }
+        if (agent.pathPending) { return; }
 
         _isIdle = true;
 
@@ -222,7 +219,7 @@ public class AI : MonoBehaviour
             }
 
             // Face the ladder
-            yield return StartCoroutine(LookAtNavMeshLink(goingDown));
+            yield return StartCoroutine(LookAtNavMeshLink(true));
         }
 
         // Climbing/descending ladder
@@ -277,6 +274,9 @@ public class AI : MonoBehaviour
         }
 
         agent.angularSpeed = rotSpeed * 100f;
+
+         currentSpeed = agent.speed;
+         //Debug.Log(currentSpeed);
     }
 
     IEnumerator MoveToNavMeshLink(Vector3 target, float duration=0.2f)
@@ -336,6 +336,8 @@ public class AI : MonoBehaviour
         agent.updatePosition = false;
         agent.updateRotation = false;
 
+        _recoveringFromNavMeshLink = true;
+
         yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
         yield return StartCoroutine(LookAtNavMeshLink(false));
 
@@ -345,16 +347,18 @@ public class AI : MonoBehaviour
     {
         transform.position = _navMeshLinkEndPos;
 
-        agent.updatePosition = true;
         agent.updateRotation = true;
         agent.isStopped = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        agent.updatePosition = true;
 
         agent.CompleteOffMeshLink();
 
         isHandlingLink = false;
 
-        _recoveringFromNavMeshLink = true;
-
+        // Speed handicap after a NavMeshLink
         yield return new WaitForSeconds(1);
 
         _recoveringFromNavMeshLink = false;
