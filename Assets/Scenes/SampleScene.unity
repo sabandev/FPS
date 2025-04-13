@@ -9842,6 +9842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6167e9eda9e4c6d8dc3ed8da4c1c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolType: 0
   waypoints:
   - {fileID: 700516498}
   - {fileID: 414130084}
@@ -9857,6 +9858,8 @@ MonoBehaviour:
   ladderClimbDuration: 3.5
   debugPathColor: {r: 1, g: 0, b: 0.6606407, a: 1}
   idleTime: 1.5
+  randomPatrol: 0
+  patrolRadius: 50
   running: 0
   currentWaypointIndex: 0
 --- !u!195 &998620934

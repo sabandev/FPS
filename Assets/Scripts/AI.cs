@@ -4,12 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using System.Runtime.CompilerServices;
+
+public enum PatrolType
+{
+    Waypoints,
+    Random
+}
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI : MonoBehaviour
 {
     // Fields
     [Header("Custom Properties")]
+    [SerializeField] private PatrolType patrolType = PatrolType.Waypoints;
     [SerializeField] private List<Transform> waypoints;
     [SerializeField] private int walkingSpeed = 4;
     [SerializeField] private float runningSpeed = 7.5f;
@@ -20,6 +28,8 @@ public class AI : MonoBehaviour
     [SerializeField] private float ladderClimbDuration = 3f;
     [SerializeField] private Color debugPathColor = Color.blue;
     [SerializeField] private float idleTime = 2f;
+    [SerializeField] private bool randomPatrol = false;
+    [SerializeField] private float patrolRadius = 20f;
     [Space(20)]
     [Header("Debug:")]
     [SerializeField] private bool running = false;
@@ -32,6 +42,22 @@ public class AI : MonoBehaviour
     private Vector3 _navMeshLinkEndPos;
     private bool _recoveringFromNavMeshLink = false;
     private bool _isIdle = false;
+    private bool _lastPatrolState;
+    // private Coroutine _IdleWaitTimeCoroutine;
+
+    private Vector3 RandomNavMeshPoint(Vector3 origin, float radius)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomDir = UnityEngine.Random.insideUnitSphere * radius;
+            randomDir += origin;
+
+            if (NavMesh.SamplePosition(randomDir, out NavMeshHit hit, radius, NavMesh.AllAreas))
+                return hit.position;
+        }
+
+        return Vector3.zero;
+    }
 
     void Start()
     {
@@ -44,13 +70,16 @@ public class AI : MonoBehaviour
         // Turn off automatic OffMeshLink traversal
         agent.autoTraverseOffMeshLink = false;
 
+        // Ensure we are not recovering from a NavMeshLink on the first frame
         _recoveringFromNavMeshLink = false;
+
+        _lastPatrolState = randomPatrol;
     }
 
     void Update()
     {
         if (!_isIdle)
-            PatrolWaypoints();
+            Patrol();
 
         SpeedControl(walkingSpeed, runningSpeed, rotationSpeed);
 
@@ -64,6 +93,7 @@ public class AI : MonoBehaviour
             NavMeshLink link = (NavMeshLink)agent.navMeshOwner;
             int areaType = link.area;
 
+            // Get the ladder's index
             int ladderArea = NavMesh.GetAreaFromName("Ladder");
 
             if (areaType == ladderArea)
@@ -73,41 +103,31 @@ public class AI : MonoBehaviour
         }
     }
 
-    private void SpeedControl(float wSpeed, float rSpeed, float rotSpeed)
+    private void Patrol()
     {
-        // Speed control
-        if ((agent.hasPath && agent.remainingDistance > stoppingDistance + 4f) && !_recoveringFromNavMeshLink)
+        switch (patrolType)
         {
-            agent.speed = rSpeed;
-            running = true;
+            case PatrolType.Waypoints:
+                PatrolWaypoints();
+                break;
+            
+            case PatrolType.Random:
+                PatrolRandom();
+                break;
         }
-        else
-        {
-            agent.speed = wSpeed;
-            running = false;
-        }
-
-        agent.angularSpeed = rotSpeed * 100f;
     }
 
     private void PatrolWaypoints()
     {
         // If no waypoints, cancel
-        if (waypoints.Count == 0) { return; }
+        if (waypoints.Count == 0 || agent.pathPending || agent.remainingDistance > stoppingDistance) { return; }
 
         // If close to waypoint or waypoint is not active, cycle through waypoints
         if (agent.hasPath && agent.remainingDistance <= stoppingDistance)
         {
             _isIdle = true;
 
-            StartCoroutine(IdleTimeDelay(idleTime, () => {
-                // // Increment waypoint index
-                // currentWaypointIndex ++;
-
-                // // If we are beyond number of waypoints, set it to 0
-                // if(currentWaypointIndex >= waypoints.Count)
-                //     currentWaypointIndex = 0;
-                
+                StartCoroutine(IdleTimeDelay(idleTime, () => {
                 do
                 {
                     currentWaypointIndex++;
@@ -124,6 +144,22 @@ public class AI : MonoBehaviour
         // Set destination to waypoint's position
         if (waypoints[currentWaypointIndex].gameObject.activeInHierarchy)
             agent.SetDestination(waypoints[currentWaypointIndex].position);
+    }
+
+    private void PatrolRandom()
+    {
+        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance) { return; }
+
+        _isIdle = true;
+
+        StartCoroutine(IdleTimeDelay(idleTime, () => {
+            Vector3 destination = RandomNavMeshPoint(transform.position, patrolRadius);
+
+            if (destination != Vector3.zero)
+                agent.SetDestination(destination);
+
+            _isIdle = false;
+        }));
     }
 
     IEnumerator Jump(float height, float duration)
@@ -224,6 +260,23 @@ public class AI : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         callback?.Invoke();
+    }
+
+    private void SpeedControl(float wSpeed, float rSpeed, float rotSpeed)
+    {
+        // Speed control
+        if ((agent.hasPath && agent.remainingDistance > stoppingDistance + 4f) && !_recoveringFromNavMeshLink)
+        {
+            agent.speed = rSpeed;
+            running = true;
+        }
+        else
+        {
+            agent.speed = wSpeed;
+            running = false;
+        }
+
+        agent.angularSpeed = rotSpeed * 100f;
     }
 
     IEnumerator MoveToNavMeshLink(Vector3 target, float duration=0.2f)
