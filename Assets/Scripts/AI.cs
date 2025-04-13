@@ -1,11 +1,9 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
-using Unity.AI.Navigation;
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI : MonoBehaviour
@@ -21,6 +19,7 @@ public class AI : MonoBehaviour
     [SerializeField] private float jumpDuration = 0.75f;
     [SerializeField] private float ladderClimbDuration = 3f;
     [SerializeField] private Color debugPathColor = Color.blue;
+    [SerializeField] private float idleTime = 2f;
     [Space(20)]
     [Header("Debug:")]
     [SerializeField] private bool running = false;
@@ -32,7 +31,8 @@ public class AI : MonoBehaviour
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
     private bool _recoveringFromNavMeshLink = false;
-    
+    private bool _isIdle = false;
+
     void Start()
     {
         // Get NavMeshAgent
@@ -49,7 +49,8 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        PatrolWaypoints();
+        if (!_isIdle)
+            PatrolWaypoints();
 
         SpeedControl(walkingSpeed, runningSpeed, rotationSpeed);
 
@@ -77,12 +78,12 @@ public class AI : MonoBehaviour
         // Speed control
         if ((agent.hasPath && agent.remainingDistance > stoppingDistance + 4f) && !_recoveringFromNavMeshLink)
         {
-            agent.speed = runningSpeed;
+            agent.speed = rSpeed;
             running = true;
         }
         else
         {
-            agent.speed = walkingSpeed;
+            agent.speed = wSpeed;
             running = false;
         }
 
@@ -95,45 +96,34 @@ public class AI : MonoBehaviour
         if (waypoints.Count == 0) { return; }
 
         // If close to waypoint or waypoint is not active, cycle through waypoints
-        if ((agent.hasPath && (agent.remainingDistance <= stoppingDistance)) || (waypoints[currentWaypointIndex].gameObject.activeSelf == false))
+        if (agent.hasPath && agent.remainingDistance <= stoppingDistance)
         {
-            // Increment waypoint index
-            currentWaypointIndex ++;
+            _isIdle = true;
 
-            // If we are beyond number of waypoints, set it to 0
-            if(currentWaypointIndex >= waypoints.Count)
-                currentWaypointIndex = 0;
+            StartCoroutine(IdleTimeDelay(idleTime, () => {
+                // // Increment waypoint index
+                // currentWaypointIndex ++;
+
+                // // If we are beyond number of waypoints, set it to 0
+                // if(currentWaypointIndex >= waypoints.Count)
+                //     currentWaypointIndex = 0;
+                
+                do
+                {
+                    currentWaypointIndex++;
+
+                    if (currentWaypointIndex >= waypoints.Count)
+                        currentWaypointIndex = 0;
+                }
+                while (!waypoints[currentWaypointIndex].gameObject.activeInHierarchy && currentWaypointIndex < waypoints.Count);
+
+                _isIdle = false;
+            }));
         }
 
         // Set destination to waypoint's position
-        agent.SetDestination(waypoints[currentWaypointIndex].position);
-    }
-
-    private void DEBUG_DrawLinePath(Color c)
-    {
-        // Get path
-        Vector3[] path = agent.path.corners;
-
-        for (int i=0; i < path.Length - 1; i++)
-        {
-            Debug.DrawLine(path[i], path[i+1], c, 0, true);
-        }
-    }
-
-    IEnumerator MoveToNavMeshLink(Vector3 target, float duration=0.2f)
-    {
-        Vector3 initialPos = transform.position;
-
-        float timer = 0f;
-        while (timer < duration)
-        {
-            float t = timer / duration;
-            transform.position = Vector3.Lerp(initialPos, target, t);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = target;
+        if (waypoints[currentWaypointIndex].gameObject.activeInHierarchy)
+            agent.SetDestination(waypoints[currentWaypointIndex].position);
     }
 
     IEnumerator Jump(float height, float duration)
@@ -151,71 +141,6 @@ public class AI : MonoBehaviour
         }
 
         yield return StartCoroutine(PostNavMeshLinkTraversal());
-    }
-
-    IEnumerator PreNavMeshLinkTraversal()
-    {
-        isHandlingLink = true;
-
-        // Get OffMeshLinkData
-        OffMeshLinkData data = agent.currentOffMeshLinkData;
-
-        // Calculate start and end positions of OffMeshLinks
-        _navMeshLinkStartPos = data.startPos + Vector3.up * agent.baseOffset;
-        _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
-
-        // Disable NavMesh movement
-        agent.isStopped = true;
-        agent.updatePosition = false;
-        agent.updateRotation = false;
-
-        yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
-        yield return StartCoroutine(LookAtNavMeshLink(false));
-
-    }
-
-    IEnumerator LookAtNavMeshLink(bool invertLookDirection)
-    {
-        // Face direction of startPos
-        Vector3 dir;
-
-        if (invertLookDirection == true)
-            dir = _navMeshLinkStartPos - _navMeshLinkEndPos;
-        else
-            dir = _navMeshLinkEndPos - _navMeshLinkStartPos;
-
-        dir.y = 0f;
-        Quaternion lookRot = Quaternion.LookRotation(dir);
-
-        // Rotate to face NavMeshLink
-        float timer = 0f;
-        while (timer < 1f)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * rotationSpeed);
-            //transform.rotation = lookRot;  FAST
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator PostNavMeshLinkTraversal()
-    {
-        transform.position = _navMeshLinkEndPos;
-
-        agent.updatePosition = true;
-        agent.updateRotation = true;
-        agent.isStopped = false;
-
-        agent.CompleteOffMeshLink();
-
-        isHandlingLink = false;
-
-        _recoveringFromNavMeshLink = true;
-
-        yield return new WaitForSeconds(1);
-
-        _recoveringFromNavMeshLink = false;
     }
 
     IEnumerator TraverseLadder()
@@ -294,4 +219,103 @@ public class AI : MonoBehaviour
 
         yield return StartCoroutine(PostNavMeshLinkTraversal());
     }
+
+    IEnumerator IdleTimeDelay(float delay, Action callback)
+    {
+        yield return new WaitForSeconds(delay);
+        callback?.Invoke();
+    }
+
+    IEnumerator MoveToNavMeshLink(Vector3 target, float duration=0.2f)
+    {
+        Vector3 initialPos = transform.position;
+
+        float timer = 0f;
+        while (timer < duration)
+        {
+            float t = timer / duration;
+            transform.position = Vector3.Lerp(initialPos, target, t);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = target;
+    }
+
+    IEnumerator LookAtNavMeshLink(bool invertLookDirection)
+    {
+        // Face direction of startPos
+        Vector3 dir;
+
+        if (invertLookDirection == true)
+            dir = _navMeshLinkStartPos - _navMeshLinkEndPos;
+        else
+            dir = _navMeshLinkEndPos - _navMeshLinkStartPos;
+
+        dir.y = 0f;
+        Quaternion lookRot = Quaternion.LookRotation(dir);
+
+        // Rotate to face NavMeshLink
+        float timer = 0f;
+        while (timer < 1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * rotationSpeed);
+            //transform.rotation = lookRot;  FAST
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator PreNavMeshLinkTraversal()
+    {
+        isHandlingLink = true;
+
+        // Get OffMeshLinkData
+        OffMeshLinkData data = agent.currentOffMeshLinkData;
+
+        // Calculate start and end positions of OffMeshLinks
+        _navMeshLinkStartPos = data.startPos + Vector3.up * agent.baseOffset;
+        _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
+
+        // Disable NavMesh movement
+        agent.isStopped = true;
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+
+        yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
+        yield return StartCoroutine(LookAtNavMeshLink(false));
+
+    }
+
+    IEnumerator PostNavMeshLinkTraversal()
+    {
+        transform.position = _navMeshLinkEndPos;
+
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+
+        agent.CompleteOffMeshLink();
+
+        isHandlingLink = false;
+
+        _recoveringFromNavMeshLink = true;
+
+        yield return new WaitForSeconds(1);
+
+        _recoveringFromNavMeshLink = false;
+    }
+
+    private void DEBUG_DrawLinePath(Color c)
+    {
+        // Get path
+        Vector3[] path = agent.path.corners;
+
+        for (int i=0; i < path.Length - 1; i++)
+        {
+            Debug.DrawLine(path[i], path[i+1], c, 0, true);
+        }
+    }
+
 }

@@ -9848,7 +9848,7 @@ MonoBehaviour:
   - {fileID: 1193542708}
   - {fileID: 527198715}
   - {fileID: 1268432719}
-  walkingSpeed: 2
+  walkingSpeed: 4
   runningSpeed: 7.5
   rotationSpeed: 10
   stoppingDistance: 1
@@ -9856,6 +9856,7 @@ MonoBehaviour:
   jumpDuration: 1
   ladderClimbDuration: 3.5
   debugPathColor: {r: 1, g: 0, b: 0.6606407, a: 1}
+  idleTime: 1.5
   running: 0
   currentWaypointIndex: 0
 --- !u!195 &998620934
@@ -9869,7 +9870,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 7
-  m_Acceleration: 8
+  m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 1000
   m_StoppingDistance: 0
@@ -17944,7 +17945,7 @@ Transform:
   m_GameObject: {fileID: 1268432718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.44, y: 2, z: -7.397}
+  m_LocalPosition: {x: -3.44, y: 2, z: -12.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
