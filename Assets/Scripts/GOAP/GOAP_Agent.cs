@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.PlayerLoop;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 
 /// <summary>
 /// GOAP_SubGoal
@@ -25,9 +26,18 @@ public class GOAP_SubGoal
     }
 }
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class GOAP_Agent : MonoBehaviour
 {
+    // Inspector Variables
+    public float walkingSpeed = 4.0f;
+    public float runningSpeed = 7.5f;
+    public float rotationSpeed = 10.0f;
+    public float stoppingDistance = 2.0f;
+
     // Public Variables
+    public NavMeshAgent agent;
+
     public List<GOAP_Action> actions = new List<GOAP_Action>();
 
     public Dictionary<GOAP_SubGoal, int> goals = new Dictionary<GOAP_SubGoal, int>();
@@ -49,6 +59,14 @@ public class GOAP_Agent : MonoBehaviour
 
         foreach (GOAP_Action a in acts)
             actions.Add(a);
+
+        // Set NavMesh properties
+        agent = GetComponent<NavMeshAgent>();
+
+        agent.speed = runningSpeed;
+        agent.angularSpeed = rotationSpeed * 100f;
+        agent.stoppingDistance = stoppingDistance;
+
     }
 
     // Private Functions
@@ -61,7 +79,7 @@ public class GOAP_Agent : MonoBehaviour
             // NOTE: implement a check for if an action is complete, dont just rely on NavMesh
             float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, transform.position);
 
-            if (currentAction.agent.hasPath && distanceToTarget < 2.0f)
+            if (currentAction.agent.hasPath && distanceToTarget < stoppingDistance)
             {
                 if (!_invoked)
                 {
@@ -69,6 +87,9 @@ public class GOAP_Agent : MonoBehaviour
                     _invoked = true;
                 }
             }
+            else if (currentAction.agent.hasPath && distanceToTarget > stoppingDistance)
+                MoveToTarget();
+
             return;
         }
 
@@ -109,17 +130,7 @@ public class GOAP_Agent : MonoBehaviour
 
             if (currentAction.PreAction())
             {
-                // NOTE: implement a check for if the action has a target or a target tag
-
-                // If we have a target, set a destination to the target
-                if (currentAction.target == null && currentAction.targetTag != string.Empty)
-                    currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
-
-                if (currentAction.target != null)
-                {
-                    currentAction.running = true;
-                    currentAction.agent.SetDestination(currentAction.target.transform.position);
-                }
+                MoveToTarget();
             }
             else
                 _actionQueue = null;
@@ -131,5 +142,20 @@ public class GOAP_Agent : MonoBehaviour
         currentAction.running = false;
         currentAction.PostAction();
         _invoked = false;
+    }
+    
+    private void MoveToTarget()
+    {
+        // NOTE: implement a check for if the action has a target or a target tag
+
+        // If we have a target, set a destination to the target
+        if (currentAction.target == null && currentAction.targetTag != string.Empty)
+            currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
+
+        if (currentAction.target != null)
+        {
+            currentAction.running = true;
+            currentAction.agent.SetDestination(currentAction.target.transform.position);
+        }
     }
 }
