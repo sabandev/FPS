@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
-using System.Threading;
 
 public class Pathfinder : GOAP_Agent
 {
@@ -118,7 +117,7 @@ public class Pathfinder : GOAP_Agent
             }
 
             // Face the ladder
-            yield return StartCoroutine(LookAtNavMeshLink(true));
+            yield return StartCoroutine(LookAt(_navMeshLinkStartPos - _navMeshLinkEndPos));
         }
 
         // Climbing/descending ladder
@@ -176,7 +175,7 @@ public class Pathfinder : GOAP_Agent
         agent.updateRotation = false;
 
         yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
-        yield return StartCoroutine(LookAtNavMeshLink(false));
+        yield return StartCoroutine(LookAt(_navMeshLinkEndPos - _navMeshLinkStartPos));
 
     }
 
@@ -189,24 +188,9 @@ public class Pathfinder : GOAP_Agent
         agent.velocity = Vector3.zero;
 
         // Face destination
-        Vector3 direction = agent.destination - transform.position;
-        direction.y = 0f;
+        Vector3 destination = agent.destination - transform.position;
 
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            float time = 0f;
-            float duration = rotationSpeed * 0.1f;
-
-            while (time < duration)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, time / duration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            transform.rotation = targetRotation;
-        }
+        yield return StartCoroutine(LookAt(destination));
 
         // Re-enable NavMeshAgent updating
         agent.updateRotation = true;
@@ -233,16 +217,8 @@ public class Pathfinder : GOAP_Agent
         transform.position = target;
     }
 
-    IEnumerator LookAtNavMeshLink(bool invertLookDirection)
+    IEnumerator LookAt(Vector3 dir)
     {
-        // Face direction of startPos
-        Vector3 dir;
-
-        if (invertLookDirection == true)
-            dir = _navMeshLinkStartPos - _navMeshLinkEndPos;
-        else
-            dir = _navMeshLinkEndPos - _navMeshLinkStartPos;
-
         dir.y = 0f;
         Quaternion lookRot = Quaternion.LookRotation(dir);
 
