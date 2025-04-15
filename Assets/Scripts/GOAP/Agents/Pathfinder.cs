@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using System.Threading;
 
 public class Pathfinder : GOAP_Agent
 {
@@ -15,7 +16,6 @@ public class Pathfinder : GOAP_Agent
     private Vector3 _navMeshLinkEndPos;
 
     private bool _isHandlingLink = false;
-    private bool _recoveringFromNavMeshLink = false;
 
     // New Functions
     new void Start()
@@ -27,7 +27,6 @@ public class Pathfinder : GOAP_Agent
 
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;
-        _recoveringFromNavMeshLink = false;
     }
 
     // Private Functions
@@ -100,8 +99,8 @@ public class Pathfinder : GOAP_Agent
             : new Vector3(_navMeshLinkStartPos.x, _navMeshLinkEndPos.y, _navMeshLinkStartPos.z); // Normal up climb
 
         // Timings
-        float climbDuration = ladderClimbDuration * 0.6f;
-        float stepDuration = ladderClimbDuration * 0.4f;
+        float climbDuration = ladderClimbDuration;
+        float stepDuration = walkingSpeed * 0.1f;
         float timer;
 
         // If going down, step onto ladder
@@ -173,11 +172,8 @@ public class Pathfinder : GOAP_Agent
         _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
 
         // Disable NavMesh movement
-        agent.isStopped = true;
         agent.updatePosition = false;
         agent.updateRotation = false;
-
-        _recoveringFromNavMeshLink = true;
 
         yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
         yield return StartCoroutine(LookAtNavMeshLink(false));
@@ -186,23 +182,39 @@ public class Pathfinder : GOAP_Agent
 
     IEnumerator PostNavMeshLinkTraversal()
     {
+        // Snap to end point
         transform.position = _navMeshLinkEndPos;
 
+        // Reset velocity
+        agent.velocity = Vector3.zero;
+
+        // Face destination
+        Vector3 direction = agent.destination - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            float time = 0f;
+            float duration = rotationSpeed * 0.1f;
+
+            while (time < duration)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.rotation = targetRotation;
+        }
+
+        // Re-enable NavMeshAgent updating
         agent.updateRotation = true;
-        agent.isStopped = false;
-
-        yield return new WaitForSeconds(0.5f);
-
         agent.updatePosition = true;
-
-        agent.CompleteOffMeshLink();
 
         _isHandlingLink = false;
 
-        // Speed handicap after a NavMeshLink
-        yield return new WaitForSeconds(1);
-
-        _recoveringFromNavMeshLink = false;
+        agent.CompleteOffMeshLink();
     }
 
     IEnumerator MoveToNavMeshLink(Vector3 target, float duration = 0.2f)
@@ -236,9 +248,10 @@ public class Pathfinder : GOAP_Agent
 
         // Rotate to face NavMeshLink
         float timer = 0f;
+        float duration = rotationSpeed * 0.1f;
         while (timer < 1f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, timer / duration);
             //transform.rotation = lookRot;  FAST
 
             timer += Time.deltaTime;

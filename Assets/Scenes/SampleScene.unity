@@ -1827,7 +1827,7 @@ GameObject:
   - component: {fileID: 414130084}
   m_Layer: 0
   m_Name: waypoint(1)
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2074,8 +2074,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: -2.4308321, y: 0, z: -2.5}
-  m_EndPoint: {x: -0.00000021624601, y: 0, z: 3.035}
+  m_StartPoint: {x: -1.0209028, y: 0, z: -3.781441}
+  m_EndPoint: {x: 0.0000004448645, y: 0, z: 3.9144204}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -7266,8 +7266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedVersion: 1
   m_AgentTypeID: 0
-  m_StartPoint: {x: 0, y: 7.0353413, z: 0.88078976}
-  m_EndPoint: {x: -0.021149635, y: 0, z: 1.6206932}
+  m_StartPoint: {x: 0, y: 7.0353413, z: 0.3828869}
+  m_EndPoint: {x: -0.021149635, y: 0, z: 2.007865}
   m_StartTransform: {fileID: 0}
   m_EndTransform: {fileID: 0}
   m_Activated: 1
@@ -9729,7 +9729,6 @@ GameObject:
   - component: {fileID: 998620930}
   - component: {fileID: 998620929}
   - component: {fileID: 998620934}
-  - component: {fileID: 998620933}
   - component: {fileID: 998620936}
   - component: {fileID: 998620935}
   - component: {fileID: 998620937}
@@ -9835,39 +9834,6 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &998620933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc6167e9eda9e4c6d8dc3ed8da4c1c6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolType: 0
-  waypoints:
-  - {fileID: 700516498}
-  - {fileID: 414130084}
-  - {fileID: 1193542708}
-  - {fileID: 527198715}
-  - {fileID: 1268432719}
-  walkingSpeed: 4
-  runningSpeed: 7.5
-  rotationSpeed: 10
-  stoppingDistance: 1
-  jumpHeight: 3
-  jumpDuration: 1
-  ladderClimbDuration: 3.5
-  debugPathColor: {r: 1, g: 0, b: 0.6606407, a: 1}
-  idleTime: 1.5
-  randomPatrol: 0
-  patrolRadius: 50
-  running: 0
-  currentWaypointIndex: 0
-  currentSpeed: 0
 --- !u!195 &998620934
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9906,8 +9872,8 @@ MonoBehaviour:
   cost: 1
   duration: 0
   running: 0
-  target: {fileID: 700516497}
-  targetTag: 
+  target: {fileID: 0}
+  targetTag: Respawn
   worldStatePreconditions: []
   worldStateEffects:
   - key: arrived
@@ -9951,7 +9917,7 @@ MonoBehaviour:
   cost: 1
   duration: 0
   running: 0
-  target: {fileID: 414130083}
+  target: {fileID: 1268432718}
   targetTag: 
   worldStatePreconditions:
   - key: arrived
