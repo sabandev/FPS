@@ -9730,6 +9730,8 @@ GameObject:
   - component: {fileID: 998620929}
   - component: {fileID: 998620934}
   - component: {fileID: 998620933}
+  - component: {fileID: 998620936}
+  - component: {fileID: 998620935}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -9822,7 +9824,7 @@ Transform:
   m_GameObject: {fileID: 998620928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.378031, y: 8.092, z: -14.017}
+  m_LocalPosition: {x: -13.378031, y: 8.31, z: -13.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9837,7 +9839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc6167e9eda9e4c6d8dc3ed8da4c1c6d, type: 3}
   m_Name: 
@@ -9862,6 +9864,7 @@ MonoBehaviour:
   patrolRadius: 50
   running: 0
   currentWaypointIndex: 0
+  currentSpeed: 0
 --- !u!195 &998620934
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9884,6 +9887,43 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &998620935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998620928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177d777f8ea1b49eeacfb2f66cedb91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Go To Waypoint
+  cost: 1
+  duration: 0
+  running: 0
+  target: {fileID: 700516497}
+  targetTag: 
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: isWaiting
+    value: 0
+  agent: {fileID: 0}
+--- !u!114 &998620936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998620928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3906662e672da4187be1aa04112a4251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: []
+  currentAction: {fileID: 0}
 --- !u!43 &1006399028
 Mesh:
   m_ObjectHideFlags: 0

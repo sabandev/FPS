@@ -38,6 +38,7 @@ public class AI : MonoBehaviour
 
     // Variables
     private NavMeshAgent agent;
+
     private bool isHandlingLink = false;
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
@@ -256,6 +257,7 @@ public class AI : MonoBehaviour
     IEnumerator IdleTimeDelay(float delay, Action callback)
     {
         yield return new WaitForSeconds(delay);
+        
         callback?.Invoke();
     }
 
