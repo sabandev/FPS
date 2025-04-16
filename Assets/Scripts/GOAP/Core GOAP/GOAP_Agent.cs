@@ -73,6 +73,20 @@ public class GOAP_Agent : MonoBehaviour
                 currentAction.DuringAction();
             }
 
+            if (currentAction.IsComplete())
+            {
+                if (!_invoked)
+                {
+                    Invoke("CompleteAction", currentAction.duration);
+                    _invoked = true;
+                }
+            }
+            else
+            {
+                MoveToTarget();
+                currentAction.DuringAction();
+            }
+
             return;
         }
 

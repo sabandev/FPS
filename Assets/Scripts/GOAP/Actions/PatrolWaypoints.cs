@@ -6,7 +6,7 @@ using UnityEngine;
 /// ACTION
 /// Visits a list of waypoints in order, skipping those that are inactive and looping back to the first waypoint after visiting all of them
 /// </summary>
-public class PatrolWaypoints : GOAP_Action
+public class PatrolWaypoints : GOAP_ACTION_GoTo
 {
     // Inspector Variables
     [SerializeField] private List<Transform> waypoints;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 /// <summary>
 /// GOAP_Action
@@ -57,8 +56,9 @@ public abstract class GOAP_Action : MonoBehaviour
     }
 
     public abstract bool PreAction();
-    public abstract bool DuringAction();
+    public virtual bool DuringAction() { return true; }
     public abstract bool PostAction();
+    public abstract bool IsComplete();
 
     // Private Functions
     private void Awake()
