@@ -8,8 +8,8 @@ using UnityEngine.AI;
 /// </summary>
 public class GOAP_ACTION_GoTo : GOAP_Action
 {
-    // Private Variables
-    private NavMeshAgent _agent;
+    // Protected Variables
+    protected NavMeshAgent _agent;
 
     // Private Functions
     private void MoveToTarget()

@@ -8,13 +8,14 @@ using UnityEngine;
 public abstract class GOAP_Action : MonoBehaviour
 {
     // Public Variables
-    public string actionName = "Action";
+    public string actionName = "Generic Action";
 
     public float cost = 1.0f;
     public float duration = 0.0f;
 
     public bool running = false;
 
+    // NOTE: move specific variables to their dedicated GOAP Actions
     public GameObject target;
     public string targetTag;
 
@@ -23,7 +24,7 @@ public abstract class GOAP_Action : MonoBehaviour
 
     // public NavMeshAgent agent;
 
-    public GOAP_WorldStates agentBeliefs;
+    // public GOAP_WorldStates agentBeliefs;
 
     // Used to translate the WorldState[] into dictionaries
     public Dictionary<string, int> preconditions;
@@ -63,8 +64,6 @@ public abstract class GOAP_Action : MonoBehaviour
     // Private Functions
     protected virtual void Awake()
     {
-        // agent = gameObject.GetComponent<NavMeshAgent>();
-
         if (worldStatePreconditions != null)
         {
             foreach (GOAP_WorldState s in worldStatePreconditions)

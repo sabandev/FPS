@@ -21,11 +21,14 @@ public class Pathfinder : GOAP_Agent
     {
         base.Start();
 
-        GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
-        goals.Add(g1, 3);
+        // GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
+        // goals.Add(g1, 3);
 
-        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", true);
-        goals.Add(g2, 10);
+        // GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", false);
+        // goals.Add(g2, 10);
+
+        GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
+        goals.Add(idleGoal, 1);
 
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;
@@ -60,7 +63,7 @@ public class Pathfinder : GOAP_Agent
         }
     }
 
-    IEnumerator Jump(float height, float duration)
+    private IEnumerator Jump(float height, float duration)
     {
         yield return StartCoroutine(PreNavMeshLinkTraversal());
 
@@ -77,7 +80,7 @@ public class Pathfinder : GOAP_Agent
         yield return StartCoroutine(PostNavMeshLinkTraversal());
     }
 
-    IEnumerator TraverseLadder()
+    private IEnumerator TraverseLadder()
     {
         // Get OffMeshLinkData
         OffMeshLinkData data = agent.currentOffMeshLinkData;
@@ -162,7 +165,7 @@ public class Pathfinder : GOAP_Agent
             agent.speed = walkingSpeed;
     }
 
-    IEnumerator PreNavMeshLinkTraversal()
+    private IEnumerator PreNavMeshLinkTraversal()
     {
         _isHandlingLink = true;
 
@@ -182,7 +185,7 @@ public class Pathfinder : GOAP_Agent
 
     }
 
-    IEnumerator PostNavMeshLinkTraversal()
+    private IEnumerator PostNavMeshLinkTraversal()
     {
         // Snap to end point
         transform.position = _navMeshLinkEndPos;
@@ -204,7 +207,7 @@ public class Pathfinder : GOAP_Agent
         agent.CompleteOffMeshLink();
     }
 
-    IEnumerator MoveToNavMeshLink(Vector3 target, float duration = 0.2f)
+    private IEnumerator MoveToNavMeshLink(Vector3 target, float duration = 0.2f)
     {
         Vector3 initialPos = transform.position;
 
@@ -220,7 +223,7 @@ public class Pathfinder : GOAP_Agent
         transform.position = target;
     }
 
-    IEnumerator LookAt(Vector3 dir)
+    private IEnumerator LookAt(Vector3 dir)
     {
         dir.y = 0f;
         Quaternion lookRot = Quaternion.LookRotation(dir);
