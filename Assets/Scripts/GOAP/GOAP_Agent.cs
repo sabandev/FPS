@@ -1,28 +1,26 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.PlayerLoop;
-using Unity.VisualScripting;
 using UnityEngine.AI;
 
 /// <summary>
-/// GOAP_SubGoal
-/// Template for all sub goals
-/// Every goal will be made up of sub goals
+/// GOAP_Goal
+/// Template for all goals; they hold a dictionary which allows the raw <string, int> to be referenced in code
 /// </summary>
-public class GOAP_SubGoal
+public class GOAP_Goal
 {
     // Public Variables
-    public Dictionary<string, int> subGoals;
+    public Dictionary<string, int> goalDictionary;
 
     public bool removeAfterCompletion;
 
     // Constructor
-    public GOAP_SubGoal(string s, bool r, int importance=1)
+    public GOAP_Goal(string s="goal", bool r=true, int i=1)
     {
-        subGoals = new Dictionary<string, int>();
-        subGoals.Add(s, importance);
         removeAfterCompletion = r;
+
+        goalDictionary = new Dictionary<string, int>();
+        goalDictionary.Add(s, i);
     }
 }
 
@@ -40,10 +38,10 @@ public class GOAP_Agent : MonoBehaviour
 
     public List<GOAP_Action> actions = new List<GOAP_Action>();
 
-    public Dictionary<GOAP_SubGoal, int> goals = new Dictionary<GOAP_SubGoal, int>();
+    public Dictionary<GOAP_Goal, int> goals = new Dictionary<GOAP_Goal, int>();
 
     public GOAP_Action currentAction;
-    public GOAP_SubGoal currentGoal;
+    public GOAP_Goal currentGoal;
 
     // Private Variables
     private GOAP_Planner _planner;
@@ -105,9 +103,9 @@ public class GOAP_Agent : MonoBehaviour
             var sortedGoals = from entry in goals orderby entry.Value descending select entry;
 
             // Make a plan
-            foreach (KeyValuePair<GOAP_SubGoal, int> g in sortedGoals)
+            foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
             {
-                _actionQueue = _planner.Plan(actions, g.Key.subGoals, null);
+                _actionQueue = _planner.Plan(actions, g.Key.goalDictionary, null);
 
                 if (_actionQueue != null)
                 {
@@ -122,7 +120,7 @@ public class GOAP_Agent : MonoBehaviour
         {
             if (currentGoal.removeAfterCompletion)
             {
-                Debug.Log("Goal achieved");
+                Debug.Log("Goal achieved: " + currentGoal.goalDictionary.Keys);
                 goals.Remove(currentGoal);
             }
             

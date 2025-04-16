@@ -21,10 +21,10 @@ public class Pathfinder : GOAP_Agent
     {
         base.Start();
 
-        GOAP_SubGoal g1 = new GOAP_SubGoal("PatrolWaypoints", false);
+        GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
         goals.Add(g1, 3);
 
-        GOAP_SubGoal g2 = new GOAP_SubGoal("PatrolRandom", true);
+        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", true);
         goals.Add(g2, 10);
 
         // OffMeshLinks
