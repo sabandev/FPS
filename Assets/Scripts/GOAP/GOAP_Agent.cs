@@ -18,7 +18,7 @@ public class GOAP_SubGoal
     public bool removeAfterCompletion;
 
     // Constructor
-    public GOAP_SubGoal(string s, int importance, bool r)
+    public GOAP_SubGoal(string s, bool r, int importance=1)
     {
         subGoals = new Dictionary<string, int>();
         subGoals.Add(s, importance);
@@ -118,10 +118,13 @@ public class GOAP_Agent : MonoBehaviour
         }
 
         // Check if the AI has completed its plan
-        if (_actionQueue != null && _actionQueue.Count == 0)
+        if (_actionQueue != null && _actionQueue.Count == 0 && goals.Count != 0)
         {
             if (currentGoal.removeAfterCompletion)
+            {
+                Debug.Log("Goal achieved");
                 goals.Remove(currentGoal);
+            }
             
             _planner = null;
         }
