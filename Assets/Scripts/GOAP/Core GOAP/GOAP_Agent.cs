@@ -36,6 +36,7 @@ public class GOAP_Agent : MonoBehaviour
     // Protected Functions
     protected virtual void Start()
     {
+        // Set what actions the AI can use
         GOAP_Action[] acts = GetComponents<GOAP_Action>();
 
         foreach (GOAP_Action a in acts)
