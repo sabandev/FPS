@@ -61,7 +61,7 @@ public abstract class GOAP_Action : MonoBehaviour
     public abstract bool IsComplete();
 
     // Private Functions
-    private void Awake()
+    protected virtual void Awake()
     {
         // agent = gameObject.GetComponent<NavMeshAgent>();
 

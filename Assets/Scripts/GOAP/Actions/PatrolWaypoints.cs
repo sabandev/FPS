@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// PatrolWaypoints
-/// ACTION
+/// GoTo ACTION
 /// Visits a list of waypoints in order, skipping those that are inactive and looping back to the first waypoint after visiting all of them
 /// </summary>
 public class PatrolWaypoints : GOAP_ACTION_GoTo
@@ -22,7 +22,7 @@ public class PatrolWaypoints : GOAP_ACTION_GoTo
         else
         {
             target = NextAvailableWaypoint();
-            return true;
+            return base.PreAction();
         }
     }
 
@@ -31,7 +31,7 @@ public class PatrolWaypoints : GOAP_ACTION_GoTo
         if (!target.activeSelf)
             target = NextAvailableWaypoint();
 
-        return true;
+        return base.DuringAction();
     }
 
     public override bool PostAction()

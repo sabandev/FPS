@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 /// <summary>
 /// PatrolRandom
-/// ACTION
+/// GoTo ACTION
 /// Finds 50 random points on the NavMesh, cycles through each point
 /// </summary>
 public class PatrolRandom : GOAP_ACTION_GoTo
@@ -48,12 +48,9 @@ public class PatrolRandom : GOAP_ACTION_GoTo
 
         // Debug.Log(_currentWaypointIndex);
 
-        return true;
+        return base.PreAction();
     }
-    public override bool DuringAction()
-    {
-        return true;
-    }
+
     public override bool PostAction()
     {
         // Destroy the target and any other clone instances

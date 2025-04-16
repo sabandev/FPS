@@ -12,14 +12,37 @@ public class GOAP_ACTION_GoTo : GOAP_Action
     private NavMeshAgent _agent;
 
     // Private Functions
-    private void Start()
+    private void MoveToTarget()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        // If we have a target, set a destination to the target
+        if (target == null && targetTag != string.Empty)
+            target = GameObject.FindWithTag(targetTag);
+
+        if (target != null && _agent != null)
+        {
+            running = true;
+            _agent.SetDestination(target.transform.position);
+        }
     }
 
     // Override Functions
+    protected override void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+
+        base.Awake();
+    }
+
     public override bool PreAction()
     {
+        // Debug.Log("Called GoTo PreAction");
+        MoveToTarget();
+        return true;
+    }
+
+    public override bool DuringAction()
+    {
+        MoveToTarget();
         return true;
     }
 
@@ -43,4 +66,6 @@ public class GOAP_ACTION_GoTo : GOAP_Action
 
         return false;
     }
+
+
 }

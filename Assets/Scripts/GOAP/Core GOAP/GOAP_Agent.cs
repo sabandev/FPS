@@ -57,22 +57,6 @@ public class GOAP_Agent : MonoBehaviour
         // If it is not done, return out of LateUpdate
         if (currentAction != null && currentAction.running)
         {
-            // NOTE: implement a check for if an action is complete, dont just rely on NavMesh
-
-            if (agent.hasPath && agent.remainingDistance < stoppingDistance)
-            {
-                if (!_invoked)
-                {
-                    Invoke("CompleteAction", currentAction.duration);
-                    _invoked = true;
-                }
-            }
-            else if (agent.hasPath && agent.remainingDistance > stoppingDistance)
-            {
-                MoveToTarget();
-                currentAction.DuringAction();
-            }
-
             if (currentAction.IsComplete())
             {
                 if (!_invoked)
@@ -83,7 +67,6 @@ public class GOAP_Agent : MonoBehaviour
             }
             else
             {
-                MoveToTarget();
                 currentAction.DuringAction();
             }
 
@@ -117,7 +100,7 @@ public class GOAP_Agent : MonoBehaviour
         {
             if (currentGoal.removeAfterCompletion)
             {
-                Debug.Log("Goal achieved: " + currentGoal.goalDictionary.Keys);
+                Debug.Log("Goal achieved");
                 goals.Remove(currentGoal);
             }
             
@@ -130,7 +113,7 @@ public class GOAP_Agent : MonoBehaviour
 
             if (currentAction.PreAction())
             {
-                MoveToTarget();
+                // Agent specific behaviour here
             }
             else
                 _actionQueue = null;
@@ -142,20 +125,5 @@ public class GOAP_Agent : MonoBehaviour
         currentAction.running = false;
         currentAction.PostAction();
         _invoked = false;
-    }
-    
-    private void MoveToTarget()
-    {
-        // NOTE: implement a check for if the action has a target or a target tag
-
-        // If we have a target, set a destination to the target
-        if (currentAction.target == null && currentAction.targetTag != string.Empty)
-            currentAction.target = GameObject.FindWithTag(currentAction.targetTag);
-
-        if (currentAction.target != null)
-        {
-            currentAction.running = true;
-            agent.SetDestination(currentAction.target.transform.position);
-        }
     }
 }
