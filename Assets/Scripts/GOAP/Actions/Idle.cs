@@ -43,12 +43,6 @@ public class Idle : GOAP_ACTION_Animate
         return true;
     }
 
-    private void Update()
-    {
-        if (_idleTimer > idleDuration)
-            Debug.Log("beyond idle");
-    }
-
     public override bool PostAction()
     {
         return true;

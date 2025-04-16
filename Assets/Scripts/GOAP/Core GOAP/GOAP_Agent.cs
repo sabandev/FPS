@@ -59,7 +59,6 @@ public class GOAP_Agent : MonoBehaviour
         {
             if (currentAction.IsComplete())
             {
-                Debug.Log("Complete animation triggered");
                 if (!_invoked)
                 {
                     Invoke("CompleteAction", currentAction.duration);
