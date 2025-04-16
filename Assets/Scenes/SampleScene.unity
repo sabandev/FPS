@@ -9937,9 +9937,9 @@ MonoBehaviour:
   agent: {fileID: 0}
   actions: []
   currentAction: {fileID: 0}
-  jumpHeight: 2
+  jumpHeight: 3
   jumpDuration: 0.75
-  ladderClimbDuration: 1.5
+  ladderClimbDuration: 3
 --- !u!114 &998620938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9953,7 +9953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugPathColor: {r: 0, g: 0, b: 1, a: 1}
-  debugLineWidth: 0.05
+  debugLineWidth: 0.1
   debugLineElevation: 0.5
 --- !u!120 &998620939
 LineRenderer:
@@ -26493,7 +26493,7 @@ Transform:
   m_GameObject: {fileID: 1945102926}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13, y: 5.88, z: 6.76}
+  m_LocalPosition: {x: -1.37, y: 5.88, z: -11.796}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26846,7 +26846,7 @@ Transform:
   m_GameObject: {fileID: 2087466524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.38, y: 2.2, z: -2.5067792}
+  m_LocalPosition: {x: 17.404, y: 2.013, z: -2.5067792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

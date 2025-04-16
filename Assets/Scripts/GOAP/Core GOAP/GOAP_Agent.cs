@@ -4,26 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 
 /// <summary>
-/// GOAP_Goal
-/// Template for all goals; they hold a dictionary which allows the raw <string, int> to be referenced in code
+/// GOAP_Agent
+/// A template for all AI agents
 /// </summary>
-public class GOAP_Goal
-{
-    // Public Variables
-    public Dictionary<string, int> goalDictionary;
-
-    public bool removeAfterCompletion;
-
-    // Constructor
-    public GOAP_Goal(string s="goal", bool r=true, int i=1)
-    {
-        removeAfterCompletion = r;
-
-        goalDictionary = new Dictionary<string, int>();
-        goalDictionary.Add(s, i);
-    }
-}
-
 [RequireComponent(typeof(NavMeshAgent))]
 public class GOAP_Agent : MonoBehaviour
 {

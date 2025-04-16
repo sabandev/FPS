@@ -47,7 +47,10 @@ public class PatrolWaypoints : GOAP_Action
     private GameObject NextAvailableWaypoint()
     {
         if (waypoints.Count == 0)
+        {
+            Debug.LogWarning("WARNING: No waypoints have been set in this action. Must have waypoints to continue");
             return null;
+        }
 
         bool activeWaypointFound = false;
 

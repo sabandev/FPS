@@ -21,10 +21,10 @@ public class Pathfinder : GOAP_Agent
     {
         base.Start();
 
-        GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
-        goals.Add(g1, 3);
+        // GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
+        // goals.Add(g1, 3);
 
-        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", true);
+        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", false);
         goals.Add(g2, 10);
 
         // OffMeshLinks
@@ -191,7 +191,7 @@ public class Pathfinder : GOAP_Agent
         agent.velocity = Vector3.zero;
 
         // Face destination
-        Vector3 destination = agent.destination - transform.position;
+        Vector3 destination = agent.path.corners[1] - transform.position;
 
         yield return StartCoroutine(LookAt(destination));
 
