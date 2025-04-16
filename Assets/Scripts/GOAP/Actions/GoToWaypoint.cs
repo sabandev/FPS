@@ -7,6 +7,11 @@ public class GoToWaypoint : GOAP_Action
         return true;
     }
 
+    public override bool DuringAction()
+    {
+        return true;
+    }
+
     public override bool PostAction()
     {
         return true;

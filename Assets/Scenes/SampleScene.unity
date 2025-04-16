@@ -9730,10 +9730,9 @@ GameObject:
   - component: {fileID: 998620929}
   - component: {fileID: 998620934}
   - component: {fileID: 998620936}
-  - component: {fileID: 998620935}
-  - component: {fileID: 998620937}
   - component: {fileID: 998620939}
   - component: {fileID: 998620938}
+  - component: {fileID: 998620940}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -9856,29 +9855,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &998620935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177d777f8ea1b49eeacfb2f66cedb91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Go to waypoint
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 0}
-  targetTag: Respawn
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: arrived
-    value: 0
-  agent: {fileID: 0}
 --- !u!114 &998620936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9892,7 +9868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSpeed: 4
-  runningSpeed: 7.5
+  runningSpeed: 15
   rotationSpeed: 10
   stoppingDistance: 2
   agent: {fileID: 0}
@@ -9901,31 +9877,6 @@ MonoBehaviour:
   jumpHeight: 2
   jumpDuration: 0.75
   ladderClimbDuration: 1.5
---- !u!114 &998620937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e6ad44a63ef748ebae7d6b06143a644, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Go to waypoint 1
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 1268432718}
-  targetTag: 
-  worldStatePreconditions:
-  - key: arrived
-    value: 0
-  worldStateEffects:
-  - key: PatrolWaypoints
-    value: 0
-  agent: {fileID: 0}
 --- !u!114 &998620938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10048,6 +9999,34 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &998620940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998620928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79474d9e78a3475eac90183b4178b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Patrol waypoints
+  cost: 1
+  duration: 0
+  running: 0
+  target: {fileID: 0}
+  targetTag: 
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: PatrolWaypoints
+    value: 0
+  waypoints:
+  - {fileID: 700516498}
+  - {fileID: 414130084}
+  - {fileID: 1193542708}
+  - {fileID: 527198715}
+  - {fileID: 1268432719}
 --- !u!43 &1006399028
 Mesh:
   m_ObjectHideFlags: 0

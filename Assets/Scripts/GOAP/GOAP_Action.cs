@@ -22,7 +22,7 @@ public abstract class GOAP_Action : MonoBehaviour
     public GOAP_WorldState[] worldStatePreconditions;
     public GOAP_WorldState[] worldStateEffects;
 
-    public NavMeshAgent agent;
+    // public NavMeshAgent agent;
 
     public GOAP_WorldStates agentBeliefs;
 
@@ -57,12 +57,13 @@ public abstract class GOAP_Action : MonoBehaviour
     }
 
     public abstract bool PreAction();
+    public abstract bool DuringAction();
     public abstract bool PostAction();
 
     // Private Functions
     private void Awake()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        // agent = gameObject.GetComponent<NavMeshAgent>();
 
         if (worldStatePreconditions != null)
         {

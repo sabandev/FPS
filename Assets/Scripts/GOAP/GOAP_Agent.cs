@@ -77,9 +77,8 @@ public class GOAP_Agent : MonoBehaviour
         if (currentAction != null && currentAction.running)
         {
             // NOTE: implement a check for if an action is complete, dont just rely on NavMesh
-            float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, transform.position);
 
-            if (currentAction.agent.hasPath && distanceToTarget < stoppingDistance)
+            if (agent.hasPath && agent.remainingDistance < stoppingDistance)
             {
                 if (!_invoked)
                 {
@@ -87,8 +86,11 @@ public class GOAP_Agent : MonoBehaviour
                     _invoked = true;
                 }
             }
-            else if (currentAction.agent.hasPath && distanceToTarget > stoppingDistance)
+            else if (agent.hasPath && agent.remainingDistance > stoppingDistance)
+            {
                 MoveToTarget();
+                currentAction.DuringAction();
+            }
 
             return;
         }
@@ -155,7 +157,7 @@ public class GOAP_Agent : MonoBehaviour
         if (currentAction.target != null)
         {
             currentAction.running = true;
-            currentAction.agent.SetDestination(currentAction.target.transform.position);
+            agent.SetDestination(currentAction.target.transform.position);
         }
     }
 }

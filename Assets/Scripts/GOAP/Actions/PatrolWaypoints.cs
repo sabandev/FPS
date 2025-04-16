@@ -1,0 +1,70 @@
+using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
+using UnityEngine;
+
+public class PatrolWaypoints : GOAP_Action
+{
+    // Inspector Variables
+    [SerializeField] private List<Transform> waypoints;
+
+    // Private Variables
+    private int _currentWaypointIndex = 0;
+
+    // Overriden functions
+    public override bool PreAction()
+    {
+        if (NextAvailableWaypoint() == null)
+            return false;
+        else
+        {
+            target = NextAvailableWaypoint();
+            return true;
+        }
+    }
+
+    public override bool DuringAction()
+    {
+        if (!target.activeSelf)
+            target = NextAvailableWaypoint();
+
+        return true;
+    }
+
+    public override bool PostAction()
+    {
+        if (_currentWaypointIndex < waypoints.Count - 1)
+            _currentWaypointIndex++;
+        else
+            _currentWaypointIndex = 0;
+
+        return true;
+    }
+
+    private GameObject NextAvailableWaypoint()
+    {
+        if (waypoints.Count == 0)
+            return null;
+
+        bool activeWaypointFound = false;
+
+        for (int i = 0; i < waypoints.Count; i++)
+        {
+            if (waypoints[i].gameObject.activeSelf)
+                activeWaypointFound = true;
+        }
+
+        if (activeWaypointFound)
+        {
+            for (int w = _currentWaypointIndex; w < waypoints.Count; w++)
+            {
+                if (waypoints[w].gameObject.activeSelf)
+                    return waypoints[w].gameObject;
+                
+                if (w == waypoints.Count - 1)
+                    _currentWaypointIndex = 0;
+            }
+        }
+
+        return null;
+    }
+}
