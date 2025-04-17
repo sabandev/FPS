@@ -5,15 +5,15 @@ using UnityEngine;
 /// Animate ACTION
 /// Involves playing an animation that uses a button
 /// </summary>
-[CreateAssetMenu(menuName = "GOAP/Actions/Animate/Use button")]
-public class UseButton : Animate
+[CreateAssetMenu(menuName = "GOAP/Actions/UseSmartObject/Use button")]
+public class UseButton : UseSmartObject
 {
     // Override Functions
     public override bool PreAction(GOAP_Agent AI)
     {
         base.PreAction(AI);
 
-        _hasAnimated = true;
+        _hasUsedSmartObject = true;
 
         return true;
     }
