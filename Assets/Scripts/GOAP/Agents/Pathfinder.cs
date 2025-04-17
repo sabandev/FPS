@@ -19,11 +19,11 @@ public class Pathfinder : GOAP_Agent
     // New Functions
     private void Start()
     {
-        // GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
-        // goals.Add(g1, 3);
+        GOAP_Goal patrolWaypointsGoal = new GOAP_Goal("PatrolWaypoints", false);
+        goals.Add(patrolWaypointsGoal, 3);
 
-        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", false);
-        goals.Add(g2, 10);
+        // GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", false);
+        // goals.Add(g2, 10);
 
         // GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
         // goals.Add(inRoomBGoal, 10);

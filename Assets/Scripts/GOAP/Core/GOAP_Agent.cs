@@ -23,7 +23,7 @@ public enum AIType
 public class GOAP_Agent : MonoBehaviour
 {
     // Inspector Variables
-    public AIType aiType = AIType.Unspecified;
+    public AIType aiType = AIType.Pathfinder;
 
     public ActionManager actionManager;
 
@@ -41,6 +41,9 @@ public class GOAP_Agent : MonoBehaviour
 
     public GOAP_Action currentAction;
     public GOAP_Goal currentGoal;
+
+    public List<Transform> waypoints;
+    public int currentWaypointIndex = 0;
 
     // Private Variables
     private GOAP_Planner _planner;

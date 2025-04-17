@@ -9,20 +9,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GOAP/Actions/GoTo/PatrolWaypoints")]
 public class PatrolWaypoints : GoTo
 {
-    // Inspector Variables
-    [SerializeField] private List<Transform> waypoints;
-
-    // Private Variables
-    private int _currentWaypointIndex = 0;
-
     // Overriden functions
     public override bool PreAction(GOAP_Agent AI)
     {
-        if (NextAvailableWaypoint() == null)
+        if (NextAvailableWaypoint(AI) == null)
             return false;
         else
         {
-            target = NextAvailableWaypoint();
+            target = NextAvailableWaypoint(AI);
             return base.PreAction(AI);
         }
     }
@@ -30,24 +24,24 @@ public class PatrolWaypoints : GoTo
     public override bool DuringAction(GOAP_Agent AI)
     {
         if (!target.activeSelf)
-            target = NextAvailableWaypoint();
+            target = NextAvailableWaypoint(AI);
 
         return base.DuringAction(AI);
     }
 
     public override bool PostAction(GOAP_Agent AI)
     {
-        if (_currentWaypointIndex < waypoints.Count - 1)
-            _currentWaypointIndex++;
+        if (AI.currentWaypointIndex < AI.waypoints.Count - 1)
+            AI.currentWaypointIndex++;
         else
-            _currentWaypointIndex = 0;
+            AI.currentWaypointIndex = 0;
 
         return true;
     }
 
-    private GameObject NextAvailableWaypoint()
+    private GameObject NextAvailableWaypoint(GOAP_Agent AI)
     {
-        if (waypoints.Count == 0)
+        if (AI.waypoints.Count == 0)
         {
             Debug.LogWarning("WARNING: No waypoints have been set in this action. Must have waypoints to continue");
             return null;
@@ -55,21 +49,21 @@ public class PatrolWaypoints : GoTo
 
         bool activeWaypointFound = false;
 
-        for (int i = 0; i < waypoints.Count; i++)
+        for (int i = 0; i < AI.waypoints.Count; i++)
         {
-            if (waypoints[i].gameObject.activeSelf)
+            if (AI.waypoints[i].gameObject.activeSelf)
                 activeWaypointFound = true;
         }
 
         if (activeWaypointFound)
         {
-            for (int w = _currentWaypointIndex; w < waypoints.Count; w++)
+            for (int w = AI.currentWaypointIndex; w < AI.waypoints.Count; w++)
             {
-                if (waypoints[w].gameObject.activeSelf)
-                    return waypoints[w].gameObject;
+                if (AI.waypoints[w].gameObject.activeSelf)
+                    return AI.waypoints[w].gameObject;
                 
-                if (w == waypoints.Count - 1)
-                    _currentWaypointIndex = 0;
+                if (w == AI.waypoints.Count - 1)
+                    AI.currentWaypointIndex = 0;
             }
         }
 
