@@ -13620,12 +13620,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1102243059}
   - component: {fileID: 1102243060}
-  - component: {fileID: 1102243058}
-  - component: {fileID: 1102243057}
-  - component: {fileID: 1102243056}
-  - component: {fileID: 1102243055}
-  - component: {fileID: 1102243054}
-  - component: {fileID: 1102243053}
   m_Layer: 0
   m_Name: Action Manager
   m_TagString: Untagged
@@ -13633,156 +13627,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1102243053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b1aeaa41b0a408faca66ab7233218f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Use button
-  cost: 1
-  duration: 1
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions:
-  - key: atButton
-    value: 0
-  worldStateEffects:
-  - key: doorOpen
-    value: 0
---- !u!114 &1102243054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Move to room B
-  cost: 1
-  duration: 0.5
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 562365995}
-  targetTag: 
-  worldStatePreconditions:
-  - key: doorOpen
-    value: 0
-  worldStateEffects:
-  - key: inRoomB
-    value: 0
---- !u!114 &1102243055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Move to button
-  cost: 1
-  duration: 0
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  targetTag: tag_button
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: atButton
-    value: 0
---- !u!114 &1102243056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9ec14305d0e49739fbbee756ce2b5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Idle
-  cost: 1
-  duration: 0
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: Idle
-    value: 0
-  idleDuration: 5
-  timeBetweenLooks: 1
-  rotationSpeed: 2
-  minAngle: 45
-  maxAngle: 180
---- !u!114 &1102243057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d79474d9e78a3475eac90183b4178b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Patrol waypoints
-  cost: 1
-  duration: 0
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: PatrolWaypoints
-    value: 0
-  waypoints:
-  - {fileID: 1033950899}
-  - {fileID: 1945102927}
---- !u!114 &1102243058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102243052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf275febb9344613900953bbbcb97a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Patrol randomly
-  cost: 1
-  duration: 0
-  running: 0
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: PatrolRandom
-    value: 0
 --- !u!4 &1102243059
 Transform:
   m_ObjectHideFlags: 0
@@ -13811,16 +13655,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unspecifiedAIActions:
-  - {fileID: 1102243056}
+  - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
   pathfinderAIActions:
-  - {fileID: 1102243058}
-  - {fileID: 1102243057}
-  - {fileID: 1102243056}
-  - {fileID: 1102243055}
-  - {fileID: 1102243054}
-  - {fileID: 1102243053}
+  - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
+  - {fileID: 11400000, guid: a75ede82d31cb42b98cf0fe619f69e25, type: 2}
+  - {fileID: 11400000, guid: ea8a048cf43b340468392d4ab15e5458, type: 2}
+  - {fileID: 11400000, guid: a7c46b00c05ab4b51be2aee1f48d6ff0, type: 2}
+  - {fileID: 11400000, guid: 7ce25a0ad629f4290875ff5f6e5e9804, type: 2}
   idlerAIActions:
-  - {fileID: 1102243056}
+  - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
 --- !u!43 &1122863218
 Mesh:
   m_ObjectHideFlags: 0

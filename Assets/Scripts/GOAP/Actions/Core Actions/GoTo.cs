@@ -50,7 +50,7 @@ public class GoTo : GOAP_Action
         }
         else
         {
-            if (Vector3.Distance(transform.position, target.transform.position) < 3.0f)
+            if (Vector3.Distance(AI.transform.position, target.transform.position) < 3.0f)
                 return true;
         }
 

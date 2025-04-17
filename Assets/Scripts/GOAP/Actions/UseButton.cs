@@ -5,6 +5,7 @@ using UnityEngine;
 /// Animate ACTION
 /// Involves playing an animation that uses a button
 /// </summary>
+[CreateAssetMenu(menuName = "GOAP/Actions/Animate/Use button")]
 public class UseButton : Animate
 {
     // Override Functions

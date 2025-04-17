@@ -7,6 +7,7 @@ using UnityEngine.AI;
 /// GoTo ACTION
 /// Finds 50 random points on the NavMesh, cycles through each point
 /// </summary>
+[CreateAssetMenu(menuName = "GOAP/Actions/GoTo/PatrolRandom")]
 public class PatrolRandom : GoTo
 {
     // Private Variables
@@ -32,16 +33,14 @@ public class PatrolRandom : GoTo
         }
     }
 
-    private void Start()
-    {
-        RandomPoint(transform.position, 50.0f);
-    }
-
     // Overriden functions
     public override bool PreAction(GOAP_Agent AI)
     {
         if (_currentWaypointIndex == randomWaypointPositions.Count)
             _currentWaypointIndex = 0;
+
+        if (_currentWaypointIndex == 0)
+            RandomPoint(AI.transform.position, 50.0f);
 
         // Create a gameObject at the random position to set as the target
         target = Instantiate(new GameObject("$$Random Waypoint$$"), randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);

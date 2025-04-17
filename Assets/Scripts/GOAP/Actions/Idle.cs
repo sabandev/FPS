@@ -7,6 +7,7 @@ using UnityEngine.Animations;
 /// Animate ACTION
 /// Plays a simple idle animation
 /// </summary>
+[CreateAssetMenu(menuName = "GOAP/Actions/Animate/Idle")]
 public class Idle : Animate
 {
     // Inspector Variables
@@ -24,7 +25,7 @@ public class Idle : Animate
     // Override Functions
     public override bool PreAction(GOAP_Agent AI)
     {
-        StartCoroutine(LookAtRoutine(AI));
+        AI.StartCoroutine(LookAtRoutine(AI));
 
         return base.PreAction(AI);
     }
@@ -36,7 +37,7 @@ public class Idle : Animate
         
         if (_idleTimer > idleDuration)
         {
-            StopAllCoroutines();
+            AI.StopAllCoroutines();
             _idleTimer = 0.0f;
             _hasAnimated = true;
         }
@@ -52,9 +53,9 @@ public class Idle : Animate
     private IEnumerator LookAtRoutine(GOAP_Agent AI)
     {
         CalculateLookDirection(AI);
-        yield return StartCoroutine(LookAt(AI, lookDirection));
+        yield return AI.StartCoroutine(LookAt(AI, lookDirection));
         yield return new WaitForSeconds(timeBetweenLooks);
-        StartCoroutine(LookAtRoutine(AI));
+        AI.StartCoroutine(LookAtRoutine(AI));
     }
 
     private IEnumerator LookAt(GOAP_Agent AI, Vector3 dir)

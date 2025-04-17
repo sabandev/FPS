@@ -55,7 +55,15 @@ public class GOAP_Agent : MonoBehaviour
         // Get actions
         if (actionManager != null)
         {
-            actions = actionManager.GetActions(this);
+            foreach (GOAP_Action a in actionManager.GetActions(this))
+            {
+                if (a == null)
+                    continue;
+
+                GOAP_Action actionInstance = Instantiate(a);
+                a.agent = this;
+                actions.Add(actionInstance);
+            }
         }
         else
             Debug.LogWarning("WARNING: ActionManager not assigned in agent");

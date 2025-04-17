@@ -6,6 +6,7 @@ using UnityEngine;
 /// GoTo ACTION
 /// Visits a list of waypoints in order, skipping those that are inactive and looping back to the first waypoint after visiting all of them
 /// </summary>
+[CreateAssetMenu(menuName = "GOAP/Actions/GoTo/PatrolWaypoints")]
 public class PatrolWaypoints : GoTo
 {
     // Inspector Variables

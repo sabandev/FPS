@@ -5,7 +5,7 @@ using UnityEngine;
 /// GOAP_Action
 /// Template for all GOAP actions
 /// </summary>
-public abstract class GOAP_Action : MonoBehaviour
+public abstract class GOAP_Action : ScriptableObject
 {
     // Public Variables
     public string actionName = "Generic Action";
