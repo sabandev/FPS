@@ -15,26 +15,26 @@ public class PatrolWaypoints : GOAP_ACTION_GoTo
     private int _currentWaypointIndex = 0;
 
     // Overriden functions
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
         if (NextAvailableWaypoint() == null)
             return false;
         else
         {
             target = NextAvailableWaypoint();
-            return base.PreAction();
+            return base.PreAction(AI);
         }
     }
 
-    public override bool DuringAction()
+    public override bool DuringAction(GOAP_Agent AI)
     {
         if (!target.activeSelf)
             target = NextAvailableWaypoint();
 
-        return base.DuringAction();
+        return base.DuringAction(AI);
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
         if (_currentWaypointIndex < waypoints.Count - 1)
             _currentWaypointIndex++;

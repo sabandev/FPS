@@ -14,8 +14,7 @@ public class OpenDoorFromTrigger : MonoBehaviour
     {
         if (other.CompareTag("AI"))
         {
+            door.OpenDoor();
         }
-        door.OpenDoor();
-        Debug.Log("AI in my trigger");
     }
 }

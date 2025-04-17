@@ -7,13 +7,13 @@ using UnityEngine;
 /// </summary>
 public class MoveToTarget : GOAP_ACTION_GoTo
 {
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
-        return base.PreAction();
+        return base.PreAction(AI);
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
-        return base.PostAction();
+        return base.PostAction(AI);
     }
 }

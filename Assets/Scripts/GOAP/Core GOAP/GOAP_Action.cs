@@ -15,6 +15,8 @@ public abstract class GOAP_Action : MonoBehaviour
 
     public bool running = false;
 
+    public GOAP_Agent agent;
+
     // NOTE: move specific variables to their dedicated GOAP Actions
     public GameObject target;
     public string targetTag;
@@ -56,10 +58,10 @@ public abstract class GOAP_Action : MonoBehaviour
         return true;
     }
 
-    public abstract bool PreAction();
-    public virtual bool DuringAction() { return true; }
-    public abstract bool PostAction();
-    public abstract bool IsComplete();
+    public abstract bool PreAction(GOAP_Agent AI);
+    public virtual bool DuringAction(GOAP_Agent AI) { return true; }
+    public abstract bool PostAction(GOAP_Agent AI);
+    public abstract bool IsComplete(GOAP_Agent AI);
 
     // Private Functions
     protected virtual void Awake()

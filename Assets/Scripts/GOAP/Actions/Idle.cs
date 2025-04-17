@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Animations;
 
 /// <summary>
 /// Idle
@@ -21,14 +22,14 @@ public class Idle : GOAP_ACTION_Animate
     private float _idleTimer = 0.0f;
 
     // Override Functions
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
-        StartCoroutine(LookAtRoutine());
+        StartCoroutine(LookAtRoutine(AI));
 
-        return base.PreAction();
+        return base.PreAction(AI);
     }
 
-    public override bool DuringAction()
+    public override bool DuringAction(GOAP_Agent AI)
     {
         if (running)
             _idleTimer += Time.deltaTime;
@@ -43,20 +44,20 @@ public class Idle : GOAP_ACTION_Animate
         return true;
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
         return true;
     }
 
-    private IEnumerator LookAtRoutine()
+    private IEnumerator LookAtRoutine(GOAP_Agent AI)
     {
-        CalculateLookDirection();
-        yield return StartCoroutine(LookAt(lookDirection));
+        CalculateLookDirection(AI);
+        yield return StartCoroutine(LookAt(AI, lookDirection));
         yield return new WaitForSeconds(timeBetweenLooks);
-        StartCoroutine(LookAtRoutine());
+        StartCoroutine(LookAtRoutine(AI));
     }
 
-    private IEnumerator LookAt(Vector3 dir)
+    private IEnumerator LookAt(GOAP_Agent AI, Vector3 dir)
     {
         dir.y = 0f;
         Quaternion lookRot = Quaternion.LookRotation(dir);
@@ -66,7 +67,7 @@ public class Idle : GOAP_ACTION_Animate
         float duration = rotationSpeed;
         while (timer < 1f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, timer / duration);
+            AI.gameObject.transform.rotation = Quaternion.Slerp(AI.gameObject.transform.rotation, lookRot, timer / duration);
             //transform.rotation = lookRot;  FAST
 
             timer += Time.deltaTime;
@@ -74,10 +75,10 @@ public class Idle : GOAP_ACTION_Animate
         }
     }
 
-    private void CalculateLookDirection()
+    private void CalculateLookDirection(GOAP_Agent AI)
     {
         float randomAngle = Random.Range(minAngle, maxAngle);
-        Vector3 lookDir = Quaternion.Euler(0.0f, randomAngle, 0.0f) * transform.forward;
+        Vector3 lookDir = Quaternion.Euler(0.0f, randomAngle, 0.0f) * AI.gameObject.transform.forward;
 
         lookDirection = lookDir;
     }

@@ -8,9 +8,9 @@ using UnityEngine;
 public class UseButton : GOAP_ACTION_Animate
 {
     // Override Functions
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
-        base.PreAction();
+        base.PreAction(AI);
 
         _hasAnimated = true;
 

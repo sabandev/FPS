@@ -11,19 +11,19 @@ public class GOAP_ACTION_Animate : GOAP_Action
     protected bool _hasAnimated = false;
 
     // Override Functions
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
         running = true;
         _hasAnimated = false;
         return true;
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
         return true;
     }
 
-    public override bool IsComplete()
+    public override bool IsComplete(GOAP_Agent AI)
     {
         return _hasAnimated;
     }

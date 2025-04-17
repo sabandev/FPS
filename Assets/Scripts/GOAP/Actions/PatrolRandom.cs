@@ -38,7 +38,7 @@ public class PatrolRandom : GOAP_ACTION_GoTo
     }
 
     // Overriden functions
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
         if (_currentWaypointIndex == randomWaypointPositions.Count)
             _currentWaypointIndex = 0;
@@ -48,10 +48,10 @@ public class PatrolRandom : GOAP_ACTION_GoTo
 
         // Debug.Log(_currentWaypointIndex);
 
-        return base.PreAction();
+        return base.PreAction(AI);
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
         // Destroy the target and any other clone instances
         Destroy(target);

@@ -9826,15 +9826,9 @@ GameObject:
   - component: {fileID: 998620936}
   - component: {fileID: 998620939}
   - component: {fileID: 998620938}
-  - component: {fileID: 998620940}
-  - component: {fileID: 998620941}
-  - component: {fileID: 998620942}
-  - component: {fileID: 998620944}
-  - component: {fileID: 998620943}
-  - component: {fileID: 998620946}
   m_Layer: 0
-  m_Name: Agent
-  m_TagString: Untagged
+  m_Name: Pathfinder
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9924,7 +9918,7 @@ Transform:
   m_GameObject: {fileID: 998620928}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.34, y: 1.21, z: -6.88}
+  m_LocalPosition: {x: -11.34, y: 8.076, z: -13.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9966,6 +9960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3906662e672da4187be1aa04112a4251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionManager: {fileID: 1102243052}
   walkingSpeed: 4
   runningSpeed: 7.5
   rotationSpeed: 10
@@ -10098,126 +10093,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &998620940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf275febb9344613900953bbbcb97a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Patrol randomly
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: PatrolRandom
-    value: 0
---- !u!114 &998620941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d79474d9e78a3475eac90183b4178b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Patrol waypoints
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: PatrolWaypoints
-    value: 0
-  waypoints:
-  - {fileID: 1033950899}
-  - {fileID: 1945102927}
---- !u!114 &998620942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9ec14305d0e49739fbbee756ce2b5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Idle
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: Idle
-    value: 0
-  idleDuration: 5
-  timeBetweenLooks: 1
-  rotationSpeed: 2
-  minAngle: 45
-  maxAngle: 180
---- !u!114 &998620943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Move to room B
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 562365995}
-  targetTag: 
-  worldStatePreconditions:
-  - key: doorOpen
-    value: 0
-  worldStateEffects:
-  - key: inRoomB
-    value: 0
---- !u!114 &998620944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Move to button
-  cost: 1
-  duration: 0
-  running: 0
-  target: {fileID: 0}
-  targetTag: tag_button
-  worldStatePreconditions: []
-  worldStateEffects:
-  - key: atButton
-    value: 0
 --- !u!54 &998620945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10245,30 +10120,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &998620946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998620928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b1aeaa41b0a408faca66ab7233218f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionName: Use button
-  cost: 1
-  duration: 1
-  running: 0
-  target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions:
-  - key: atButton
-    value: 0
-  worldStateEffects:
-  - key: doorOpen
-    value: 0
 --- !u!43 &1006399028
 Mesh:
   m_ObjectHideFlags: 0
@@ -13756,6 +13607,193 @@ Transform:
   - {fileID: 1452420683}
   - {fileID: 562365996}
   - {fileID: 2087466530}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1102243052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102243059}
+  - component: {fileID: 1102243058}
+  - component: {fileID: 1102243057}
+  - component: {fileID: 1102243056}
+  - component: {fileID: 1102243055}
+  - component: {fileID: 1102243054}
+  - component: {fileID: 1102243053}
+  m_Layer: 0
+  m_Name: Action Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1102243053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b1aeaa41b0a408faca66ab7233218f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Use button
+  cost: 1
+  duration: 1
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  targetTag: 
+  worldStatePreconditions:
+  - key: atButton
+    value: 0
+  worldStateEffects:
+  - key: doorOpen
+    value: 0
+--- !u!114 &1102243054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Move to room B
+  cost: 1
+  duration: 0
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 562365995}
+  targetTag: 
+  worldStatePreconditions:
+  - key: doorOpen
+    value: 0
+  worldStateEffects:
+  - key: inRoomB
+    value: 0
+--- !u!114 &1102243055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Move to button
+  cost: 1
+  duration: 0
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  targetTag: tag_button
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: atButton
+    value: 0
+--- !u!114 &1102243056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ec14305d0e49739fbbee756ce2b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Idle
+  cost: 1
+  duration: 0
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  targetTag: 
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: Idle
+    value: 0
+  idleDuration: 5
+  timeBetweenLooks: 1
+  rotationSpeed: 2
+  minAngle: 45
+  maxAngle: 180
+--- !u!114 &1102243057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79474d9e78a3475eac90183b4178b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Patrol waypoints
+  cost: 1
+  duration: 0
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  targetTag: 
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: PatrolWaypoints
+    value: 0
+  waypoints:
+  - {fileID: 1033950899}
+  - {fileID: 1945102927}
+--- !u!114 &1102243058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf275febb9344613900953bbbcb97a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Patrol randomly
+  cost: 1
+  duration: 0
+  running: 0
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  targetTag: 
+  worldStatePreconditions: []
+  worldStateEffects:
+  - key: PatrolRandom
+    value: 0
+--- !u!4 &1102243059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102243052}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.34, y: 1.21, z: -6.88}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1122863218
@@ -29856,6 +29894,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1102243059}
   - {fileID: 705507995}
   - {fileID: 998620932}
   - {fileID: 880847853}

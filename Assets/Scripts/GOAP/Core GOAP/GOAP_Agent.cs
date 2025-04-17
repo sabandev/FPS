@@ -11,6 +11,8 @@ using UnityEngine.AI;
 public class GOAP_Agent : MonoBehaviour
 {
     // Inspector Variables
+    public GameObject actionManager;
+
     public float walkingSpeed = 4.0f;
     public float runningSpeed = 7.5f;
     public float rotationSpeed = 10.0f;
@@ -37,10 +39,20 @@ public class GOAP_Agent : MonoBehaviour
     protected virtual void Start()
     {
         // Set what actions the AI can use
-        GOAP_Action[] acts = GetComponents<GOAP_Action>();
+        // GOAP_Action[] acts = GetComponents<GOAP_Action>();
 
-        foreach (GOAP_Action a in acts)
-            actions.Add(a);
+        // foreach (GOAP_Action a in acts)
+        //     actions.Add(a);
+
+        if (actionManager != null)
+        {
+            foreach (GOAP_Action a in actionManager.GetComponents<GOAP_Action>())
+            {
+                actions.Add(a);
+            }
+        }
+        else
+            Debug.LogWarning("WARNING: ActionManager not assigned in agent");
 
         // Set NavMesh properties
         agent = GetComponent<NavMeshAgent>();
@@ -58,7 +70,7 @@ public class GOAP_Agent : MonoBehaviour
         // If it is not done, return out of LateUpdate
         if (currentAction != null && currentAction.running)
         {
-            if (currentAction.IsComplete())
+            if (currentAction.IsComplete(this))
             {
                 if (!_invoked)
                 {
@@ -68,7 +80,7 @@ public class GOAP_Agent : MonoBehaviour
             }
             else
             {
-                currentAction.DuringAction();
+                currentAction.DuringAction(this);
             }
 
             return;
@@ -112,7 +124,7 @@ public class GOAP_Agent : MonoBehaviour
         {
             currentAction = _actionQueue.Dequeue();
 
-            if (currentAction.PreAction())
+            if (currentAction.PreAction(this))
             {
                 // Agent specific behaviour here
             }
@@ -124,7 +136,7 @@ public class GOAP_Agent : MonoBehaviour
     private void CompleteAction()
     {
         currentAction.running = false;
-        currentAction.PostAction();
+        currentAction.PostAction(this);
         _invoked = false;
     }
 }

@@ -8,54 +8,44 @@ using UnityEngine.AI;
 /// </summary>
 public class GOAP_ACTION_GoTo : GOAP_Action
 {
-    // Protected Variables
-    protected NavMeshAgent _agent;
-
     // Private Functions
-    private void MoveToTarget()
+    private void MoveToTarget(GOAP_Agent AI)
     {
         // If we have a target, set a destination to the target
         if (target == null && targetTag != string.Empty)
             target = GameObject.FindWithTag(targetTag);
 
-        if (target != null && _agent != null)
+        if (target != null && AI.agent != null)
         {
             running = true;
-            _agent.SetDestination(target.transform.position);
+            AI.agent.SetDestination(target.transform.position);
         }
     }
 
     // Override Functions
-    protected override void Awake()
-    {
-        _agent = GetComponent<NavMeshAgent>();
-
-        base.Awake();
-    }
-
-    public override bool PreAction()
+    public override bool PreAction(GOAP_Agent AI)
     {
         // Debug.Log("Called GoTo PreAction");
-        MoveToTarget();
+        MoveToTarget(AI);
         return true;
     }
 
-    public override bool DuringAction()
+    public override bool DuringAction(GOAP_Agent AI)
     {
-        MoveToTarget();
+        MoveToTarget(AI);
         return true;
     }
 
-    public override bool PostAction()
+    public override bool PostAction(GOAP_Agent AI)
     {
         return true;
     }
 
-    public override bool IsComplete()
+    public override bool IsComplete(GOAP_Agent AI)
     {
-        if (_agent != null)
+        if (AI.agent != null)
         {
-            if (_agent.hasPath && _agent.remainingDistance < _agent.stoppingDistance)
+            if (AI.agent.hasPath && AI.agent.remainingDistance < AI.agent.stoppingDistance)
                 return true;
         }
         else
