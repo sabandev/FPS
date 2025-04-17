@@ -7,7 +7,7 @@ using UnityEngine.Animations;
 /// Animate ACTION
 /// Plays a simple idle animation
 /// </summary>
-public class Idle : GOAP_ACTION_Animate
+public class Idle : Animate
 {
     // Inspector Variables
     [SerializeField] private float idleDuration = 3.0f;

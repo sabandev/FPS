@@ -6,7 +6,7 @@ using UnityEngine.AI;
 /// Inherits GOAP_Action
 /// Is the template for all actions that involve moving the AI from point A to point B
 /// </summary>
-public class GOAP_ACTION_GoTo : GOAP_Action
+public class GoTo : GOAP_Action
 {
     // Private Functions
     private void MoveToTarget(GOAP_Agent AI)

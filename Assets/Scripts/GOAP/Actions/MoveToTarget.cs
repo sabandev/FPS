@@ -5,7 +5,7 @@ using UnityEngine;
 /// GoTo ACTION
 /// Involves moving the AI to a specified target
 /// </summary>
-public class MoveToTarget : GOAP_ACTION_GoTo
+public class MoveToTarget : GoTo
 {
     public override bool PreAction(GOAP_Agent AI)
     {

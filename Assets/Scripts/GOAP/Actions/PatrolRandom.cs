@@ -7,7 +7,7 @@ using UnityEngine.AI;
 /// GoTo ACTION
 /// Finds 50 random points on the NavMesh, cycles through each point
 /// </summary>
-public class PatrolRandom : GOAP_ACTION_GoTo
+public class PatrolRandom : GoTo
 {
     // Private Variables
     private List<Vector3> randomWaypointPositions = new List<Vector3>();

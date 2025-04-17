@@ -5,7 +5,7 @@ using UnityEngine;
 /// Inherits GOAP_Action
 /// Is the template for all actions that involve animating in one place
 /// </summary>
-public class GOAP_ACTION_Animate : GOAP_Action
+public class Animate : GOAP_Action
 {
     // Private Variables
     protected bool _hasAnimated = false;

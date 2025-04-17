@@ -11,7 +11,7 @@ using UnityEngine.AI;
 public class GOAP_Agent : MonoBehaviour
 {
     // Inspector Variables
-    public GameObject actionManager;
+    public ActionManager actionManager;
 
     public float walkingSpeed = 4.0f;
     public float runningSpeed = 7.5f;
@@ -38,18 +38,9 @@ public class GOAP_Agent : MonoBehaviour
     // Protected Functions
     protected virtual void Start()
     {
-        // Set what actions the AI can use
-        // GOAP_Action[] acts = GetComponents<GOAP_Action>();
-
-        // foreach (GOAP_Action a in acts)
-        //     actions.Add(a);
-
         if (actionManager != null)
         {
-            foreach (GOAP_Action a in actionManager.GetComponents<GOAP_Action>())
-            {
-                actions.Add(a);
-            }
+            actions = actionManager.GetActions();
         }
         else
             Debug.LogWarning("WARNING: ActionManager not assigned in agent");
