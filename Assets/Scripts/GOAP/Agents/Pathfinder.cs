@@ -17,10 +17,8 @@ public class Pathfinder : GOAP_Agent
     private bool _isHandlingLink = false;
 
     // New Functions
-    new void Start()
+    private void Start()
     {
-        base.Start();
-
         // GOAP_Goal g1 = new GOAP_Goal("PatrolWaypoints", false);
         // goals.Add(g1, 3);
 

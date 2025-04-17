@@ -4,6 +4,18 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 
 /// <summary>
+/// AIType
+/// Enumeration
+/// Stores all the possible "types" of AI an agent could be
+/// </summary>
+public enum AIType
+{
+    Unspecified,
+    Pathfinder,
+    Idler
+}
+
+/// <summary>
 /// GOAP_Agent
 /// A template for all AI agents
 /// </summary>
@@ -11,6 +23,8 @@ using UnityEngine.AI;
 public class GOAP_Agent : MonoBehaviour
 {
     // Inspector Variables
+    public AIType aiType = AIType.Unspecified;
+
     public ActionManager actionManager;
 
     public float walkingSpeed = 4.0f;
@@ -36,11 +50,12 @@ public class GOAP_Agent : MonoBehaviour
     private bool _invoked = false;
 
     // Protected Functions
-    protected virtual void Start()
+    protected virtual void Awake()
     {
+        // Get actions
         if (actionManager != null)
         {
-            actions = actionManager.GetActions();
+            actions = actionManager.GetActions(this);
         }
         else
             Debug.LogWarning("WARNING: ActionManager not assigned in agent");
@@ -51,7 +66,6 @@ public class GOAP_Agent : MonoBehaviour
         agent.speed = runningSpeed;
         agent.angularSpeed = rotationSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
-
     }
 
     // Private Functions

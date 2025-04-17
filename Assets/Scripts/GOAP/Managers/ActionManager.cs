@@ -9,20 +9,20 @@ using UnityEngine;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
-    public List<GOAP_Action> GetActions()
+    public List<GOAP_Action> unspecifiedAIActions;
+    public List<GOAP_Action> pathfinderAIActions;
+    public List<GOAP_Action> idlerAIActions;
+
+    public List<GOAP_Action> GetActions(GOAP_Agent AI)
     {
-        GOAP_Action[] rawActions = GetComponents<GOAP_Action>();
-        List<GOAP_Action> actions = new List<GOAP_Action>();
-        
-        if (rawActions.Length == 0)
-        {
-            Debug.LogWarning("WARNING: No actions on ActionManager GameObject");
-            return null;
-        }
+        // Convert the 
+        List<GOAP_Action> allActions = GetComponents<GOAP_Action>().ToList<GOAP_Action>();
 
-        foreach (GOAP_Action a in rawActions)
-            actions.Add(a);
+        if (AI.aiType == AIType.Pathfinder && pathfinderAIActions != null)
+            return pathfinderAIActions;
+        else if (AI.aiType == AIType.Idler && idlerAIActions != null)
+            return idlerAIActions;
 
-        return actions;
+        return unspecifiedAIActions;
     }
 }
