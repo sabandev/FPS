@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
-  m_Name: Move to button
+  m_Name: MoveToTarget
   m_EditorClassIdentifier: 
-  actionName: Move to button
+  actionName: Move to target
   cost: 1
   duration: 0
   running: 0
   agent: {fileID: 0}
   target: {fileID: 0}
-  targetTag: tag_button
+  targetTag: 
   worldStatePreconditions: []
   worldStateEffects:
-  - key: atButton
+  - key: atTarget
+    value: 0
+  - key: inRoomB
     value: 0

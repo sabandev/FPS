@@ -9,19 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2b1aeaa41b0a408faca66ab7233218f, type: 3}
-  m_Name: Use button
+  m_Script: {fileID: 11500000, guid: 47780d6c11b49470ca2a6cfca8dd75ce, type: 3}
+  m_Name: MoveToSmartObject
   m_EditorClassIdentifier: 
-  actionName: Use button
+  actionName: Move to smart object
   cost: 1
   duration: 0
   running: 0
   agent: {fileID: 0}
   target: {fileID: 0}
-  targetTag: 
-  worldStatePreconditions:
-  - key: atButton
-    value: 0
+  targetTag: tag_button
+  worldStatePreconditions: []
   worldStateEffects:
-  - key: doorOpen
+  - key: atSmartObject
     value: 0
