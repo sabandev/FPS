@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
-using System.IO;
-using Unity.VisualScripting;
 
 public class Pathfinder : GOAP_Agent
 {

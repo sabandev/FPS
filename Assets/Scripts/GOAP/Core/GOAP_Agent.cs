@@ -129,7 +129,6 @@ public class GOAP_Agent : MonoBehaviour
         {
             if (currentGoal.removeAfterCompletion)
             {
-                Debug.Log("Goal achieved");
                 goals.Remove(currentGoal);
             }
             
