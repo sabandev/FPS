@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 /// <summary>
@@ -6,27 +8,31 @@ using UnityEngine;
 /// </summary>
 public class SlideUpDoor : MonoBehaviour
 {
-    // Inspector Variables
-    [SerializeField] private float openSpeed = 2.0f;
+    // Public Variables
+    public float duration = 2.0f;
 
     // Private Variables
-    private Vector3 openOffset = new Vector3(0, 4, 0);
     private Vector3 openPosition;
 
-    private bool isOpen = false;
+    // Public Functions
+    public void OpenDoor() => StartCoroutine(OpenDoorCoroutine());
 
     // Private Functions
     private void Start()
     {
-        openPosition = transform.position + openOffset;
+        openPosition = transform.position + new Vector3(0.0f, 4.0f, 0.0f);
     }
 
-    private void Update()
+    private IEnumerator OpenDoorCoroutine()
     {
-        Vector3 target = isOpen ? openPosition : transform.position;
-        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * openSpeed);
-    }
+        float timer = 0.0f;
+        while (timer < duration)
+        {
+            transform.position = Vector3.Lerp(transform.position, openPosition, timer / duration * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
 
-    // Public Functions
-    public void OpenDoor() => isOpen = true;
+        gameObject.GetComponentInChildren<NavMeshLink>().activated = false;
+    }
 }

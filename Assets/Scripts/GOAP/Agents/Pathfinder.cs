@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using System.IO;
+using Unity.VisualScripting;
 
 public class Pathfinder : GOAP_Agent
 {
@@ -19,14 +21,14 @@ public class Pathfinder : GOAP_Agent
     // New Functions
     private void Start()
     {
-        // GOAP_Goal patrolWaypointsGoal = new GOAP_Goal("PatrolWaypoints", false);
-        // goals.Add(patrolWaypointsGoal, 3);
+        GOAP_Goal patrolWaypointsGoal = new GOAP_Goal("PatrolWaypoints", false);
+        goals.Add(patrolWaypointsGoal, 3);
 
         // GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", false);
         // goals.Add(g2, 10);
 
-        GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
-        goals.Add(inRoomBGoal, 10);
+        // GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
+        // goals.Add(inRoomBGoal, 10);
 
         GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
         goals.Add(idleGoal, 1);
@@ -56,15 +58,22 @@ public class Pathfinder : GOAP_Agent
 
             // Get the ladder's index
             int ladderArea = NavMesh.GetAreaFromName("Ladder");
+            int doorArea = NavMesh.GetAreaFromName("Door");
 
             if (areaType == ladderArea)
                 StartCoroutine(TraverseLadder());
+            else if (areaType == doorArea)
+            {
+                SlideUpDoor door = link.gameObject.GetComponentInParent<SlideUpDoor>();
+
+                StartCoroutine(TraverseDoor(door));
+            }
             else
-                StartCoroutine(Jump(jumpHeight, jumpDuration));
+                StartCoroutine(TraverseJump(jumpHeight, jumpDuration));
         }
     }
 
-    private IEnumerator Jump(float height, float duration)
+    private IEnumerator TraverseJump(float height, float duration)
     {
         yield return StartCoroutine(PreNavMeshLinkTraversal());
 
@@ -158,6 +167,35 @@ public class Pathfinder : GOAP_Agent
         yield return StartCoroutine(PostNavMeshLinkTraversal());
     }
 
+    private IEnumerator TraverseDoor(SlideUpDoor door)
+    {
+        if (door != null)
+        {
+            yield return PreNavMeshLinkTraversal();
+
+            // Open the door
+            door.OpenDoor();
+
+            yield return new WaitForSeconds(door.duration);
+
+            // Walk through the door
+            float distance = Vector3.Distance(_navMeshLinkStartPos, _navMeshLinkEndPos);
+            float duration = distance / walkingSpeed;
+            float time = 0.0f;
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                float t = time / duration;
+                transform.position = Vector3.Lerp(_navMeshLinkStartPos, _navMeshLinkEndPos, t);
+                yield return null;
+            }
+
+            yield return StartCoroutine(PostNavMeshLinkTraversal());
+        }
+        else
+            Debug.LogWarning("WARNING: Parent of OffMeshLink does not have a door component");
+    }
+
     private void SpeedControl()
     {
         if (agent.remainingDistance > stoppingDistance + 4f)
@@ -195,7 +233,10 @@ public class Pathfinder : GOAP_Agent
         agent.velocity = Vector3.zero;
 
         // Face destination
-        Vector3 destination = agent.path.corners[1] - transform.position;
+        Vector3 destination = agent.destination;
+
+        if (agent.path.corners.Length > 1)
+            destination = agent.path.corners[1] - transform.position;
 
         yield return StartCoroutine(LookAt(destination));
 

@@ -13,7 +13,7 @@ NavMeshProjectSettings:
     cost: 2
   - name: Ladder
     cost: 5
-  - name: 
+  - name: Door
     cost: 1
   - name: 
     cost: 1
