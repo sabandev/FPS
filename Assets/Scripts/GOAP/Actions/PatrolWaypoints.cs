@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -9,62 +10,62 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GOAP/Actions/GoTo/PatrolWaypoints")]
 public class PatrolWaypoints : GoTo
 {
+    // Private Variables
+    private List<Transform> activeWaypoints = new List<Transform>();
+
     // Overriden functions
     public override bool PreAction(GOAP_Agent AI)
     {
-        if (NextAvailableWaypoint(AI) == null)
-            return false;
-        else
+        // Add active waypoints from the agent's waypoints list to our list
+        if (AI.waypoints.Count == 0) { return false; }
+
+        for (int i = 0; i < AI.waypoints.Count; i++)
         {
-            target = NextAvailableWaypoint(AI);
-            return base.PreAction(AI);
+            if (AI.waypoints[i].gameObject.activeSelf)
+                activeWaypoints.Add(AI.waypoints[i]);
         }
-    }
+
+        target = NextAvailableWaypoint(AI);
+        return base.PreAction(AI);
+}
 
     public override bool DuringAction(GOAP_Agent AI)
     {
         if (!target.activeSelf)
             target = NextAvailableWaypoint(AI);
 
+        if (AI.agent != null && AI.agent.hasPath && AI.agent.remainingDistance < AI.stoppingDistance)
+        {
+            AI.currentWaypointIndex++;
+            target = NextAvailableWaypoint(AI);
+        }
+
         return base.DuringAction(AI);
     }
 
     public override bool PostAction(GOAP_Agent AI)
     {
-        if (AI.currentWaypointIndex < AI.waypoints.Count - 1)
-            AI.currentWaypointIndex++;
-        else
-            AI.currentWaypointIndex = 0;
-
+        AI.currentWaypointIndex = 0;
+        activeWaypoints = new List<Transform>();
         return true;
     }
 
+    public override bool IsComplete(GOAP_Agent AI)
+    {
+        if (AI.currentWaypointIndex == activeWaypoints.Count)
+            return true;
+
+        return false;
+    }
+
+    // Private Functions
     private GameObject NextAvailableWaypoint(GOAP_Agent AI)
     {
-        if (AI.waypoints.Count == 0)
+        // Return next waypoint as the target
+        for (int w = AI.currentWaypointIndex; w < activeWaypoints.Count; w++)
         {
-            Debug.LogWarning("WARNING: No waypoints have been set in this action. Must have waypoints to continue");
-            return null;
-        }
-
-        bool activeWaypointFound = false;
-
-        for (int i = 0; i < AI.waypoints.Count; i++)
-        {
-            if (AI.waypoints[i].gameObject.activeSelf)
-                activeWaypointFound = true;
-        }
-
-        if (activeWaypointFound)
-        {
-            for (int w = AI.currentWaypointIndex; w < AI.waypoints.Count; w++)
-            {
-                if (AI.waypoints[w].gameObject.activeSelf)
-                    return AI.waypoints[w].gameObject;
-                
-                if (w == AI.waypoints.Count - 1)
-                    AI.currentWaypointIndex = 0;
-            }
+            if (activeWaypoints[w].gameObject.activeSelf)
+                return activeWaypoints[w].gameObject;
         }
 
         return null;

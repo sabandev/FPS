@@ -28,8 +28,8 @@ public class Pathfinder : GOAP_Agent
         // GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
         // goals.Add(inRoomBGoal, 10);
 
-        GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
-        goals.Add(idleGoal, 1);
+        // GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
+        // goals.Add(idleGoal, 1);
 
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;
