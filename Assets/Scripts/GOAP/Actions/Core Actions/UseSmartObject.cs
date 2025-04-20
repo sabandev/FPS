@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class UseSmartObject : GOAP_Action
 {
+    // Public Variables
+    // new readonly ActionType actionType = ActionType.UseSmartObject;
+
     // Private Variables
     protected bool _hasUsedSmartObject = false;
 

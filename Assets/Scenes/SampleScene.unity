@@ -10434,9 +10434,9 @@ MonoBehaviour:
   walkingSpeed: 4
   runningSpeed: 7.5
   rotationSpeed: 10
-  stoppingDistance: 2
+  stoppingDistance: 1
   agent: {fileID: 0}
-  actions: []
+  availableActions: []
   currentAction: {fileID: 0}
   target: {fileID: 562365995}
   waypoints:
@@ -14482,7 +14482,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7c46b00c05ab4b51be2aee1f48d6ff0, type: 2}
   - {fileID: 11400000, guid: 7ce25a0ad629f4290875ff5f6e5e9804, type: 2}
   - {fileID: 11400000, guid: e201de7da47e34cb4a5492b680e02b75, type: 2}
-  - {fileID: 11400000, guid: ae1b430ac9e5046f0afb6f407abbad8b, type: 2}
   - {fileID: 11400000, guid: 1723be417488048dea04cb6d97a66d63, type: 2}
   idlerAIActions:
   - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}

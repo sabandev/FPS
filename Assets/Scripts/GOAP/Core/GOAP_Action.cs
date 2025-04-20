@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ActionType
+{
+    GoTo,
+    Animate,
+    UseSmartObject
+}
+
 /// <summary>
 /// GOAP_Action
 /// Template for all GOAP actions
@@ -8,6 +15,8 @@ using UnityEngine;
 public abstract class GOAP_Action : ScriptableObject
 {
     // Public Variables
+    public ActionType actionType { get; private set; }
+
     public string actionName = "Generic Action";
 
     public float cost = 1.0f;
@@ -40,14 +49,14 @@ public abstract class GOAP_Action : ScriptableObject
     }
 
     // Public Functions
-    public bool IsAchievable()
+    public virtual bool IsAchievable()
     {
         // We would assume all of our actions intend to be achievable
         // but you would put code here to specify if the action is not achievable right away for any reason
         return true;
     }
 
-    public bool IsAchievableGiven(Dictionary<string, int> conditions)
+    public virtual bool IsAchievableGiven(Dictionary<string, int> conditions)
     {
         foreach (KeyValuePair<string, int> c in preconditions)
         {

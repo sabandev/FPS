@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class Animate : GOAP_Action
 {
+    // Public Variables
+    // new readonly ActionType actionType = ActionType.Animate;
+
     // Private Variables
     protected bool _hasAnimated = false;
 

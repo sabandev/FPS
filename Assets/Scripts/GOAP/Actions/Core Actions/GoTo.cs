@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,9 @@ using UnityEngine.AI;
 /// </summary>
 public class GoTo : GOAP_Action
 {
+    // Public Variables
+    // new readonly ActionType actionType = ActionType.GoTo;
+
     // Private Functions
     private void MoveToTarget(GOAP_Agent AI)
     {

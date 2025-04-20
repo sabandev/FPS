@@ -35,7 +35,7 @@ public class GOAP_Agent : MonoBehaviour
     // Public Variables
     public NavMeshAgent agent;
 
-    public List<GOAP_Action> actions = new List<GOAP_Action>();
+    public List<GOAP_Action> availableActions = new List<GOAP_Action>();
 
     public Dictionary<GOAP_Goal, int> goals = new Dictionary<GOAP_Goal, int>();
 
@@ -67,7 +67,7 @@ public class GOAP_Agent : MonoBehaviour
 
                 GOAP_Action actionInstance = Instantiate(a);
                 a.agent = this;
-                actions.Add(actionInstance);
+                availableActions.Add(actionInstance);
             }
         }
         else
@@ -116,7 +116,7 @@ public class GOAP_Agent : MonoBehaviour
             // Make a plan
             foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
             {
-                _actionQueue = _planner.Plan(actions, g.Key.goalDictionary, null);
+                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, null);
 
                 if (_actionQueue != null)
                 {
