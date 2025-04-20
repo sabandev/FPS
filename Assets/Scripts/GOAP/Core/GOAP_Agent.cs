@@ -20,7 +20,7 @@ public enum AIType
 /// A template for all AI agents
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
-public class GOAP_Agent : MonoBehaviour
+public class GOAP_Agent: MonoBehaviour
 {
     // Inspector Variables
     public AIType aiType = AIType.Pathfinder;
@@ -79,6 +79,14 @@ public class GOAP_Agent : MonoBehaviour
         agent.speed = runningSpeed;
         agent.angularSpeed = rotationSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
+    }
+
+    protected virtual void AddGoal(string name, bool removeAfterCompletion, int importance)
+    {
+        GOAP_Goal newGoal = new GOAP_Goal(name, removeAfterCompletion);
+        goals.Add(newGoal, importance);
+
+        GOAP_World.Instance.goals.Add(name);
     }
 
     // Private Functions

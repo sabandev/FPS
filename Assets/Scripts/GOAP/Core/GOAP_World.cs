@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Mono.Cecil;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -14,14 +12,16 @@ public sealed class GOAP_World : MonoBehaviour
     // Public Variables
     public static GOAP_World Instance { get; private set; }
 
-    public List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
-
-    // Private variables
     public GOAP_WorldStates worldStatesClass = new GOAP_WorldStates();
+    public List<string> goals = new List<string>();
+
+    // Inspector Variables
+    [SerializeField] private List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
 
     // Private Functions
     private void Awake()
     {
+        // Preserve singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -29,6 +29,7 @@ public sealed class GOAP_World : MonoBehaviour
         }
         Instance = this;
 
+        // Set any inspector-assigned states to their correct values
         foreach (var ws in worldStates)
             worldStatesClass.states[ws.key] = ws.value;
     }

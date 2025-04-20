@@ -2366,6 +2366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldStates: []
+  goals: []
 --- !u!1 &562365995
 GameObject:
   m_ObjectHideFlags: 0
@@ -10483,6 +10484,9 @@ MonoBehaviour:
   agent: {fileID: 0}
   availableActions: []
   currentAction: {fileID: 0}
+  currentGoal:
+    name: 
+    removeAfterCompletion: 0
   target: {fileID: 562365995}
   waypoints:
   - {fileID: 562365996}

@@ -80,6 +80,7 @@ public abstract class GOAP_Action : ScriptableObject
             foreach (GOAP_WorldState s in worldStatePreconditions)
             {
                 preconditions.Add(s.key, s.value);
+                // GOAP_World.Instance.worldStatesClass.AddState(s.key, s.value);
             }
         }
 
@@ -88,6 +89,8 @@ public abstract class GOAP_Action : ScriptableObject
             foreach (GOAP_WorldState s in worldStateEffects)
             {
                 effects.Add(s.key, s.value);
+                // GOAP_World.Instance.worldStatesClass.AddState(s.key, s.value);
+
             }
         }
     }

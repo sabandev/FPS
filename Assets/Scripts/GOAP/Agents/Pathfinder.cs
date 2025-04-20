@@ -16,9 +16,11 @@ public class Pathfinder : GOAP_Agent
 
     private bool _isHandlingLink = false;
 
-    // New Functions
+    // Private Functions
     private void Start()
     {
+        base.Awake();
+
         // GOAP_Goal patrolWaypointsGoal = new GOAP_Goal("PatrolWaypoints", false);
         // goals.Add(patrolWaypointsGoal, 3);
 
@@ -28,13 +30,12 @@ public class Pathfinder : GOAP_Agent
         // GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
         // goals.Add(inRoomBGoal, 10);
 
-        GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
-        goals.Add(idleGoal, 1);
-
-        GOAP_Goal moveToTargetGoal = new GOAP_Goal("AtTarget", true);
-        goals.Add(moveToTargetGoal, 3);
-
         GOAP_World.Instance.worldStatesClass.AddState("agentHasGoal", 0);
+
+        // AddGoal("PatrolWaypoints", false, 3);
+        // AddGoal("PatrolRandom", true, 3);
+        AddGoal("AtTarget", true, 3);
+        AddGoal("Idle", false, 1);
 
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;

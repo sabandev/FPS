@@ -11,12 +11,14 @@ public class GOAP_Goal
     // Public Variables
     public Dictionary<string, int> goalDictionary;
 
-    public bool removeAfterCompletion;
+    public string name = "goal";
+    public bool removeAfterCompletion = true;
 
     // Constructor
     public GOAP_Goal(string s = "goal", bool r = true, int i = 1)
     {
         removeAfterCompletion = r;
+        name = s;
 
         goalDictionary = new Dictionary<string, int>();
         goalDictionary.Add(s, i);

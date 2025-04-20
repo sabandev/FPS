@@ -47,7 +47,7 @@ public class GOAP_WorldStates
     public void AddState(string key, int value)
     {
         if (states.ContainsKey(key))
-            states[key] = value;
+            return;
         else
             states.Add(key, value);
     }
