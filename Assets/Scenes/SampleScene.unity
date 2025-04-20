@@ -1533,6 +1533,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 46512825}
+    - target: {fileID: 3050535524906695009, guid: 79ffc919c5d5b42f886fd0c3e91aea94, type: 3}
+      propertyPath: m_VersionIndex
+      value: 20873
+      objectReference: {fileID: 0}
     - target: {fileID: 6289113937425285984, guid: 79ffc919c5d5b42f886fd0c3e91aea94, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.4043446
@@ -10434,6 +10438,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   actions: []
   currentAction: {fileID: 0}
+  target: {fileID: 562365995}
   waypoints:
   - {fileID: 562365996}
   - {fileID: 1033950899}
@@ -14474,11 +14479,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
   pathfinderAIActions:
   - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
-  - {fileID: 11400000, guid: ea8a048cf43b340468392d4ab15e5458, type: 2}
   - {fileID: 11400000, guid: a7c46b00c05ab4b51be2aee1f48d6ff0, type: 2}
   - {fileID: 11400000, guid: 7ce25a0ad629f4290875ff5f6e5e9804, type: 2}
   - {fileID: 11400000, guid: e201de7da47e34cb4a5492b680e02b75, type: 2}
   - {fileID: 11400000, guid: ae1b430ac9e5046f0afb6f407abbad8b, type: 2}
+  - {fileID: 11400000, guid: 1723be417488048dea04cb6d97a66d63, type: 2}
   idlerAIActions:
   - {fileID: 11400000, guid: 6d613d9e40b0a459ea83e8182628b04e, type: 2}
 --- !u!43 &1122863218
@@ -30061,7 +30066,7 @@ PrefabInstance:
       objectReference: {fileID: 492511287}
     - target: {fileID: 3050535524906695009, guid: 79ffc919c5d5b42f886fd0c3e91aea94, type: 3}
       propertyPath: m_VersionIndex
-      value: 20867
+      value: 20873
       objectReference: {fileID: 0}
     - target: {fileID: 6289113937425285984, guid: 79ffc919c5d5b42f886fd0c3e91aea94, type: 3}
       propertyPath: m_LocalPosition.x

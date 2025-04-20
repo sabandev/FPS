@@ -25,7 +25,6 @@ public class GoTo : GOAP_Action
     // Override Functions
     public override bool PreAction(GOAP_Agent AI)
     {
-        // Debug.Log("Called GoTo PreAction");
         MoveToTarget(AI);
         return true;
     }

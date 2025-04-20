@@ -10,6 +10,7 @@ public class MoveToTarget : GoTo
 {
     public override bool PreAction(GOAP_Agent AI)
     {
+        target = AI.target;
         return base.PreAction(AI);
     }
 

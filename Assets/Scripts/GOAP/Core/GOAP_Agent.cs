@@ -42,6 +42,8 @@ public class GOAP_Agent : MonoBehaviour
     public GOAP_Action currentAction;
     public GOAP_Goal currentGoal;
 
+    public GameObject target;
+
     public List<Transform> waypoints;
     public int currentWaypointIndex = 0;
 

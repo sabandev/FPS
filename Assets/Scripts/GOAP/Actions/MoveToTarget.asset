@@ -21,7 +21,5 @@ MonoBehaviour:
   targetTag: 
   worldStatePreconditions: []
   worldStateEffects:
-  - key: atTarget
-    value: 0
-  - key: inRoomB
+  - key: AtTarget
     value: 0

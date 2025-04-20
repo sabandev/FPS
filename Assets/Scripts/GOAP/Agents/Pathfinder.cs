@@ -22,14 +22,17 @@ public class Pathfinder : GOAP_Agent
         // GOAP_Goal patrolWaypointsGoal = new GOAP_Goal("PatrolWaypoints", false);
         // goals.Add(patrolWaypointsGoal, 3);
 
-        GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", true);
-        goals.Add(g2, 3);
+        // GOAP_Goal g2 = new GOAP_Goal("PatrolRandom", true);
+        // goals.Add(g2, 3);
 
         // GOAP_Goal inRoomBGoal = new GOAP_Goal("inRoomB", true);
         // goals.Add(inRoomBGoal, 10);
 
-        GOAP_Goal idleGoal = new GOAP_Goal("Idle", true);
+        GOAP_Goal idleGoal = new GOAP_Goal("Idle", false);
         goals.Add(idleGoal, 1);
+
+        GOAP_Goal moveToTargetGoal = new GOAP_Goal("AtTarget", true);
+        goals.Add(moveToTargetGoal, 3);
 
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;
