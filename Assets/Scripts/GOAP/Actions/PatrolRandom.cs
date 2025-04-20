@@ -5,20 +5,26 @@ using UnityEngine.AI;
 /// <summary>
 /// PatrolRandom
 /// GoTo ACTION
-/// Finds 50 random points on the NavMesh, cycles through each point
+/// Finds a number of random points on the NavMesh, cycles through each point
 /// </summary>
 [CreateAssetMenu(menuName = "GOAP/Actions/GoTo/PatrolRandom")]
 public class PatrolRandom : GoTo
 {
+    // Inspector Variables
+    [SerializeField] private int numberOfRandomWaypoints = 10;
+    [SerializeField] private float waypointRange = 75.0f;
+
     // Private Variables
-    private List<Vector3> randomWaypointPositions = new List<Vector3>();
+    private List<Vector3> _randomWaypointPositions = new List<Vector3>();
 
     private int _currentWaypointIndex = 0;
 
+    private bool _visitedEveryWaypoint = false;
+
     // Private functions
-    private void RandomPoint(Vector3 center, float range)
+    private void GetRandomPoints(Vector3 center, float range)
     {
-        while (randomWaypointPositions.Count < 50)
+        while (_randomWaypointPositions.Count < numberOfRandomWaypoints)
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * range;
             Vector3 result = Vector3.zero;
@@ -28,7 +34,7 @@ public class PatrolRandom : GoTo
             if (NavMesh.SamplePosition(randomPoint, out hit, 1f, NavMesh.AllAreas))
             {
                 result = hit.position;
-                randomWaypointPositions.Add(result);
+                _randomWaypointPositions.Add(result);
             }
         }
     }
@@ -36,27 +42,53 @@ public class PatrolRandom : GoTo
     // Overriden functions
     public override bool PreAction(GOAP_Agent AI)
     {
-        if (_currentWaypointIndex == randomWaypointPositions.Count)
-            _currentWaypointIndex = 0;
-
-        if (_currentWaypointIndex == 0)
-            RandomPoint(AI.transform.position, 50.0f);
+        GetRandomPoints(AI.transform.position, waypointRange);
 
         // Create a gameObject at the random position to set as the target
-        target = Instantiate(new GameObject("$$Random Waypoint$$"), randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
-
-        // Debug.Log(_currentWaypointIndex);
+        target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
 
         return base.PreAction(AI);
     }
 
+    public override bool DuringAction(GOAP_Agent AI)
+    {
+        if (AI.agent.remainingDistance < AI.stoppingDistance)
+        {
+            // Destroy the target and any other clone instances
+            Destroy(target);
+            Destroy(GameObject.Find("$$Random Waypoint$$"));
+
+            // Increment to the next waypoint
+            if (_currentWaypointIndex != _randomWaypointPositions.Count - 1)
+            {
+                _currentWaypointIndex++;
+
+                // Create a gameObject at the random position to set as the target
+                target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
+            }
+            else
+                _visitedEveryWaypoint = true;
+        }
+
+        Debug.Log(_currentWaypointIndex);
+
+        return base.DuringAction(AI);
+    }
+
     public override bool PostAction(GOAP_Agent AI)
     {
+        _currentWaypointIndex = 0;
+        _visitedEveryWaypoint = false;
+
         // Destroy the target and any other clone instances
         Destroy(target);
         Destroy(GameObject.Find("$$Random Waypoint$$"));
-        _currentWaypointIndex++;
 
         return true;
+    }
+
+    public override bool IsComplete(GOAP_Agent AI)
+    {
+        return _visitedEveryWaypoint;
     }
 }
