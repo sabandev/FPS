@@ -5,6 +5,7 @@ using UnityEngine;
 /// GOAP_Goal
 /// Template for all goals; they hold a dictionary which allows the raw <string, int> to be referenced in code
 /// </summary>
+[System.Serializable]
 public class GOAP_Goal
 {
     // Public Variables

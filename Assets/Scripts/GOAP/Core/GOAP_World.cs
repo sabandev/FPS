@@ -1,35 +1,44 @@
+using System.Collections.Generic;
+using Mono.Cecil;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
 /// GOAP_World
-/// Contains all information about the game world for the AI
-/// Singleton to ensure only one instane of GOAP_World
-/// Sealed to avoid conflicts with multiple requests and ensure no inheritance
+/// Contains all information about the game world for the AI.
+/// Singleton to ensure only one instance of GOAP_World.
+/// Sealed to avoid conflicts with multiple requests and ensure no inheritance.
 /// </summary>
-public sealed class GOAP_World
+public sealed class GOAP_World : MonoBehaviour
 {
+    // Public Variables
+    public static GOAP_World Instance { get; private set; }
+
+    public List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
+
     // Private variables
-    private static readonly GOAP_World instance = new GOAP_World();
-    
-    private static GOAP_WorldStates world;
+    public GOAP_WorldStates worldStatesClass = new GOAP_WorldStates();
 
-    private GOAP_World() {}
-
-    // Constructor
-    static GOAP_World()
+    // Private Functions
+    private void Awake()
     {
-        world = new GOAP_WorldStates();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        foreach (var ws in worldStates)
+            worldStatesClass.states[ws.key] = ws.value;
     }
 
-    public static GOAP_World Instance
+    private void Update()
     {
-        get {  return instance; }
+        worldStates.Clear();
+        foreach (var pair in worldStatesClass.states)
+            worldStates.Add(new GOAP_WorldState { key = pair.Key, value = pair.Value });
     }
 
     // Public Functions
-
-    public GOAP_WorldStates GetWorld()
-    {
-        return world;
-    }
 }

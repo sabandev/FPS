@@ -34,6 +34,8 @@ public class Pathfinder : GOAP_Agent
         GOAP_Goal moveToTargetGoal = new GOAP_Goal("AtTarget", true);
         goals.Add(moveToTargetGoal, 3);
 
+        GOAP_World.Instance.worldStatesClass.AddState("agentHasGoal", 0);
+
         // OffMeshLinks
         agent.autoTraverseOffMeshLink = false;
     }

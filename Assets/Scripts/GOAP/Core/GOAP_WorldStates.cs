@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using NUnit.Framework;
 using UnityEngine;
 
 /// <summary>
@@ -33,6 +31,8 @@ public class GOAP_WorldStates
         states = new Dictionary<string, int>();
     }
 
+    // Private Functions
+
     // Public Functions
     public Dictionary<string, int> GetStates()
     {
@@ -46,7 +46,10 @@ public class GOAP_WorldStates
 
     public void AddState(string key, int value)
     {
-        states.Add(key, value);
+        if (states.ContainsKey(key))
+            states[key] = value;
+        else
+            states.Add(key, value);
     }
 
     public void ModifyState(string key, int value)
@@ -76,6 +79,4 @@ public class GOAP_WorldStates
         if (states.ContainsKey(key))
             states.Remove(key);
     }
-
-    // Private Functions
 }

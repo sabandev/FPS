@@ -154,6 +154,7 @@ public class GOAP_Agent : MonoBehaviour
     {
         currentAction.running = false;
         currentAction.PostAction(this);
+        GOAP_World.Instance.worldStatesClass.SetState("agentHasGoal", 1);
         _invoked = false;
     }
 }

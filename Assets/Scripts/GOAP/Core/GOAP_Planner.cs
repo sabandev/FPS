@@ -47,7 +47,7 @@ public class GOAP_Planner
 
         // Create starting node
         List<Node> leaves = new List<Node>();
-        Node start = new Node(null, 0.0f, GOAP_World.Instance.GetWorld().GetStates(), null);
+        Node start = new Node(null, 0.0f, GOAP_World.Instance.worldStatesClass.GetStates(), null);
 
         // Figure out if we have found a plan
         bool successfulGraph = BuildGraph(start, leaves, achievableActions, goal);
