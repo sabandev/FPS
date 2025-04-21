@@ -13,17 +13,17 @@ public class GOAP_Goal
 
     public string name = "goal";
     public int importance = 1;
-    public bool removeAfterCompletion = true;
+    public bool infinte = false;
     public bool enabled = true;
 
     // Constructor
-    public GOAP_Goal(string s = "goal", bool r = true, int i = 1)
+    public GOAP_Goal(string n = "goal", bool inf = true, int imp = 1)
     {
-        removeAfterCompletion = r;
-        name = s;
-        importance = i;
+        infinte = inf;
+        name = n;
+        importance = imp;
 
         goalDictionary = new Dictionary<string, int>();
-        goalDictionary.Add(s, i);
+        goalDictionary.Add(n, imp);
     }
 }

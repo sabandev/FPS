@@ -99,7 +99,7 @@ public class AI: MonoBehaviour
             foreach (GOAP_Goal g in goals)
             {
                 if (g.enabled)
-                    AddGoal(g.name, g.removeAfterCompletion, g.importance);
+                    AddGoal(g.name, g.infinte, g.importance);
             }
         }
 
@@ -177,7 +177,7 @@ public class AI: MonoBehaviour
         // Check if the AI has completed its plan
         if (_actionQueue != null && _actionQueue.Count == 0 && goalsDictionary.Count != 0)
         {
-            if (currentGoal.removeAfterCompletion)
+            if (!currentGoal.infinte)
             {
                 goalsDictionary.Remove(currentGoal);
             }

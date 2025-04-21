@@ -29573,6 +29573,14 @@ PrefabInstance:
       propertyPath: 'waypoints.Array.data[3]'
       value: 
       objectReference: {fileID: 1432669983}
+    - target: {fileID: 8000244138628924195, guid: 598e08c880b6a4849bda8d9fabf5fc9e, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 562365995}
+    - target: {fileID: 8000244138628924195, guid: 598e08c880b6a4849bda8d9fabf5fc9e, type: 3}
+      propertyPath: goals.Array.data[1].infinte
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8919086142062296557, guid: 598e08c880b6a4849bda8d9fabf5fc9e, type: 3}
       propertyPath: m_Name
       value: Pathfinder
