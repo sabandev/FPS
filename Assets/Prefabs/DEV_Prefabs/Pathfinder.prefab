@@ -379,7 +379,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiType: 1
-  actionManager: {fileID: 0}
   walkingSpeed: 4
   runningSpeed: 7.5
   rotationSpeed: 10
@@ -388,17 +387,21 @@ MonoBehaviour:
   availableActions: []
   goals:
   - name: PatrolRandom
-    removeAfterCompletion: 1
     importance: 3
+    removeAfterCompletion: 1
+    enabled: 0
   - name: Idle
-    removeAfterCompletion: 0
     importance: 1
-  currentAction: {fileID: 0}
-  currentGoal:
-    name: 
     removeAfterCompletion: 0
-    importance: 0
-  target: {fileID: 0}
+    enabled: 1
+  - name: AtTarget
+    importance: 3
+    removeAfterCompletion: 1
+    enabled: 1
+  currentAction: {fileID: 0}
+  assignTargetGameObject: 1
+  assignWaypoints: 0
+  node: {fileID: 0}
   waypoints: []
   currentWaypointIndex: 0
   jumpHeight: 3

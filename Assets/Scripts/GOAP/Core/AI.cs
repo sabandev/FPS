@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using System;
 
 /// <summary>
 /// AIType.
@@ -28,8 +29,6 @@ public class AI: MonoBehaviour
     // Public Variables
     public AIType aiType = AIType.Pathfinder;
 
-    public ActionManager actionManager;
-
     public float walkingSpeed = 4.0f;
     public float runningSpeed = 7.5f;
     public float rotationSpeed = 10.0f;
@@ -40,17 +39,19 @@ public class AI: MonoBehaviour
     public List<GOAP_Action> availableActions = new List<GOAP_Action>();
     public List<GOAP_Goal> goals = new List<GOAP_Goal>();
 
-    public Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
+    private Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
 
     public GOAP_Action currentAction;
-    public GOAP_Goal currentGoal;
+    private GOAP_Goal currentGoal;
+
+    public bool assignTargetGameObject = false;
+    public bool assignWaypoints = false;
 
     public GameObject target;
 
     public List<Transform> waypoints;
     public int currentWaypointIndex = 0;
 
-    // Inspector Variables
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpDuration = 0.75f;
     [SerializeField] private float ladderClimbDuration = 3.0f;
@@ -59,6 +60,8 @@ public class AI: MonoBehaviour
     private GOAP_Planner _planner;
 
     private Queue<GOAP_Action> _actionQueue;
+
+    private ActionManager actionManager;
 
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
@@ -91,7 +94,10 @@ public class AI: MonoBehaviour
         if (goals.Count != 0)
         {
             foreach (GOAP_Goal g in goals)
-                AddGoal(g.name, g.removeAfterCompletion, g.importance);
+            {
+                if (g.enabled)
+                    AddGoal(g.name, g.removeAfterCompletion, g.importance);
+            }
         }
 
         // Set NavMesh properties

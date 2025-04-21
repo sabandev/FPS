@@ -12,8 +12,9 @@ public class GOAP_Goal
     public Dictionary<string, int> goalDictionary;
 
     public string name = "goal";
-    public bool removeAfterCompletion = true;
     public int importance = 1;
+    public bool removeAfterCompletion = true;
+    public bool enabled = true;
 
     // Constructor
     public GOAP_Goal(string s = "goal", bool r = true, int i = 1)

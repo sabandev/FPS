@@ -17,7 +17,11 @@ public class PatrolWaypoints : GoTo
     public override bool PreAction(AI AI)
     {
         // Add active waypoints from the agent's waypoints list to our list
-        if (AI.waypoints.Count == 0) { return false; }
+        if (AI.waypoints.Count == 0)
+        {
+            Debug.LogWarning("WARNING: No waypoints assigned to AI. Cannot patrol null waypoints.");
+            return base.PreAction(AI);
+        }
 
         for (int i = 0; i < AI.waypoints.Count; i++)
         {
