@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
-using System;
 
 /// <summary>
 /// AIType.
@@ -26,40 +25,41 @@ public enum AIType
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI: MonoBehaviour
 {
-    // Public Variables
+    #region Public Properties
     public AIType aiType = AIType.Pathfinder;
 
-    public float walkingSpeed = 4.0f;
-    public float runningSpeed = 7.5f;
-    public float rotationSpeed = 10.0f;
-    public float stoppingDistance = 2.0f;
-
     public NavMeshAgent agent;
+    public List<Transform> waypoints;
+    public GameObject target;
 
-    public List<GOAP_Action> availableActions = new List<GOAP_Action>();
-    public List<GOAP_Goal> goals = new List<GOAP_Goal>();
+    public int currentWaypointIndex = 0;
 
-    private Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
-
-    public GOAP_Action currentAction;
-    private GOAP_Goal currentGoal;
+    public float stoppingDistance = 2.0f;
 
     public bool assignTargetGameObject = false;
     public bool assignWaypoints = false;
+    #endregion
 
-    public GameObject target;
-
-    public List<Transform> waypoints;
-    public int currentWaypointIndex = 0;
-
+    #region Serializable Properties
+    [SerializeField] private float walkingSpeed = 4.0f;
+    [SerializeField] private float runningSpeed = 7.5f;
+    [SerializeField] private float rotationSpeed = 10.0f;
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpDuration = 0.75f;
     [SerializeField] private float ladderClimbDuration = 3.0f;
+    [SerializeField] private GOAP_Action currentAction;
+    [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
+    [SerializeField] private List<GOAP_Goal> goals = new List<GOAP_Goal>();
+    #endregion
 
-    // Private Variables
+    #region Private Properties
     private GOAP_Planner _planner;
 
+    private GOAP_Goal currentGoal;
+
     private Queue<GOAP_Action> _actionQueue;
+
+    private Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
 
     private ActionManager actionManager;
 
@@ -68,6 +68,9 @@ public class AI: MonoBehaviour
 
     private bool _isHandlingLink = false;
     private bool _invoked = false;
+    #endregion
+
+    // Private Functions
 
     private void Start()
     {
@@ -88,7 +91,7 @@ public class AI: MonoBehaviour
             }
         }
         else
-            Debug.LogWarning("WARNING: ActionManager not assigned in agent");
+            Debug.LogWarning("WARNING: ActionManager cannot be found. Ensure you have a GameObject in the scene with an ActionManager attached.");
 
         // Add pre-assigned goals
         if (goals.Count != 0)
@@ -118,7 +121,15 @@ public class AI: MonoBehaviour
             GOAP_World.Instance.goals.Add(name);
     }
 
-    // Private Functions
+    private void Update()
+    {
+        if (agent.hasPath)
+            SpeedControl();
+
+        if (agent.isOnOffMeshLink)
+            HandleNavMeshLink();
+    }
+
     private void LateUpdate()
     {
         // Check if the AI is performing an action and complete the action if it is done
@@ -187,15 +198,6 @@ public class AI: MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (agent.hasPath)
-            SpeedControl();
-
-        if (agent.isOnOffMeshLink)
-            HandleNavMeshLink();
-    }
-
     private void SpeedControl()
     {
         if (agent.remainingDistance > stoppingDistance + 4f)
@@ -236,6 +238,8 @@ public class AI: MonoBehaviour
         currentAction.PostAction(this);
         _invoked = false;
     }
+
+    // Private Coroutines
 
     private IEnumerator TraverseJump(float height, float duration)
     {
