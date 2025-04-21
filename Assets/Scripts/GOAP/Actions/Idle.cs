@@ -23,14 +23,14 @@ public class Idle : Animate
     private float _idleTimer = 0.0f;
 
     // Override Functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         AI.StartCoroutine(LookAtRoutine(AI));
 
         return base.PreAction(AI);
     }
 
-    public override bool DuringAction(GOAP_Agent AI)
+    public override bool DuringAction(AI AI)
     {
         if (running)
             _idleTimer += Time.deltaTime;
@@ -45,12 +45,12 @@ public class Idle : Animate
         return true;
     }
 
-    public override bool PostAction(GOAP_Agent AI)
+    public override bool PostAction(AI AI)
     {
         return true;
     }
 
-    private IEnumerator LookAtRoutine(GOAP_Agent AI)
+    private IEnumerator LookAtRoutine(AI AI)
     {
         CalculateLookDirection(AI);
         yield return AI.StartCoroutine(LookAt(AI, lookDirection));
@@ -58,7 +58,7 @@ public class Idle : Animate
         AI.StartCoroutine(LookAtRoutine(AI));
     }
 
-    private IEnumerator LookAt(GOAP_Agent AI, Vector3 dir)
+    private IEnumerator LookAt(AI AI, Vector3 dir)
     {
         dir.y = 0f;
         Quaternion lookRot = Quaternion.LookRotation(dir);
@@ -76,7 +76,7 @@ public class Idle : Animate
         }
     }
 
-    private void CalculateLookDirection(GOAP_Agent AI)
+    private void CalculateLookDirection(AI AI)
     {
         float randomAngle = Random.Range(minAngle, maxAngle);
         Vector3 lookDir = Quaternion.Euler(0.0f, randomAngle, 0.0f) * AI.gameObject.transform.forward;

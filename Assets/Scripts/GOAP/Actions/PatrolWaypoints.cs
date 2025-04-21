@@ -14,7 +14,7 @@ public class PatrolWaypoints : GoTo
     private List<Transform> activeWaypoints = new List<Transform>();
 
     // Overriden functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         // Add active waypoints from the agent's waypoints list to our list
         if (AI.waypoints.Count == 0) { return false; }
@@ -29,7 +29,7 @@ public class PatrolWaypoints : GoTo
         return base.PreAction(AI);
 }
 
-    public override bool DuringAction(GOAP_Agent AI)
+    public override bool DuringAction(AI AI)
     {
         if (!target.activeSelf)
             target = NextAvailableWaypoint(AI);
@@ -43,14 +43,14 @@ public class PatrolWaypoints : GoTo
         return base.DuringAction(AI);
     }
 
-    public override bool PostAction(GOAP_Agent AI)
+    public override bool PostAction(AI AI)
     {
         AI.currentWaypointIndex = 0;
         activeWaypoints = new List<Transform>();
         return true;
     }
 
-    public override bool IsComplete(GOAP_Agent AI)
+    public override bool IsComplete(AI AI)
     {
         if (AI.currentWaypointIndex == activeWaypoints.Count)
             return true;
@@ -59,7 +59,7 @@ public class PatrolWaypoints : GoTo
     }
 
     // Private Functions
-    private GameObject NextAvailableWaypoint(GOAP_Agent AI)
+    private GameObject NextAvailableWaypoint(AI AI)
     {
         // Return next waypoint as the target
         for (int w = AI.currentWaypointIndex; w < activeWaypoints.Count; w++)

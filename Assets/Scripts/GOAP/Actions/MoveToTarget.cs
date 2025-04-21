@@ -9,13 +9,13 @@ using UnityEngine;
 public class MoveToTarget : GoTo
 {
     // Override Functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         target = AI.target;
         return base.PreAction(AI);
     }
 
-    public override bool PostAction(GOAP_Agent AI)
+    public override bool PostAction(AI AI)
     {
         return base.PostAction(AI);
     }

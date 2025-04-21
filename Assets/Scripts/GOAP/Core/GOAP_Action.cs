@@ -24,7 +24,7 @@ public abstract class GOAP_Action : ScriptableObject
 
     public bool running = false;
 
-    public GOAP_Agent agent;
+    public AI agent;
 
     // NOTE: move specific variables to their dedicated GOAP Actions
     public GameObject target;
@@ -67,10 +67,10 @@ public abstract class GOAP_Action : ScriptableObject
         return true;
     }
 
-    public abstract bool PreAction(GOAP_Agent AI);
-    public virtual bool DuringAction(GOAP_Agent AI) { return true; }
-    public abstract bool PostAction(GOAP_Agent AI);
-    public abstract bool IsComplete(GOAP_Agent AI);
+    public abstract bool PreAction(AI AI);
+    public virtual bool DuringAction(AI AI) { return true; }
+    public abstract bool PostAction(AI AI);
+    public abstract bool IsComplete(AI AI);
 
     // Private Functions
     protected virtual void Awake()

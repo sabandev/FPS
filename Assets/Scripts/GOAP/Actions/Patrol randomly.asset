@@ -23,5 +23,5 @@ MonoBehaviour:
   worldStateEffects:
   - key: PatrolRandom
     value: 0
-  numberOfRandomWaypoints: 5
+  numberOfRandomWaypoints: 1
   waypointRange: 75

@@ -13,12 +13,14 @@ public class GOAP_Goal
 
     public string name = "goal";
     public bool removeAfterCompletion = true;
+    public int importance = 1;
 
     // Constructor
     public GOAP_Goal(string s = "goal", bool r = true, int i = 1)
     {
         removeAfterCompletion = r;
         name = s;
+        importance = i;
 
         goalDictionary = new Dictionary<string, int>();
         goalDictionary.Add(s, i);

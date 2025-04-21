@@ -9,7 +9,7 @@ using UnityEngine;
 public class UseButton : UseSmartObject
 {
     // Override Functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         base.PreAction(AI);
 

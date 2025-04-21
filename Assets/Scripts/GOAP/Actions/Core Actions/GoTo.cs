@@ -13,7 +13,7 @@ public class GoTo : GOAP_Action
     // new readonly ActionType actionType = ActionType.GoTo;
 
     // Private Functions
-    private void MoveToTarget(GOAP_Agent AI)
+    private void MoveToTarget(AI AI)
     {
         // If we have a target, set a destination to the target
         if (target == null && targetTag != string.Empty)
@@ -27,24 +27,24 @@ public class GoTo : GOAP_Action
     }
 
     // Override Functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         MoveToTarget(AI);
         return true;
     }
 
-    public override bool DuringAction(GOAP_Agent AI)
+    public override bool DuringAction(AI AI)
     {
         MoveToTarget(AI);
         return true;
     }
 
-    public override bool PostAction(GOAP_Agent AI)
+    public override bool PostAction(AI AI)
     {
         return true;
     }
 
-    public override bool IsComplete(GOAP_Agent AI)
+    public override bool IsComplete(AI AI)
     {
         if (AI.agent != null)
         {

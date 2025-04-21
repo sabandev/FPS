@@ -40,7 +40,7 @@ public class PatrolRandom : GoTo
     }
 
     // Overriden functions
-    public override bool PreAction(GOAP_Agent AI)
+    public override bool PreAction(AI AI)
     {
         GetRandomPoints(AI.transform.position, waypointRange);
 
@@ -50,7 +50,7 @@ public class PatrolRandom : GoTo
         return base.PreAction(AI);
     }
 
-    public override bool DuringAction(GOAP_Agent AI)
+    public override bool DuringAction(AI AI)
     {
         if (AI.agent.remainingDistance < AI.stoppingDistance)
         {
@@ -70,12 +70,10 @@ public class PatrolRandom : GoTo
                 _visitedEveryWaypoint = true;
         }
 
-        Debug.Log(_currentWaypointIndex);
-
         return base.DuringAction(AI);
     }
 
-    public override bool PostAction(GOAP_Agent AI)
+    public override bool PostAction(AI AI)
     {
         _currentWaypointIndex = 0;
         _visitedEveryWaypoint = false;
@@ -87,7 +85,7 @@ public class PatrolRandom : GoTo
         return true;
     }
 
-    public override bool IsComplete(GOAP_Agent AI)
+    public override bool IsComplete(AI AI)
     {
         return _visitedEveryWaypoint;
     }

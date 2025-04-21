@@ -13,7 +13,7 @@ public class ActionManager : MonoBehaviour
     public List<GOAP_Action> pathfinderAIActions;
     public List<GOAP_Action> idlerAIActions;
 
-    public List<GOAP_Action> GetActions(GOAP_Agent AI)
+    public List<GOAP_Action> GetActions(AI AI)
     {
         // Convert the 
         // List<GOAP_Action> allActions = GetComponents<GOAP_Action>().ToList<GOAP_Action>();
