@@ -27,13 +27,9 @@ public class AIEditor : Editor
     SerializedProperty ladderClimbDuration;
     SerializedProperty assignTargetGO;
     SerializedProperty assignWaypoints;
-    SerializedProperty selectedAITypeIndex;
-    SerializedProperty agentManager;
     #endregion
 
     #region Private Properties
-    private AgentManager _agentManager;
-
     private GUIStyle _header1Style;
     private GUIStyle _header2Style;
     private GUIStyle _titleStyle;
@@ -83,15 +79,12 @@ public class AIEditor : Editor
         ladderClimbDuration = serializedObject.FindProperty("ladderClimbDuration");
         assignTargetGO = serializedObject.FindProperty("assignTargetGameObject");
         assignWaypoints = serializedObject.FindProperty("assignWaypoints");
-        selectedAITypeIndex = serializedObject.FindProperty("selectedAITypeIndex");
-        agentManager = serializedObject.FindProperty("agentManager");
         #endregion
-
-        _agentManager = FindAnyObjectByType<AgentManager>().GetComponent<AgentManager>();
     }
 
     public override void OnInspectorGUI()
     {
+        AI _ai = (AI)target;
 
         InitialiseCustomStyles();
         serializedObject.Update();
@@ -119,20 +112,13 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Type
-        AgentManager _agentManager = (AgentManager)agentManager.objectReferenceValue;
+        GUILayout.Label("Type", _header1Style);
+        EditorGUILayout.PropertyField(aiType, new GUIContent("AI Type"));
 
-        if (_agentManager != null && _agentManager.aiTypes.Count > 0)
-        {
-            string[] aiTypeNames = _agentManager.aiTypes.ConvertAll(t => t.typeName).ToArray();
-            selectedAITypeIndex.intValue = EditorGUILayout.Popup("AI Type", selectedAITypeIndex.intValue, aiTypeNames);
-        }
-        else
-        {
-            EditorGUILayout.HelpBox("Must assign an AI Type.", MessageType.Warning);
-        }
+        if (_ai.aiType == null)
+            EditorGUILayout.HelpBox("WARNING: Must assign an AI type.", MessageType.Warning);
         #endregion
 
-        AI _ai = (AI)target;
 
         EditorGUILayout.Space(10.0f);
 

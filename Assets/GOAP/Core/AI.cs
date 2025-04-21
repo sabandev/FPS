@@ -26,7 +26,8 @@ using Unity.AI.Navigation;
 public class AI: MonoBehaviour
 {
     #region Public Properties
-    public AIType selectedAIType => agentManager != null && agentManager.aiTypes.Count > selectedAITypeIndex ? agentManager.aiTypes[selectedAITypeIndex] : null;
+    // public AIType selectedAIType => agentManager != null && agentManager.aiTypes.Count > selectedAITypeIndex ? agentManager.aiTypes[selectedAITypeIndex] : null;
+    public AIType aiType;
 
     public NavMeshAgent agent;
     public List<Transform> waypoints;
@@ -50,8 +51,6 @@ public class AI: MonoBehaviour
     [SerializeField] private GOAP_Action currentAction;
     [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
     [SerializeField] private List<GOAP_Goal> goals = new List<GOAP_Goal>();
-    [SerializeField] private int selectedAITypeIndex = 0;
-    [SerializeField] private AgentManager agentManager;
     #endregion
 
     #region Private Properties
@@ -62,8 +61,6 @@ public class AI: MonoBehaviour
     private Queue<GOAP_Action> _actionQueue;
 
     private Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
-
-    private ActionManager actionManager;
 
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
@@ -76,29 +73,17 @@ public class AI: MonoBehaviour
 
     private void Start()
     {
-        // Get AgentManager
-        // agentManager = FindAnyObjectByType<AgentManager>().GetComponent<AgentManager>();
-
-        Debug.Log(selectedAIType);
-
-        // Get ActionManager
-        actionManager = FindAnyObjectByType<ActionManager>().GetComponent<ActionManager>();
-
-        // Get actions
-        if (actionManager != null)
+        if (aiType.availableActions.Count <= 0)
+            Debug.LogWarning("WARNING: AI Type has no assigned actions. AI cannot operate with no available actions.");
+        else
         {
-            foreach (GOAP_Action a in actionManager.GetActions(this))
+            foreach (GOAP_Action a in aiType.availableActions)
             {
-                if (a == null)
-                    continue;
-
-                GOAP_Action actionInstance = Instantiate(a);
-                a.agent = this;
-                availableActions.Add(actionInstance);
+                GOAP_Action instance = Instantiate(a);
+                availableActions.Add(instance);
+                instance.agent = this;
             }
         }
-        else
-            Debug.LogWarning("WARNING: ActionManager cannot be found. Ensure you have a GameObject in the scene with an ActionManager attached.");
 
         // Add pre-assigned goals
         if (goals.Count != 0)

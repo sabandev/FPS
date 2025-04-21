@@ -499,63 +499,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1001 &48485538
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2137508768801389217, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_Name
-      value: Action Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567181464648289387, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7f4d3de6c18644d3897eb5dd43c3eec2, type: 3}
 --- !u!43 &53065077
 Mesh:
   m_ObjectHideFlags: 0
@@ -4657,52 +4600,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &883871771
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 883871773}
-  - component: {fileID: 883871772}
-  m_Layer: 0
-  m_Name: AgentManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &883871772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883871771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51d7cc62b1ba4b9fba7129617a372ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aiTypes:
-  - {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
---- !u!4 &883871773
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883871771}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &934265374
 GameObject:
   m_ObjectHideFlags: 0
@@ -18846,6 +18743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f1989bad90c4d949b960fadc574335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiType: {fileID: 11400000, guid: 051354bb0f94b4390a27186825d4a69d, type: 2}
   agent: {fileID: 0}
   waypoints:
   - {fileID: 194308659}
@@ -18870,18 +18768,16 @@ MonoBehaviour:
     enabled: 0
   - name: Idle
     importance: 1
-    infinte: 0
+    infinte: 1
     enabled: 1
   - name: AtTarget
     importance: 3
     infinte: 0
-    enabled: 0
+    enabled: 1
   - name: PatrolWaypoints
     importance: 3
     infinte: 0
-    enabled: 1
-  selectedAITypeIndex: 0
-  agentManager: {fileID: 883871772}
+    enabled: 0
 --- !u!4 &8550574482139163946
 Transform:
   m_ObjectHideFlags: 0
@@ -19011,8 +18907,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 771437668}
-  - {fileID: 883871773}
-  - {fileID: 48485538}
   - {fileID: 1422576853}
   - {fileID: 1607074527}
   - {fileID: 2632835061108633882}
