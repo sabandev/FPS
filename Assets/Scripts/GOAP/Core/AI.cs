@@ -10,12 +10,12 @@ using Unity.AI.Navigation;
 /// Enumeration.
 /// Stores all the possible "types" of AI an agent could be.
 /// </summary>
-public enum AIType
-{
-    Unspecified,
-    Pathfinder,
-    Idler
-}
+// public enum AIType
+// {
+//     Unspecified,
+//     Pathfinder,
+//     Idler
+// }
 
 /// <summary>
 /// AI
@@ -26,7 +26,7 @@ public enum AIType
 public class AI: MonoBehaviour
 {
     #region Public Properties
-    public AIType aiType = AIType.Pathfinder;
+    public AIType selectedAIType => agentManager != null && agentManager.aiTypes.Count > selectedAITypeIndex ? agentManager.aiTypes[selectedAITypeIndex] : null;
 
     public NavMeshAgent agent;
     public List<Transform> waypoints;
@@ -50,6 +50,8 @@ public class AI: MonoBehaviour
     [SerializeField] private GOAP_Action currentAction;
     [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
     [SerializeField] private List<GOAP_Goal> goals = new List<GOAP_Goal>();
+    [SerializeField] private int selectedAITypeIndex = 0;
+    [SerializeField] private AgentManager agentManager;
     #endregion
 
     #region Private Properties
@@ -74,6 +76,11 @@ public class AI: MonoBehaviour
 
     private void Start()
     {
+        // Get AgentManager
+        // agentManager = FindAnyObjectByType<AgentManager>().GetComponent<AgentManager>();
+
+        Debug.Log(selectedAIType);
+
         // Get ActionManager
         actionManager = FindAnyObjectByType<ActionManager>().GetComponent<ActionManager>();
 

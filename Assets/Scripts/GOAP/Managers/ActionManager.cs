@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -19,7 +18,7 @@ public class ActionManager : MonoBehaviour
     {
         // Return the appropriate list of actions depending on the AI's type
 
-        if (AI.aiType == AIType.Pathfinder && pathfinderAIActions != null)
+        if (AI.selectedAIType == AIType. && pathfinderAIActions != null)
             return pathfinderAIActions;
         else if (AI.aiType == AIType.Idler && idlerAIActions != null)
             return idlerAIActions;
