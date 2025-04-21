@@ -6,9 +6,9 @@ using UnityEngine.AI;
 using Unity.AI.Navigation;
 
 /// <summary>
-/// AIType
-/// Enumeration
-/// Stores all the possible "types" of AI an agent could be
+/// AIType.
+/// Enumeration.
+/// Stores all the possible "types" of AI an agent could be.
 /// </summary>
 public enum AIType
 {
@@ -18,8 +18,9 @@ public enum AIType
 }
 
 /// <summary>
-/// GOAP_Agent
-/// A template for all AI agents
+/// AI
+/// Stores all of the behavioural logic for an AI Agent.
+/// The "brains" of the AI.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class AI: MonoBehaviour
@@ -65,8 +66,7 @@ public class AI: MonoBehaviour
     private bool _isHandlingLink = false;
     private bool _invoked = false;
 
-    // Protected Functions
-    protected virtual void Awake()
+    private void Start()
     {
         // Get ActionManager
         actionManager = FindAnyObjectByType<ActionManager>().GetComponent<ActionManager>();
@@ -103,7 +103,7 @@ public class AI: MonoBehaviour
         agent.autoTraverseOffMeshLink = false;
     }
 
-    protected virtual void AddGoal(string name, bool removeAfterCompletion, int importance)
+    private void AddGoal(string name, bool removeAfterCompletion, int importance)
     {
         GOAP_Goal newGoal = new GOAP_Goal(name, removeAfterCompletion);
         goalsDictionary.Add(newGoal, importance);

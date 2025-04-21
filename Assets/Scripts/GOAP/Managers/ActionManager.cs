@@ -13,6 +13,9 @@ public class ActionManager : MonoBehaviour
     public List<GOAP_Action> pathfinderAIActions;
     public List<GOAP_Action> idlerAIActions;
 
+    // Private Functions
+
+    // Public Functions
     public List<GOAP_Action> GetActions(AI AI)
     {
         // Convert the 

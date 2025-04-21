@@ -214,7 +214,6 @@ GameObject:
   - component: {fileID: 193919273525450410}
   - component: {fileID: 947536464815805094}
   - component: {fileID: 8656728897124342777}
-  - component: {fileID: 3373895231485670999}
   - component: {fileID: 8000244138628924195}
   - component: {fileID: 4202701846807089392}
   - component: {fileID: 1406409574542329794}
@@ -367,38 +366,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3373895231485670999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8919086142062296557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f1989bad90c4d949b960fadc574335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aiType: 1
-  actionManager: {fileID: 0}
-  walkingSpeed: 4
-  runningSpeed: 7.5
-  rotationSpeed: 10
-  stoppingDistance: 2
-  agent: {fileID: 0}
-  availableActions: []
-  goals: []
-  currentAction: {fileID: 0}
-  currentGoal:
-    name: 
-    removeAfterCompletion: 0
-    importance: 0
-  target: {fileID: 0}
-  waypoints: []
-  currentWaypointIndex: 0
-  jumpHeight: 3
-  jumpDuration: 0.75
-  ladderClimbDuration: 3
 --- !u!114 &8000244138628924195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +388,7 @@ MonoBehaviour:
   availableActions: []
   goals:
   - name: PatrolRandom
-    removeAfterCompletion: 0
+    removeAfterCompletion: 1
     importance: 3
   - name: Idle
     removeAfterCompletion: 0
