@@ -27,5 +27,5 @@ MonoBehaviour:
     enabled: 0
   - goalName: AtTarget
     importance: 3
-    infinte: 0
+    infinte: 1
     enabled: 0

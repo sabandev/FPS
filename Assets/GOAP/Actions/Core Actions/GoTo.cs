@@ -52,10 +52,7 @@ public class GoTo : GOAP_Action
                 return true;
         }
         else
-        {
-            if (Vector3.Distance(AI.transform.position, target.transform.position) < 3.0f)
-                return true;
-        }
+            Debug.LogWarning("ERROR: GoTo Core Action cannot find AI Agent. Cannot complete action.");
 
         return false;
     }

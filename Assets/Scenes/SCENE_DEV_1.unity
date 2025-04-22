@@ -9317,10 +9317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1877981821}
-  moveSpeed: 4
+  moveSpeed: 2.5
   gravity: 50
-  jumpHeight: 0.9
-  mouseSensitivity: 750
+  jumpHeight: 1
+  playerControls: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
+  mouseSensitivity: 10
 --- !u!1 &934265374
 GameObject:
   m_ObjectHideFlags: 0
@@ -41729,13 +41730,13 @@ MonoBehaviour:
   - {fileID: 1929673816}
   - {fileID: 169006219}
   - {fileID: 1516752459}
-  target: {fileID: 1201157261}
+  target: {fileID: 921261730}
   currentWaypointIndex: 0
   stoppingDistance: 2
   assignTargetGameObject: 1
   assignWaypoints: 1
   walkingSpeed: 2
-  runningSpeed: 5
+  runningSpeed: 10
   rotationSpeed: 10
   jumpHeight: 3
   jumpDuration: 0.75

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -17,19 +18,53 @@ public class Player : MonoBehaviour
     private float xRotation;
 
     [Header("Input")]
+    [SerializeField] private InputActionAsset playerControls;
     [SerializeField] private float mouseSensitivity;
-    private float moveInput;
-    private float turnInput;
+
+    private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction jumpAction;
+    private Vector2 moveInput;
+    private Vector2 lookInput;
+
+    private float verticalInput;
+    private float horizontalInput;
     private float mouseX;
     private float mouseY;
 
-    private void Start()
+    Vector3 move;
+
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
+
+        moveAction = playerControls.FindActionMap("Base Movement").FindAction("Move");
+        lookAction = playerControls.FindActionMap("Base Movement").FindAction("Look");
+        jumpAction = playerControls.FindActionMap("Base Movement").FindAction("Jump");
+
+        moveAction.performed += context => moveInput = context.ReadValue<Vector2>();
+        moveAction.canceled += context => moveInput = Vector2.zero;
+
+        lookAction.performed += context => lookInput = context.ReadValue<Vector2>();
+        lookAction.canceled += context => lookInput = Vector2.zero;
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnEnable()
+    {
+        moveAction.Enable();
+        lookAction.Enable();
+        jumpAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.Disable();
+        lookAction.Disable();
+        jumpAction.Disable();
     }
 
     private void Update()
@@ -46,12 +81,12 @@ public class Player : MonoBehaviour
 
     private void GroundMovement()
     {
-        Vector3 move = new Vector3(turnInput, 0, moveInput);
+        move = new Vector3(horizontalInput, 0, verticalInput);
         move = playerCamera.transform.TransformDirection(move);
 
         move *= moveSpeed;
 
-        move.y = VerticalForceCalculation();
+        move.y = Jump();
 
         controller.Move(move * Time.deltaTime);
     }
@@ -70,16 +105,14 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    private float VerticalForceCalculation()
+    private float Jump()
     {
         if (controller.isGrounded)
         {
             verticalVelocity = -1;
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            if(jumpAction.triggered)
                 verticalVelocity = Mathf.Sqrt(jumpHeight * gravity * 2);
-            }
         }
         else
         {
@@ -90,9 +123,15 @@ public class Player : MonoBehaviour
 
     private void InputManagement()
     {
-        moveInput = Input.GetAxis("Vertical");
-        turnInput = Input.GetAxis("Horizontal");
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
+        // moveInput = Input.GetAxis("Vertical");
+        // turnInput = Input.GetAxis("Horizontal");
+        // mouseX = Input.GetAxis("Mouse X");
+        // mouseY = Input.GetAxis("Mouse Y");
+
+        mouseX = lookInput.x * mouseSensitivity;
+        mouseY = lookInput.y * mouseSensitivity;
+
+        verticalInput = moveInput.y * moveSpeed;
+        horizontalInput = moveInput.x * moveSpeed;
     }
 }

@@ -16,6 +16,8 @@ public class PatrolWaypoints : GoTo
     // Overriden functions
     public override bool PreAction(AI AI)
     {
+        activeWaypoints.Clear();
+
         // Add active waypoints from the agent's waypoints list to our list
         if (AI.waypoints.Count == 0)
         {
@@ -36,9 +38,12 @@ public class PatrolWaypoints : GoTo
     public override bool DuringAction(AI AI)
     {
         if (!target.activeSelf)
+        {
             target = NextAvailableWaypoint(AI);
+            return base.DuringAction(AI);
+        }
 
-        if (AI.agent != null && AI.agent.hasPath && AI.agent.remainingDistance < AI.stoppingDistance)
+        if (AI.agent != null && AI.agent.hasPath && AI.agent.remainingDistance < AI.stoppingDistance && !AI.agent.pathPending)
         {
             AI.currentWaypointIndex++;
             target = NextAvailableWaypoint(AI);
@@ -50,16 +55,13 @@ public class PatrolWaypoints : GoTo
     public override bool PostAction(AI AI)
     {
         AI.currentWaypointIndex = 0;
-        activeWaypoints = new List<Transform>();
+        activeWaypoints.Clear();
         return true;
     }
 
     public override bool IsComplete(AI AI)
     {
-        if (AI.currentWaypointIndex == activeWaypoints.Count)
-            return true;
-
-        return false;
+        return AI.currentWaypointIndex >= activeWaypoints.Count;
     }
 
     // Private Functions
