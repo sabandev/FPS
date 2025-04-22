@@ -70,6 +70,12 @@ public class PatrolWaypoints : GoTo
         {
             if (activeWaypoints[w].gameObject.activeSelf)
                 return activeWaypoints[w].gameObject;
+            else
+            {
+                // If a waypoint is disabled during runtime, stop patrolling waypoints and give a warning
+                AI.currentWaypointIndex = activeWaypoints.Count;
+                Debug.LogWarning("WARNING: Waypoint has been disabled during runtime. AI will stop patrolling waypoints");
+            }
         }
 
         return null;

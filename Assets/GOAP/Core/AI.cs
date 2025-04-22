@@ -26,8 +26,8 @@ using Unity.AI.Navigation;
 public class AI: MonoBehaviour
 {
     #region Public Properties
-    // public AIType selectedAIType => agentManager != null && agentManager.aiTypes.Count > selectedAITypeIndex ? agentManager.aiTypes[selectedAITypeIndex] : null;
     public AIType aiType;
+    public GOAP_GoalSet goalSet;
 
     public NavMeshAgent agent;
     public List<Transform> waypoints;
@@ -50,17 +50,16 @@ public class AI: MonoBehaviour
     [SerializeField] private float ladderClimbDuration = 3.0f;
     [SerializeField] private GOAP_Action currentAction;
     [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
-    [SerializeField] private List<GOAP_Goal> goals = new List<GOAP_Goal>();
     #endregion
 
     #region Private Properties
     private GOAP_Planner _planner;
 
-    private GOAP_Goal currentGoal;
+    [SerializeField] private GOAP_Goal currentGoal;
 
     private Queue<GOAP_Action> _actionQueue;
 
-    private Dictionary<GOAP_Goal, int> goalsDictionary = new Dictionary<GOAP_Goal, int>();
+    private Dictionary<GOAP_Goal, int> goals = new Dictionary<GOAP_Goal, int>();
 
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
@@ -70,7 +69,6 @@ public class AI: MonoBehaviour
     #endregion
 
     // Private Functions
-
     private void Start()
     {
         if (aiType.availableActions.Count <= 0)
@@ -86,12 +84,14 @@ public class AI: MonoBehaviour
         }
 
         // Add pre-assigned goals
-        if (goals.Count != 0)
+        if (goalSet != null)
         {
-            foreach (GOAP_Goal g in goals)
+            foreach (GOAP_Goal g in goalSet.goals)
             {
                 if (g.enabled)
-                    AddGoal(g.name, g.infinte, g.importance);
+                {
+                    AddGoal(g.goalName, g.infinte, g.importance);
+                }
             }
         }
 
@@ -104,10 +104,10 @@ public class AI: MonoBehaviour
         agent.autoTraverseOffMeshLink = false;
     }
 
-    private void AddGoal(string name, bool removeAfterCompletion, int importance)
+    private void AddGoal(string name, bool infinite, int importance)
     {
-        GOAP_Goal newGoal = new GOAP_Goal(name, removeAfterCompletion);
-        goalsDictionary.Add(newGoal, importance);
+        GOAP_Goal newGoal = new GOAP_Goal(name, infinite);
+        goals.Add(newGoal, importance);
 
         if (!GOAP_World.Instance.goals.Contains(name))
             GOAP_World.Instance.goals.Add(name);
@@ -151,7 +151,7 @@ public class AI: MonoBehaviour
             _planner = new GOAP_Planner();
 
             // Order the goals
-            var sortedGoals = from entry in goalsDictionary orderby entry.Value descending select entry;
+            var sortedGoals = from entry in goals orderby entry.Value descending select entry;
 
             // Make a plan
             foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
@@ -167,11 +167,11 @@ public class AI: MonoBehaviour
         }
 
         // Check if the AI has completed its plan
-        if (_actionQueue != null && _actionQueue.Count == 0 && goalsDictionary.Count != 0)
+        if (_actionQueue != null && _actionQueue.Count == 0 && goals.Count != 0)
         {
             if (!currentGoal.infinte)
             {
-                goalsDictionary.Remove(currentGoal);
+                goals.Remove(currentGoal);
             }
             
             _planner = null;
@@ -192,6 +192,9 @@ public class AI: MonoBehaviour
 
     private void SpeedControl()
     {
+        agent.angularSpeed = rotationSpeed * 100f;
+        agent.stoppingDistance = stoppingDistance;
+
         if (agent.remainingDistance > stoppingDistance + 4f)
             agent.speed = runningSpeed;
         else

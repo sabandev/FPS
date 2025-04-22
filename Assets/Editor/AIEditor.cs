@@ -17,7 +17,6 @@ public class AIEditor : Editor
     SerializedProperty rotationSpeed;
     SerializedProperty stoppingDistance;
     SerializedProperty availableActions;
-    SerializedProperty goals;
     SerializedProperty currentAction;
     SerializedProperty targetGO;
     SerializedProperty waypoints;
@@ -27,6 +26,8 @@ public class AIEditor : Editor
     SerializedProperty ladderClimbDuration;
     SerializedProperty assignTargetGO;
     SerializedProperty assignWaypoints;
+    SerializedProperty goalSet;
+    SerializedProperty currentGoal;
     #endregion
 
     #region Private Properties
@@ -69,7 +70,6 @@ public class AIEditor : Editor
         rotationSpeed = serializedObject.FindProperty("rotationSpeed");
         stoppingDistance = serializedObject.FindProperty("stoppingDistance");
         availableActions = serializedObject.FindProperty("availableActions");
-        goals = serializedObject.FindProperty("goals");
         currentAction = serializedObject.FindProperty("currentAction");
         targetGO = serializedObject.FindProperty("target");
         waypoints = serializedObject.FindProperty("waypoints");
@@ -79,6 +79,8 @@ public class AIEditor : Editor
         ladderClimbDuration = serializedObject.FindProperty("ladderClimbDuration");
         assignTargetGO = serializedObject.FindProperty("assignTargetGameObject");
         assignWaypoints = serializedObject.FindProperty("assignWaypoints");
+        goalSet = serializedObject.FindProperty("goalSet");
+        currentGoal = serializedObject.FindProperty("currentGoal");
         #endregion
     }
 
@@ -164,7 +166,10 @@ public class AIEditor : Editor
         #region Goals
         GUILayout.Label("Goals", _header1Style);
 
-        EditorGUILayout.PropertyField(goals, new GUIContent("AI Goals"));
+        EditorGUILayout.PropertyField(goalSet, new GUIContent("AI Goal Set"));
+
+        if (_ai.goalSet == null)
+            EditorGUILayout.HelpBox("WARNING: Must assign a goal set for AI to have goals.", MessageType.Warning);
         #endregion
 
         EditorGUILayout.Space(10.0f);
@@ -174,8 +179,18 @@ public class AIEditor : Editor
 
         EditorGUI.BeginDisabledGroup(true);
 
+        GUILayout.Label("Actions", _header2Style);
         EditorGUILayout.PropertyField(currentAction);
         EditorGUILayout.PropertyField(availableActions, new GUIContent("Available Actions"));
+
+        EditorGUILayout.Space(5.0f);
+
+        GUILayout.Label("Goals", _header2Style);
+        EditorGUILayout.PropertyField(currentGoal);
+
+        EditorGUILayout.Space(5.0f);
+
+        GUILayout.Label("Waypoints", _header2Style);
         EditorGUILayout.PropertyField(currentWaypointIndex);
 
         EditorGUI.EndDisabledGroup();
