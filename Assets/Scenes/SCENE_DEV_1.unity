@@ -2647,7 +2647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 181823665}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2690,7 +2690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193782986}
   - component: {fileID: 193782987}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3866,7 +3866,7 @@ GameObject:
   - component: {fileID: 250298230}
   - component: {fileID: 250298229}
   - component: {fileID: 250298228}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Window (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4172,7 +4172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 270843318}
   - component: {fileID: 270843319}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4270,7 +4270,7 @@ GameObject:
   - component: {fileID: 271595075}
   - component: {fileID: 271595077}
   - component: {fileID: 271595076}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4299,7 +4299,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271595074}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4573,7 +4573,7 @@ GameObject:
   - component: {fileID: 322096297}
   - component: {fileID: 322096296}
   - component: {fileID: 322096295}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Window (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5076,7 +5076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 381275718}
   - component: {fileID: 381275719}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6224,7 +6224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522006930}
   - component: {fileID: 522006931}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8801,7 +8801,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 913721325}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Windows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9254,7 +9254,7 @@ GameObject:
   - component: {fileID: 921261732}
   - component: {fileID: 921261731}
   - component: {fileID: 921261733}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -9295,7 +9295,7 @@ Transform:
   m_GameObject: {fileID: 921261730}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 12.576999, y: -1.608, z: -1.2380002}
+  m_LocalPosition: {x: 0.17, y: -1.312, z: -5.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9751,7 +9751,7 @@ Transform:
   m_GameObject: {fileID: 939408809}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.014355122, z: -0, w: 0.999897}
-  m_LocalPosition: {x: -14.762999, y: -1.738, z: -10.402074}
+  m_LocalPosition: {x: -14.893, y: -1.258, z: -10.443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11128,7 +11128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996347933}
   - component: {fileID: 996347934}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11225,7 +11225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1015291804}
   - component: {fileID: 1015291805}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12990,7 +12990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1161161444}
   - component: {fileID: 1161161445}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13087,7 +13087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1177026044}
   - component: {fileID: 1177026045}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34326,7 +34326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1625224379}
   - component: {fileID: 1625224380}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35747,7 +35747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701311164}
   - component: {fileID: 1701311165}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37653,7 +37653,7 @@ GameObject:
   - component: {fileID: 1877981819}
   - component: {fileID: 1877981821}
   - component: {fileID: 1877981820}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38153,7 +38153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935354272}
   - component: {fileID: 1935354273}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38417,7 +38417,7 @@ GameObject:
   - component: {fileID: 1966081622}
   - component: {fileID: 1966081621}
   - component: {fileID: 1966081620}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Window (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39480,7 +39480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2054029541}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Follow Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41487,7 +41487,7 @@ Transform:
   m_GameObject: {fileID: 8919086142689166391}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -15.280001, y: -1.43, z: -16.285997}
+  m_LocalPosition: {x: -8.48, y: -1.43, z: -5.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41503,7 +41503,7 @@ Transform:
   m_GameObject: {fileID: 8902921984718550160}
   serializedVersion: 2
   m_LocalRotation: {x: 0.295477, y: 0.20236766, z: -0.05332195, w: 0.9321467}
-  m_LocalPosition: {x: 12.576999, y: -0.975, z: -1.2380002}
+  m_LocalPosition: {x: 0.17, y: -0.679, z: -5.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41853,6 +41853,7 @@ GameObject:
   - component: {fileID: 8000244137930750713}
   - component: {fileID: 4202701847438502186}
   - component: {fileID: 1406409573848219160}
+  - component: {fileID: 9157785934661117050}
   m_Layer: 0
   m_Name: Pathfinder
   m_TagString: AI
@@ -41905,6 +41906,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9157785934661117050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8919086142689166391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad535efcfb1246db9604c9a280331ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 10
+  angle: 45
+  height: 1.5
+  sensorColor: {r: 0, g: 0.93903685, b: 1, a: 0.5411765}
+  scanFrequency: 30
+  layers:
+    serializedVersion: 2
+    m_Bits: 8
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  objects: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
