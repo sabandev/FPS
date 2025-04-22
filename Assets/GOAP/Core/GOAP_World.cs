@@ -13,7 +13,7 @@ public sealed class GOAP_World : MonoBehaviour
     public static GOAP_World Instance { get; private set; }
 
     public GOAP_WorldStates worldStatesClass = new GOAP_WorldStates();
-    public List<string> goals = new List<string>();
+    public List<GOAP_Goal> goals = new List<GOAP_Goal>();
 
     // Inspector Variables
     [SerializeField] private List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();

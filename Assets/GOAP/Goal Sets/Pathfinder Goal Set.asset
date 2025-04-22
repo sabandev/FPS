@@ -15,7 +15,7 @@ MonoBehaviour:
   goals:
   - goalName: PatrolWaypoints
     importance: 3
-    infinte: 0
+    infinte: 1
     enabled: 1
   - goalName: Idle
     importance: 1

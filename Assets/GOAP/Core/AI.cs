@@ -106,11 +106,11 @@ public class AI: MonoBehaviour
 
     private void AddGoal(string name, bool infinite, int importance)
     {
-        GOAP_Goal newGoal = new GOAP_Goal(name, infinite);
+        GOAP_Goal newGoal = new GOAP_Goal(name, infinite, importance);
         goals.Add(newGoal, importance);
 
-        if (!GOAP_World.Instance.goals.Contains(name))
-            GOAP_World.Instance.goals.Add(name);
+        if (!GOAP_World.Instance.goals.Contains(newGoal))
+            GOAP_World.Instance.goals.Add(newGoal);
     }
 
     private void Update()
@@ -120,10 +120,7 @@ public class AI: MonoBehaviour
 
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
-    }
 
-    private void LateUpdate()
-    {
         // Check if the AI is performing an action and complete the action if it is done
         // If it is not done, return out of LateUpdate
         if (currentAction != null && currentAction.running)

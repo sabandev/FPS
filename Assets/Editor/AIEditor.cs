@@ -92,23 +92,25 @@ public class AIEditor : Editor
         serializedObject.Update();
 
         #region Title
-        Rect rect = EditorGUILayout.GetControlRect(false, 30);
-        float lineWidth = 250;
-        float lineHeight = 5;
+        // Rect rect = EditorGUILayout.GetControlRect(false, 30);
+        // float lineWidth = 250;
+        // float lineHeight = 5;
 
-        // Left line
-        EditorGUI.DrawRect(
-            new Rect(rect.x, rect.y + rect.height / 2, lineWidth, lineHeight),
-            Color.gray
-        );
+        // // Left line
+        // EditorGUI.DrawRect(
+        //     new Rect(rect.x, rect.y + rect.height / 2, lineWidth, lineHeight),
+        //     Color.gray
+        // );
 
-        // Right line
-        EditorGUI.DrawRect(
-            new Rect(rect.xMax - lineWidth, rect.y + rect.height / 2, lineWidth, lineHeight),
-            Color.gray
-        );
+        // // Right line
+        // EditorGUI.DrawRect(
+        //     new Rect(rect.xMax - lineWidth, rect.y + rect.height / 2, lineWidth, lineHeight),
+        //     Color.gray
+        // );
 
-        EditorGUI.LabelField(rect, " AI ", _titleStyle);
+        // EditorGUI.LabelField(rect, " AI ", _titleStyle);
+
+        Title("AI");
         #endregion
 
         EditorGUILayout.Space(10.0f);
@@ -197,5 +199,26 @@ public class AIEditor : Editor
         #endregion
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    private void Title(string title)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, 30);
+        float lineWidth = 250;
+        float lineHeight = 5;
+
+        // Left line
+        EditorGUI.DrawRect(
+            new Rect(rect.x, rect.y + rect.height / 2, lineWidth, lineHeight),
+            Color.gray
+        );
+
+        // Right line
+        EditorGUI.DrawRect(
+            new Rect(rect.xMax - lineWidth, rect.y + rect.height / 2, lineWidth, lineHeight),
+            Color.gray
+        );
+
+        EditorGUI.LabelField(rect, $" {title} ", _titleStyle);
     }
 }
