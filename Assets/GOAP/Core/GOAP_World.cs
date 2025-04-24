@@ -16,7 +16,7 @@ public sealed class GOAP_World : MonoBehaviour
     public List<GOAP_Goal> goals = new List<GOAP_Goal>();
 
     // Inspector Variables
-    [SerializeField] private List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
+    public List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
 
     // Private Functions
     private void Awake()

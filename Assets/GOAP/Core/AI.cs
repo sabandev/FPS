@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// AIType.
@@ -50,18 +51,20 @@ public class AI: MonoBehaviour
     [SerializeField] private float ladderClimbDuration = 3.0f;
     [SerializeField] private GOAP_Action currentAction;
     [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
+    [SerializeField] private GOAP_Goal currentGoal;
     #endregion
 
     #region Private Properties
     private GOAP_Planner _planner;
 
-    [SerializeField] private GOAP_Goal currentGoal;
+    private AISensor _sensor;
 
     private Queue<GOAP_Action> _actionQueue;
 
-    private Dictionary<GOAP_Goal, int> goals = new Dictionary<GOAP_Goal, int>();
+    private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
 
     private Vector3 _navMeshLinkStartPos;
+
     private Vector3 _navMeshLinkEndPos;
 
     private bool _isHandlingLink = false;
@@ -71,6 +74,10 @@ public class AI: MonoBehaviour
     // Private Functions
     private void Start()
     {
+        // Get sensor
+        _sensor = GetComponent<AISensor>();
+
+        // Get available actions
         if (aiType.availableActions.Count <= 0)
             Debug.LogWarning("WARNING: AI Type has no assigned actions. AI cannot operate with no available actions.");
         else
@@ -107,7 +114,7 @@ public class AI: MonoBehaviour
     private void AddGoal(string name, bool infinite, int importance)
     {
         GOAP_Goal newGoal = new GOAP_Goal(name, infinite, importance);
-        goals.Add(newGoal, importance);
+        _goals.Add(newGoal, importance);
 
         if (!GOAP_World.Instance.goals.Contains(newGoal))
             GOAP_World.Instance.goals.Add(newGoal);
@@ -120,6 +127,12 @@ public class AI: MonoBehaviour
 
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
+
+        if (_sensor.IsInSight(target))
+        {
+            Debug.Log("I see the player");
+            GOAP_World.Instance.worldStatesClass.AddState("seePlayer", 0);
+        }
 
         // Check if the AI is performing an action and complete the action if it is done
         // If it is not done, return out of LateUpdate
@@ -148,12 +161,12 @@ public class AI: MonoBehaviour
             _planner = new GOAP_Planner();
 
             // Order the goals
-            var sortedGoals = from entry in goals orderby entry.Value descending select entry;
+            var sortedGoals = from entry in _goals orderby entry.Value descending select entry;
 
             // Make a plan
             foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
             {
-                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, null);
+                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass);
 
                 if (_actionQueue != null)
                 {
@@ -164,11 +177,11 @@ public class AI: MonoBehaviour
         }
 
         // Check if the AI has completed its plan
-        if (_actionQueue != null && _actionQueue.Count == 0 && goals.Count != 0)
+        if (_actionQueue != null && _actionQueue.Count == 0 && _goals.Count != 0)
         {
             if (!currentGoal.infinte)
             {
-                goals.Remove(currentGoal);
+                _goals.Remove(currentGoal);
             }
             
             _planner = null;

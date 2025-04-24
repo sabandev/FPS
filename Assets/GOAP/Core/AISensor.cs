@@ -7,7 +7,7 @@ public class AISensor : MonoBehaviour
     public float distance = 10.0f;
     public float angle = 30.0f;
     public float height = 1.0f;
-    public Color sensorColor = Color.red;
+    public Color sensorColor = Color.black;
     public int scanFrequency = 30;
     public LayerMask layers;
     public LayerMask occlusionLayers;
@@ -196,5 +196,22 @@ public class AISensor : MonoBehaviour
         {
             Gizmos.DrawSphere(obj.transform.position, 0.5f);
         }
+    }
+
+    public int Filter(GameObject[] buffer, string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        int count = 0;
+
+        foreach (var obj in objects)
+        {
+            if (obj.layer == layer)
+                buffer[count++] = obj;
+
+            if (buffer.Length == count)
+                break;
+        }
+
+        return count;
     }
 }
