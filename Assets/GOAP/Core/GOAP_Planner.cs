@@ -35,7 +35,7 @@ public class Node
 public class GOAP_Planner
 {
     // Public Functions
-    public Queue<GOAP_Action> Plan(List<GOAP_Action> actions, Dictionary<string, int> goal, GOAP_WorldStates states)
+    public Queue<GOAP_Action> Plan(List<GOAP_Action> actions, Dictionary<string, int> goal, GOAP_WorldStates states, bool debug)
     {
         // Funnel out actions that are not achievable
         List<GOAP_Action> achievableActions = new List<GOAP_Action>();
@@ -53,7 +53,8 @@ public class GOAP_Planner
         bool successfulGraph = BuildGraph(start, leaves, achievableActions, goal);
         if (!successfulGraph)
         {
-            Debug.LogWarning("WARNING: NO PLAN FOUND");
+            if (debug)
+                Debug.LogWarning($"WARNING: No Plan found for goal: {goal}");
 
             return null;
         }
@@ -119,7 +120,7 @@ public class GOAP_Planner
                 foreach (KeyValuePair<string, int> effect in action.effects)
                 {
                     if (!currentState.ContainsKey(effect.Key))
-                        currentState.Add(effect.Key, effect.Value);
+                        currentState.Add(effect.Key, effect.Value); 
                 }
 
                 Node node = new Node(parent, parent.cost + action.cost, currentState, action);

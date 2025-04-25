@@ -9260,7 +9260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!143 &921261731
 CharacterController:
   m_ObjectHideFlags: 0
@@ -9295,7 +9295,7 @@ Transform:
   m_GameObject: {fileID: 921261730}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -5.16, y: -1.312, z: -0.89}
+  m_LocalPosition: {x: 1.57, y: -1.312, z: -10.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41503,7 +41503,7 @@ Transform:
   m_GameObject: {fileID: 8902921984718550160}
   serializedVersion: 2
   m_LocalRotation: {x: 0.295477, y: 0.20236766, z: -0.05332195, w: 0.9321467}
-  m_LocalPosition: {x: -5.16, y: -0.679, z: -0.89}
+  m_LocalPosition: {x: 1.57, y: -0.679, z: -10.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41736,7 +41736,7 @@ MonoBehaviour:
   assignTargetGameObject: 1
   assignWaypoints: 1
   walkingSpeed: 2
-  runningSpeed: 10
+  runningSpeed: 5
   rotationSpeed: 10
   jumpHeight: 3
   jumpDuration: 0.75
@@ -41918,7 +41918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad535efcfb1246db9604c9a280331ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 10
+  distance: 30
   angle: 45
   height: 1.5
   sensorColor: {r: 0, g: 0.93903685, b: 1, a: 0.7058824}

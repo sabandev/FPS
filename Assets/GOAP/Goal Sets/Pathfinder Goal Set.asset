@@ -24,7 +24,7 @@ MonoBehaviour:
   - goalName: PatrolRandom
     importance: 3
     infinte: 0
-    enabled: 0
+    enabled: 1
   - goalName: AtTarget
     importance: 3
     infinte: 1

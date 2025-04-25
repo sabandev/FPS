@@ -79,7 +79,6 @@ public class PatrolRandom : GoTo
         _visitedEveryWaypoint = false;
 
         // Destroy the target and any other clone instances
-        Debug.Log("Trying delete random waypoint");
         Destroy(target);
         Destroy(GameObject.Find("$$Random Waypoint$$"));
 

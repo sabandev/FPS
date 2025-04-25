@@ -56,10 +56,12 @@ public class AI: MonoBehaviour
 
     #region Private Properties
     private GOAP_Planner _planner;
+    private GOAP_Planner _validatePlanner;
 
     private AISensor _sensor;
 
     private Queue<GOAP_Action> _actionQueue;
+    private Queue<GOAP_Action> _validateActionQueue;
 
     private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
 
@@ -128,14 +130,13 @@ public class AI: MonoBehaviour
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
 
-        if (_sensor.IsInSight(target))
+        if (_sensor.IsInSight(target) && target.activeSelf)
         {
-            Debug.Log("I see the player");
             GOAP_World.Instance.worldStatesClass.AddState("seePlayer", 0);
         }
 
         // Check if the AI is performing an action and complete the action if it is done
-        // If it is not done, return out of LateUpdate
+        // If it is not done, return 
         if (currentAction != null && currentAction.running)
         {
             if (currentAction.IsComplete(this))
@@ -148,15 +149,15 @@ public class AI: MonoBehaviour
             }
             else
             {
+                Invoke("ReValidatePlan", 1.0f);
                 currentAction.DuringAction(this);
             }
-
             return;
         }
 
         // Check if we have a plan
         // If not, we make one
-        if (_planner == null || _actionQueue == null)
+        if (_planner == null || currentAction == null)
         {
             _planner = new GOAP_Planner();
 
@@ -166,7 +167,7 @@ public class AI: MonoBehaviour
             // Make a plan
             foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
             {
-                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass);
+                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, true);
 
                 if (_actionQueue != null)
                 {
@@ -197,6 +198,35 @@ public class AI: MonoBehaviour
             }
             else
                 _actionQueue = null;
+        }
+    }
+
+    private void ReValidatePlan()
+    {
+        _validatePlanner = new GOAP_Planner();
+
+        // Order the goals
+        var sortedGoals = from entry in _goals orderby entry.Value descending select entry;
+
+        // Make a plan
+        foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
+        {
+            _validateActionQueue = _validatePlanner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, false);
+
+            if (_validateActionQueue != null)
+            {
+                // We found a new goal that needs immediate attention (higher priority)
+                if (g.Key != currentGoal)
+                {
+                    CompleteAction();
+                    currentGoal = g.Key;
+                    _actionQueue = _validateActionQueue;
+                }
+                if (_planner == null)
+                    _planner = _validatePlanner;
+
+                break;
+            }
         }
     }
 
