@@ -178,19 +178,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad535efcfb1246db9604c9a280331ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 30
-  angle: 45
-  height: 1.5
-  sensorColor: {r: 0, g: 0.93903685, b: 1, a: 0.49411765}
-  scanFrequency: 30
-  layers:
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0.8734226, b: 1, a: 0.49019608}
+  visionScanFrequency: 30
+  visionTargetLayers:
     serializedVersion: 2
     m_Bits: 8
-  occlusionLayers:
+  visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 1
-  objects:
-  - {fileID: 0}
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!114 &7709641086831674564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +219,7 @@ MonoBehaviour:
   assignTargetGameObject: 1
   assignWaypoints: 1
   walkingSpeed: 2
-  runningSpeed: 5
+  runningSpeed: 4.5
   rotationTime: 5
   angularSpeed: 10
   jumpHeight: 3

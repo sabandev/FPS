@@ -25,6 +25,7 @@ using System.Runtime.CompilerServices;
 /// The "brains" of the AI.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AISensor))]
 public class AI: MonoBehaviour
 {
     #region Public Properties
@@ -107,6 +108,7 @@ public class AI: MonoBehaviour
             }
         }
 
+        // Get/Set NavMesh properties
         agent = GetComponent<NavMeshAgent>();
         agent.autoTraverseOffMeshLink = false;
     }

@@ -31,37 +31,6 @@ public class AIEditor : Editor
     SerializedProperty currentGoal;
     #endregion
 
-    #region Private Properties
-    private GUIStyle _header1Style;
-    private GUIStyle _header2Style;
-    private GUIStyle _titleStyle;
-    #endregion
-
-    private void InitialiseCustomStyles()
-    {
-        #region Header 1
-        _header1Style = new GUIStyle(EditorStyles.boldLabel);
-        _header1Style.fontSize = 16;
-        _header1Style.normal.textColor = Color.white;
-        _header1Style.margin = new RectOffset(0, 0, 0, 10);
-        _header1Style.alignment = TextAnchor.MiddleLeft;
-        #endregion
-
-        #region Header 2
-        _header2Style = new GUIStyle(EditorStyles.boldLabel);
-        _header2Style.fontSize = 12;
-        _header2Style.normal.textColor = Color.white;
-        _header2Style.alignment = TextAnchor.MiddleLeft;
-        #endregion
-
-        #region Title
-        _titleStyle = new GUIStyle(EditorStyles.boldLabel);
-        _titleStyle.fontSize = 20;
-        _titleStyle.normal.textColor = Color.white;
-        _titleStyle.alignment = TextAnchor.MiddleCenter;
-        #endregion
-    }
-
     private void OnEnable()
     {
         #region Set Serialized Properties
@@ -90,17 +59,17 @@ public class AIEditor : Editor
     {
         AI _ai = (AI)target;
 
-        InitialiseCustomStyles();
+        CustomEditorStyles.InitializeCustomStyles();
         serializedObject.Update();
 
         #region Title
-        Title("AI");
+        CustomEditorStyles.Title("AI");
         #endregion
 
         EditorGUILayout.Space(10.0f);
 
         #region Type
-        GUILayout.Label("Type", _header1Style);
+        GUILayout.Label("Type", CustomEditorStyles.header1Style);
         EditorGUILayout.PropertyField(aiType, new GUIContent("AI Type"));
 
         if (_ai.aiType == null)
@@ -111,9 +80,9 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Navigation
-        GUILayout.Label("Navigation", _header1Style);
+        GUILayout.Label("Navigation", CustomEditorStyles.header1Style);
 
-        GUILayout.Label("Movement", _header2Style);
+        GUILayout.Label("Movement", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(walkingSpeed);
         EditorGUILayout.PropertyField(runningSpeed);
         EditorGUILayout.PropertyField(rotationTime);
@@ -123,7 +92,7 @@ public class AIEditor : Editor
 
         EditorGUILayout.Space(5.0f);
 
-        GUILayout.Label("NavMeshAgent", _header2Style);
+        GUILayout.Label("NavMeshAgent", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(stoppingDistance);
         EditorGUILayout.PropertyField(angularSpeed);
 
@@ -151,7 +120,7 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Goals
-        GUILayout.Label("Goals", _header1Style);
+        GUILayout.Label("Goals", CustomEditorStyles.header1Style);
 
         EditorGUILayout.PropertyField(goalSet, new GUIContent("AI Goal Set"));
 
@@ -162,48 +131,27 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Debug
-        GUILayout.Label("Debug", _header1Style);
+        GUILayout.Label("Debug", CustomEditorStyles.header1Style);
 
         EditorGUI.BeginDisabledGroup(true);
 
-        GUILayout.Label("Actions", _header2Style);
+        GUILayout.Label("Actions", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(currentAction);
         EditorGUILayout.PropertyField(availableActions, new GUIContent("Available Actions"));
 
         EditorGUILayout.Space(5.0f);
 
-        GUILayout.Label("Goals", _header2Style);
+        GUILayout.Label("Goals", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(currentGoal);
 
         EditorGUILayout.Space(5.0f);
 
-        GUILayout.Label("Waypoints", _header2Style);
+        GUILayout.Label("Waypoints", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(currentWaypointIndex);
 
         EditorGUI.EndDisabledGroup();
         #endregion
 
         serializedObject.ApplyModifiedProperties();
-    }
-
-    private void Title(string title)
-    {
-        Rect rect = EditorGUILayout.GetControlRect(false, 30);
-        float lineWidth = 250;
-        float lineHeight = 5;
-
-        // Left line
-        EditorGUI.DrawRect(
-            new Rect(rect.x, rect.y + rect.height / 2, lineWidth, lineHeight),
-            Color.gray
-        );
-
-        // Right line
-        EditorGUI.DrawRect(
-            new Rect(rect.xMax - lineWidth, rect.y + rect.height / 2, lineWidth, lineHeight),
-            Color.gray
-        );
-
-        EditorGUI.LabelField(rect, $" {title} ", _titleStyle);
     }
 }

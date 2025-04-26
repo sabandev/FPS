@@ -1,18 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// AISensor.
+/// A required component of the AI class.
+/// Grants the AI agent its senses and the ability to observe its environment.
+/// </summary>
 [ExecuteInEditMode]
 public class AISensor : MonoBehaviour
 {
-    public float distance = 10.0f;
-    public float angle = 30.0f;
-    public float height = 1.0f;
-    public Color sensorColor = Color.black;
-    public int scanFrequency = 30;
-    public LayerMask layers;
-    public LayerMask occlusionLayers;
-    public List<GameObject> objects = new List<GameObject>();
+    #region Serialized Properties
+    [SerializeField] private float visionDistance = 30.0f;
+    [SerializeField] private float visionAngle = 45.0f;
+    [SerializeField] private float visionHeight = 1.5f;
+    [SerializeField] private Color visionConeColor = Color.black;
+    [SerializeField] private int visionScanFrequency = 30;
+    [SerializeField] private LayerMask visionTargetLayers;
+    [SerializeField] private LayerMask visionOcclusionLayers;
+    [SerializeField] private List<GameObject> currentlyVisibleTargetObjects = new List<GameObject>();
+    [SerializeField] private bool drawViewCone = true;
+    [SerializeField] private bool drawInSightGizmos = true;
+    #endregion
 
+    #region Private Properties
     private Collider[] colliders = new Collider[50];
 
     private Mesh mesh;
@@ -20,10 +30,12 @@ public class AISensor : MonoBehaviour
     private int count;
     private float scanInterval;
     private float scanTimer;
+    #endregion
 
+    // Private Functions
     private void Start()
     {
-        scanInterval = 1.0f / scanFrequency;
+        scanInterval = 1.0f / visionScanFrequency;
     }
 
     private void Update()
@@ -37,40 +49,17 @@ public class AISensor : MonoBehaviour
         }
     }
 
-    public bool IsInSight(GameObject obj)
-    {
-        Vector3 origin = transform.position;
-        Vector3 destination = obj.transform.position;
-        Vector3 direction = destination - origin;
-
-        if (direction.y < 0 || direction.y > height)
-            return false;
-
-        direction.y = 0;
-        float deltaAngle = Vector3.Angle(direction, transform.forward);
-        if (deltaAngle > angle)
-            return false;
-
-        origin.y += height / 2;
-        destination.y = origin.y;
-
-        if (Physics.Linecast(origin, destination, occlusionLayers))
-            return false;
-
-        return true;
-    }
-
     private void Scan()
     {
-        count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
-        objects.Clear();
+        count = Physics.OverlapSphereNonAlloc(transform.position, visionDistance, colliders, visionTargetLayers, QueryTriggerInteraction.Collide);
+        currentlyVisibleTargetObjects.Clear();
 
         for (int i = 0; i < count; i++)
         {
             GameObject obj = colliders[i].gameObject;
 
             if (IsInSight(obj))
-                objects.Add(obj);
+                currentlyVisibleTargetObjects.Add(obj);
         }
     }
 
@@ -88,13 +77,13 @@ public class AISensor : MonoBehaviour
         #region Calculate Mesh Vectors
         // Bottom vectors
         Vector3 bottomCenter = Vector3.zero;
-        Vector3 bottomLeft = Quaternion.Euler(0, -angle, 0) * Vector3.forward * distance;
-        Vector3 bottomRight = Quaternion.Euler(0, angle, 0) * Vector3.forward * distance;
+        Vector3 bottomLeft = Quaternion.Euler(0, -visionAngle, 0) * Vector3.forward * visionDistance;
+        Vector3 bottomRight = Quaternion.Euler(0, visionAngle, 0) * Vector3.forward * visionDistance;
 
         // Top vectors
-        Vector3 topCenter = bottomCenter + Vector3.up * height;
-        Vector3 topLeft = bottomLeft + Vector3.up * height;
-        Vector3 topRight = bottomRight + Vector3.up * height;
+        Vector3 topCenter = bottomCenter + Vector3.up * visionHeight;
+        Vector3 topLeft = bottomLeft + Vector3.up * visionHeight;
+        Vector3 topRight = bottomRight + Vector3.up * visionHeight;
         #endregion
 
         #region Draw Mesh
@@ -118,18 +107,18 @@ public class AISensor : MonoBehaviour
         vertices[vert++] = bottomRight;
         vertices[vert++] = bottomCenter;
 
-        float currentAngle = -angle;
-        float deltaAngle = (angle * 2) / segments;
+        float currentAngle = -visionAngle;
+        float deltaAngle = (visionAngle * 2) / segments;
 
         for (int i = 0; i < segments; i++)
         {
             // Bottom vectors
-            bottomLeft = Quaternion.Euler(0, currentAngle, 0) * Vector3.forward * distance;
-            bottomRight = Quaternion.Euler(0, currentAngle + deltaAngle, 0) * Vector3.forward * distance;
+            bottomLeft = Quaternion.Euler(0, currentAngle, 0) * Vector3.forward * visionDistance;
+            bottomRight = Quaternion.Euler(0, currentAngle + deltaAngle, 0) * Vector3.forward * visionDistance;
 
             // Top vectors
-            topLeft = bottomLeft + Vector3.up * height;
-            topRight = bottomRight + Vector3.up * height;
+            topLeft = bottomLeft + Vector3.up * visionHeight;
+            topRight = bottomRight + Vector3.up * visionHeight;
 
             currentAngle += deltaAngle;
 
@@ -170,48 +159,58 @@ public class AISensor : MonoBehaviour
     private void OnValidate()
     {
         mesh = WedgeMesh();
-        scanInterval = 1.0f / scanFrequency;
+        scanInterval = 1.0f / visionScanFrequency;
     }
 
     private void OnDrawGizmos()
     {
-        if (mesh)
+        if (mesh && drawViewCone)
         {
-            Gizmos.color = sensorColor;
+            Gizmos.color = visionConeColor;
             Gizmos.DrawMesh(mesh, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), transform.rotation);
         }
 
-        // In sensor
-        Gizmos.DrawWireSphere(transform.position, distance);
-
-        Gizmos.color = Color.red;
-        for (int i = 0; i < count; i++)
+        // In sensor / sight
+        if (drawInSightGizmos)
         {
-            Gizmos.DrawSphere(colliders[i].transform.position, 0.5f);
-        }
+            Gizmos.DrawWireSphere(transform.position, visionDistance);
 
-        // In sight
-        Gizmos.color = Color.green;
-        foreach (var obj in objects)
-        {
-            Gizmos.DrawSphere(obj.transform.position, 0.5f);
+            Gizmos.color = Color.red;
+            for (int i = 0; i < count; i++)
+            {
+                Gizmos.DrawSphere(colliders[i].transform.position, 0.5f);
+            }
+
+            // In sight
+            Gizmos.color = Color.green;
+            foreach (var obj in currentlyVisibleTargetObjects)
+            {
+                Gizmos.DrawSphere(obj.transform.position, 0.5f);
+            }
         }
     }
 
-    public int Filter(GameObject[] buffer, string layerName)
+    // Public Functions
+    public bool IsInSight(GameObject obj)
     {
-        int layer = LayerMask.NameToLayer(layerName);
-        int count = 0;
+        Vector3 origin = transform.position;
+        Vector3 destination = obj.transform.position;
+        Vector3 direction = destination - origin;
 
-        foreach (var obj in objects)
-        {
-            if (obj.layer == layer)
-                buffer[count++] = obj;
+        if (direction.y < 0 || direction.y > visionHeight)
+            return false;
 
-            if (buffer.Length == count)
-                break;
-        }
+        direction.y = 0;
+        float deltaAngle = Vector3.Angle(direction, transform.forward);
+        if (deltaAngle > visionAngle)
+            return false;
 
-        return count;
+        origin.y += visionHeight / 2;
+        destination.y = origin.y;
+
+        if (Physics.Linecast(origin, destination, visionOcclusionLayers))
+            return false;
+
+        return true;
     }
 }
