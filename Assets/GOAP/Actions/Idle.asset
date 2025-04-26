@@ -23,7 +23,7 @@ MonoBehaviour:
   worldStateEffects:
   - key: Idle
     value: 0
-  idleDuration: 5
+  idleDuration: 600
   timeBetweenLooks: 1
   rotationSpeed: 2
   minAngle: 45

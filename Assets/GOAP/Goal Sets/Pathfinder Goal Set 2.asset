@@ -29,3 +29,7 @@ MonoBehaviour:
     importance: 3
     infinte: 0
     enabled: 0
+  - goalName: ChasePlayer
+    importance: 10
+    infinte: 0
+    enabled: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Chase player
   cost: 1
-  duration: 0
+  duration: 2
   running: 0
   agent: {fileID: 0}
   target: {fileID: 0}
@@ -23,5 +23,6 @@ MonoBehaviour:
   - key: seePlayer
     value: 0
   worldStateEffects:
-  - key: chasePlayer
+  - key: ChasePlayer
     value: 0
+  targetOffset: {x: 0, y: -1, z: 0}

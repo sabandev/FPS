@@ -14,7 +14,8 @@ public class AIEditor : Editor
     SerializedProperty aiType;
     SerializedProperty walkingSpeed;
     SerializedProperty runningSpeed;
-    SerializedProperty rotationSpeed;
+    SerializedProperty rotationTime;
+    SerializedProperty angularSpeed;
     SerializedProperty stoppingDistance;
     SerializedProperty availableActions;
     SerializedProperty currentAction;
@@ -67,7 +68,8 @@ public class AIEditor : Editor
         aiType = serializedObject.FindProperty("aiType");
         walkingSpeed = serializedObject.FindProperty("walkingSpeed");
         runningSpeed = serializedObject.FindProperty("runningSpeed");
-        rotationSpeed = serializedObject.FindProperty("rotationSpeed");
+        rotationTime = serializedObject.FindProperty("rotationTime");
+        angularSpeed = serializedObject.FindProperty("angularSpeed");
         stoppingDistance = serializedObject.FindProperty("stoppingDistance");
         availableActions = serializedObject.FindProperty("availableActions");
         currentAction = serializedObject.FindProperty("currentAction");
@@ -92,24 +94,6 @@ public class AIEditor : Editor
         serializedObject.Update();
 
         #region Title
-        // Rect rect = EditorGUILayout.GetControlRect(false, 30);
-        // float lineWidth = 250;
-        // float lineHeight = 5;
-
-        // // Left line
-        // EditorGUI.DrawRect(
-        //     new Rect(rect.x, rect.y + rect.height / 2, lineWidth, lineHeight),
-        //     Color.gray
-        // );
-
-        // // Right line
-        // EditorGUI.DrawRect(
-        //     new Rect(rect.xMax - lineWidth, rect.y + rect.height / 2, lineWidth, lineHeight),
-        //     Color.gray
-        // );
-
-        // EditorGUI.LabelField(rect, " AI ", _titleStyle);
-
         Title("AI");
         #endregion
 
@@ -132,6 +116,7 @@ public class AIEditor : Editor
         GUILayout.Label("Movement", _header2Style);
         EditorGUILayout.PropertyField(walkingSpeed);
         EditorGUILayout.PropertyField(runningSpeed);
+        EditorGUILayout.PropertyField(rotationTime);
         EditorGUILayout.PropertyField(jumpHeight);
         EditorGUILayout.PropertyField(jumpDuration);
         EditorGUILayout.PropertyField(ladderClimbDuration);
@@ -140,7 +125,7 @@ public class AIEditor : Editor
 
         GUILayout.Label("NavMeshAgent", _header2Style);
         EditorGUILayout.PropertyField(stoppingDistance);
-        EditorGUILayout.PropertyField(rotationSpeed);
+        EditorGUILayout.PropertyField(angularSpeed);
 
         EditorGUILayout.Space(5.0f);
 

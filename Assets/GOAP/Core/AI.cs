@@ -46,7 +46,8 @@ public class AI: MonoBehaviour
     #region Serializable Properties
     [SerializeField] private float walkingSpeed = 4.0f;
     [SerializeField] private float runningSpeed = 7.5f;
-    [SerializeField] private float rotationSpeed = 10.0f;
+    [SerializeField] private float rotationTime = 5.0f;
+    [SerializeField] private float angularSpeed = 10.0f;
     [SerializeField] private float jumpHeight = 3.0f;
     [SerializeField] private float jumpDuration = 0.75f;
     [SerializeField] private float ladderClimbDuration = 3.0f;
@@ -111,18 +112,9 @@ public class AI: MonoBehaviour
 
         agent.speed = runningSpeed;
 
-        agent.angularSpeed = rotationSpeed * 100f;
+        agent.angularSpeed = angularSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
         agent.autoTraverseOffMeshLink = false;
-    }
-
-    private void AddGoal(string name, bool infinite, int importance)
-    {
-        GOAP_Goal newGoal = new GOAP_Goal(name, infinite, importance);
-        _goals.Add(newGoal, importance);
-
-        if (!GOAP_World.Instance.goals.Contains(newGoal))
-            GOAP_World.Instance.goals.Add(newGoal);
     }
 
     private void Update()
@@ -220,13 +212,14 @@ public class AI: MonoBehaviour
         {
             if (!_invoked)
             {
-                Invoke("CompleteAction", currentAction.duration);
                 _invoked = true;
+                Invoke("CompleteAction", currentAction.duration);
             }
         }
         else
         {
-            currentAction.DuringAction(this);
+            if (!_invoked)
+                currentAction.DuringAction(this);
         }
     }
 
@@ -244,9 +237,21 @@ public class AI: MonoBehaviour
 
     private void CompleteAction()
     {
-        currentAction.running = false;
-        currentAction.PostAction(this);
+        if (currentAction)
+        {
+            currentAction.running = false;
+            currentAction.PostAction(this);
+        }
         _invoked = false;
+    }
+
+    private void AddGoal(string name, bool infinite, int importance)
+    {
+        GOAP_Goal newGoal = new GOAP_Goal(name, infinite, importance);
+        _goals.Add(newGoal, importance);
+
+        if (!GOAP_World.Instance.goals.Contains(newGoal))
+            GOAP_World.Instance.goals.Add(newGoal);
     }
 
     private void AddState(string stateName, int stateValue = 0)
@@ -257,13 +262,15 @@ public class AI: MonoBehaviour
 
     private void SpeedControl()
     {
-        agent.angularSpeed = rotationSpeed * 100f;
+        agent.angularSpeed = angularSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
 
-        if (agent.remainingDistance > stoppingDistance + 4f)
-            agent.speed = runningSpeed;
-        else
-            agent.speed = walkingSpeed;
+        // if (agent.remainingDistance > stoppingDistance + 4f)
+        //     agent.speed = runningSpeed;
+        // else
+        //     agent.speed = walkingSpeed;
+
+        agent.speed = runningSpeed;
     }
 
     private void HandleNavMeshLink()
@@ -485,10 +492,9 @@ public class AI: MonoBehaviour
 
         // Rotate to face NavMeshLink
         float timer = 0f;
-        float duration = rotationSpeed * 0.1f;
         while (timer < 1f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, timer / duration);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, timer / rotationTime);
             //transform.rotation = lookRot;  FAST
 
             timer += Time.deltaTime;

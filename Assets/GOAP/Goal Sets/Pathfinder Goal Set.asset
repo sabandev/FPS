@@ -19,17 +19,17 @@ MonoBehaviour:
     enabled: 0
   - goalName: Idle
     importance: 1
-    infinte: 0
-    enabled: 0
+    infinte: 1
+    enabled: 1
   - goalName: PatrolRandom
     importance: 3
     infinte: 0
-    enabled: 1
+    enabled: 0
   - goalName: AtTarget
     importance: 3
     infinte: 1
     enabled: 0
-  - goalName: chasePlayer
+  - goalName: ChasePlayer
     importance: 10
     infinte: 0
     enabled: 1

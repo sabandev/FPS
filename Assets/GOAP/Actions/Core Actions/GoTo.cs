@@ -11,6 +11,8 @@ public class GoTo : GOAP_Action
     // Public Variables
     // new readonly ActionType actionType = ActionType.GoTo;
 
+    [SerializeField] protected Vector3 targetOffset = new Vector3();
+
     // Private Functions
     private void SetDestinationTo(AI AI)
     {
@@ -21,7 +23,7 @@ public class GoTo : GOAP_Action
         if (target != null && AI.agent != null)
         {
             running = true;
-            AI.agent.SetDestination(target.transform.position);
+            AI.agent.SetDestination(target.transform.position += targetOffset);
         }
     }
 
@@ -49,6 +51,7 @@ public class GoTo : GOAP_Action
         {
             if (AI.agent.hasPath && AI.agent.remainingDistance < AI.agent.stoppingDistance)
             {
+                AI.agent.ResetPath();
                 return true;
             }
         }
