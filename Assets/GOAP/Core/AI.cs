@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using JetBrains.Annotations;
+using System.Threading;
 
 /// <summary>
 /// AIType.
@@ -23,7 +25,6 @@ using Unity.AI.Navigation;
 /// The "brains" of the AI.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(AISensor))]
 public class AI: MonoBehaviour
 {
     #region Public Properties
@@ -53,13 +54,21 @@ public class AI: MonoBehaviour
     [SerializeField] private GOAP_Action currentAction;
     [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
     [SerializeField] private GOAP_Goal currentGoal;
+    [SerializeField] private float visionDistance = 30.0f;
+    [SerializeField] private float visionAngle = 45.0f;
+    [SerializeField] private float visionHeight = 1.5f;
+    [SerializeField] private Color visionConeColor = Color.blue;
+    [SerializeField] private int visionScanFrequency = 30;
+    [SerializeField] private LayerMask visionTargetLayers;
+    [SerializeField] private LayerMask visionOcclusionLayers;
+    [SerializeField] private List<GameObject> currentlyVisibleTargetObjects = new List<GameObject>();
+    [SerializeField] private bool drawViewCone = true;
+    [SerializeField] private bool drawInSightGizmos = true;
     #endregion
 
     #region Private Properties
     private GOAP_Planner _planner;
     private GOAP_Planner _validatePlanner;
-
-    private AISensor _sensor;
 
     private Queue<GOAP_Action> _actionQueue;
     private Queue<GOAP_Action> _validateActionQueue;
@@ -67,8 +76,16 @@ public class AI: MonoBehaviour
     private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
 
     private Vector3 _navMeshLinkStartPos;
-
     private Vector3 _navMeshLinkEndPos;
+
+    private Collider[] _visionColliders = new Collider[50];
+    
+    private Mesh _mesh;
+
+    private int _visionScanCount;
+
+    private float _visionScanInterval;
+    private float _visionScanTimer;
 
     private bool _isHandlingLink = false;
     private bool _invoked = false;
@@ -79,7 +96,7 @@ public class AI: MonoBehaviour
     private void Start()
     {
         // Get sensor
-        _sensor = GetComponent<AISensor>();
+        _visionScanInterval = 1.0f / visionScanFrequency;
 
         // Get available actions
         if (aiType.availableActions.Count <= 0)
@@ -113,6 +130,14 @@ public class AI: MonoBehaviour
 
     private void Update()
     {
+        _visionScanTimer -= Time.deltaTime;
+
+        if (_visionScanTimer < 0.0f)
+        {
+            _visionScanTimer += _visionScanInterval;
+            ScanVision();
+        }
+
         SetNavMeshProperties();
 
         // if (agent.hasPath)
@@ -121,7 +146,7 @@ public class AI: MonoBehaviour
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
 
-        if (_sensor.IsInSight(target) && target.activeSelf && !_hasSeenPlayer)
+        if (IsInSight(target) && target.activeSelf && !_hasSeenPlayer)
         {
             AddState("seePlayer");
             _hasSeenPlayer = true;
@@ -141,6 +166,42 @@ public class AI: MonoBehaviour
 
         if (_actionQueue != null && _actionQueue.Count > 0)
             QueueNextAction();
+    }
+
+    private void OnValidate()
+    {
+        _mesh = WedgeMesh();
+        _visionScanInterval = 1.0f / visionScanFrequency;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_mesh && drawViewCone)
+        {
+            Gizmos.color = visionConeColor;
+            Gizmos.DrawMesh(_mesh, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), transform.rotation);
+
+            Gizmos.DrawWireSphere(transform.position, visionDistance);
+        }
+
+        // In sensor / sight
+        if (drawInSightGizmos)
+        {
+            ScanVision();
+
+            Gizmos.color = Color.red;
+            for (int i = 0; i < _visionScanCount; i++)
+            {
+                Gizmos.DrawSphere(_visionColliders[i].transform.position, 0.5f);
+            }
+
+            // In sight
+            Gizmos.color = Color.green;
+            foreach (var obj in currentlyVisibleTargetObjects)
+            {
+                Gizmos.DrawSphere(obj.transform.position, 0.5f);
+            }
+        }
     }
 
     private void CreatePlan()
@@ -295,6 +356,136 @@ public class AI: MonoBehaviour
             else
                 StartCoroutine(TraverseJump(jumpHeight, jumpDuration));
         }
+    }
+
+    private void ScanVision()
+    {
+        _visionScanCount = Physics.OverlapSphereNonAlloc(transform.position, visionDistance, _visionColliders, visionTargetLayers, QueryTriggerInteraction.Collide);
+        currentlyVisibleTargetObjects.Clear();
+
+        for (int i = 0; i < _visionScanCount; i++)
+        {
+            GameObject obj = _visionColliders[i].gameObject;
+
+            if (IsInSight(obj))
+                currentlyVisibleTargetObjects.Add(obj);
+        }
+    }
+
+    private Mesh WedgeMesh()
+    {
+        Mesh mesh = new Mesh();
+
+        int segments = 10;
+        int numTriangles = (segments * 4) + 2 + 2;
+        int numVertices = numTriangles * 3;
+
+        Vector3[] vertices = new Vector3[numVertices];
+        int[] triangles = new int[numVertices];
+
+        #region Calculate Mesh Vectors
+        // Bottom vectors
+        Vector3 bottomCenter = Vector3.zero;
+        Vector3 bottomLeft = Quaternion.Euler(0, -visionAngle, 0) * Vector3.forward * visionDistance;
+        Vector3 bottomRight = Quaternion.Euler(0, visionAngle, 0) * Vector3.forward * visionDistance;
+
+        // Top vectors
+        Vector3 topCenter = bottomCenter + Vector3.up * visionHeight;
+        Vector3 topLeft = bottomLeft + Vector3.up * visionHeight;
+        Vector3 topRight = bottomRight + Vector3.up * visionHeight;
+        #endregion
+
+        #region Draw Mesh
+        int vert = 0;
+
+        // Left side
+        vertices[vert++] = bottomCenter;
+        vertices[vert++] = bottomLeft;
+        vertices[vert++] = topLeft;
+
+        vertices[vert++] = topLeft;
+        vertices[vert++] = topCenter;
+        vertices[vert++] = bottomCenter;
+
+        // Right side
+        vertices[vert++] = bottomCenter;
+        vertices[vert++] = topCenter;
+        vertices[vert++] = topRight;
+
+        vertices[vert++] = topRight;
+        vertices[vert++] = bottomRight;
+        vertices[vert++] = bottomCenter;
+
+        float currentAngle = -visionAngle;
+        float deltaAngle = (visionAngle * 2) / segments;
+
+        for (int i = 0; i < segments; i++)
+        {
+            // Bottom vectors
+            bottomLeft = Quaternion.Euler(0, currentAngle, 0) * Vector3.forward * visionDistance;
+            bottomRight = Quaternion.Euler(0, currentAngle + deltaAngle, 0) * Vector3.forward * visionDistance;
+
+            // Top vectors
+            topLeft = bottomLeft + Vector3.up * visionHeight;
+            topRight = bottomRight + Vector3.up * visionHeight;
+
+            currentAngle += deltaAngle;
+
+            // Far side
+            vertices[vert++] = bottomLeft;
+            vertices[vert++] = bottomRight;
+            vertices[vert++] = topRight;
+
+            vertices[vert++] = topRight;
+            vertices[vert++] = topLeft;
+            vertices[vert++] = bottomLeft;
+
+            // Top
+            vertices[vert++] = topCenter;
+            vertices[vert++] = topLeft;
+            vertices[vert++] = topRight;
+
+            // Bottom
+            vertices[vert++] = bottomCenter;
+            vertices[vert++] = bottomRight;
+            vertices[vert++] = bottomLeft;
+        }
+
+        for (int i = 0; i < numVertices; i++)
+        {
+            triangles[i] = i;
+        }
+        #endregion
+
+        // Set mesh triangles and vertices that we calculated
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
+        return mesh;
+    }
+
+    private bool IsInSight(GameObject obj)
+    {
+        Vector3 origin = transform.position;
+        Vector3 destination = obj.transform.position;
+        Vector3 direction = destination - origin;
+
+        if (direction.y < 0 || direction.y > visionHeight)
+            return false;
+
+        direction.y = 0;
+        float deltaAngle = Vector3.Angle(direction, transform.forward);
+        if (deltaAngle > visionAngle)
+            return false;
+
+        origin.y += visionHeight / 2;
+        destination.y = origin.y;
+
+        if (Physics.Linecast(origin, destination, visionOcclusionLayers))
+            return false;
+
+        return true;
     }
 
     // Private Coroutines

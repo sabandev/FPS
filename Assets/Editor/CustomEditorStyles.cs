@@ -15,7 +15,7 @@ public static class CustomEditorStyles
     {
         #region Header 1
         header1Style = new GUIStyle(EditorStyles.boldLabel);
-        header1Style.fontSize = 16;
+        header1Style.fontSize = 18;
         header1Style.normal.textColor = Color.white;
         header1Style.margin = new RectOffset(0, 0, 0, 10);
         header1Style.alignment = TextAnchor.MiddleLeft;
@@ -23,14 +23,14 @@ public static class CustomEditorStyles
 
         #region Header 2
         header2Style = new GUIStyle(EditorStyles.boldLabel);
-        header2Style.fontSize = 12;
+        header2Style.fontSize = 13;
         header2Style.normal.textColor = Color.white;
         header2Style.alignment = TextAnchor.MiddleLeft;
         #endregion
 
         #region Title
         titleStyle = new GUIStyle(EditorStyles.boldLabel);
-        titleStyle.fontSize = 20;
+        titleStyle.fontSize = 25;
         titleStyle.normal.textColor = Color.white;
         titleStyle.alignment = TextAnchor.MiddleCenter;
         #endregion

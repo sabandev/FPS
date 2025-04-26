@@ -29,6 +29,16 @@ public class AIEditor : Editor
     SerializedProperty assignWaypoints;
     SerializedProperty goalSet;
     SerializedProperty currentGoal;
+    SerializedProperty visionDistance;
+    SerializedProperty visionAngle;
+    SerializedProperty visionHeight;
+    SerializedProperty visionScanFrequency;
+    SerializedProperty visionConeColor;
+    SerializedProperty visionTargetLayers;
+    SerializedProperty visionOcclusionLayers;
+    SerializedProperty drawViewCone;
+    SerializedProperty drawInSightGizmos;
+    SerializedProperty currentlyVisibleTargetObjects;
     #endregion
 
     private void OnEnable()
@@ -52,6 +62,16 @@ public class AIEditor : Editor
         assignWaypoints = serializedObject.FindProperty("assignWaypoints");
         goalSet = serializedObject.FindProperty("goalSet");
         currentGoal = serializedObject.FindProperty("currentGoal");
+        visionDistance = serializedObject.FindProperty("visionDistance");
+        visionAngle = serializedObject.FindProperty("visionAngle");
+        visionHeight = serializedObject.FindProperty("visionHeight");
+        visionScanFrequency = serializedObject.FindProperty("visionScanFrequency");
+        visionConeColor = serializedObject.FindProperty("visionConeColor");
+        visionTargetLayers = serializedObject.FindProperty("visionTargetLayers");
+        visionOcclusionLayers = serializedObject.FindProperty("visionOcclusionLayers");
+        drawViewCone = serializedObject.FindProperty("drawViewCone");
+        drawInSightGizmos = serializedObject.FindProperty("drawInSightGizmos");
+        currentlyVisibleTargetObjects = serializedObject.FindProperty("currentlyVisibleTargetObjects");
         #endregion
     }
 
@@ -76,6 +96,26 @@ public class AIEditor : Editor
             EditorGUILayout.HelpBox("WARNING: Must assign an AI type.", MessageType.Warning);
         #endregion
 
+        EditorGUILayout.Space(10.0f);
+
+        #region Senses
+        GUILayout.Label("Senses", CustomEditorStyles.header1Style);
+
+        GUILayout.Label("Vision", CustomEditorStyles.header2Style);
+        EditorGUILayout.PropertyField(visionDistance, new GUIContent("View Distance"));
+        EditorGUILayout.PropertyField(visionAngle, new GUIContent("Viewing Angle"));
+        EditorGUILayout.PropertyField(visionHeight, new GUIContent("View Height"));
+        EditorGUILayout.PropertyField(visionScanFrequency, new GUIContent("Scan View Frequency"));
+        EditorGUILayout.PropertyField(visionConeColor, new GUIContent("View Cone Color"));
+        EditorGUILayout.PropertyField(visionTargetLayers, new GUIContent("View Target Layers"));
+        EditorGUILayout.PropertyField(visionOcclusionLayers, new GUIContent("View Occlusion Layers"));
+
+        EditorGUILayout.Space(5.0f);
+
+        GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
+        EditorGUILayout.PropertyField(drawViewCone, new GUIContent("Draw View Cone Gizmo"));
+        EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
+        #endregion
 
         EditorGUILayout.Space(10.0f);
 
@@ -98,6 +138,7 @@ public class AIEditor : Editor
 
         EditorGUILayout.Space(5.0f);
 
+        GUILayout.Label("Targets", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(assignTargetGO, new GUIContent("Target Destination"));
         if (_ai.assignTargetGameObject)
         {
@@ -108,7 +149,7 @@ public class AIEditor : Editor
 
         EditorGUILayout.Space(5.0f);
 
-        EditorGUILayout.PropertyField(assignWaypoints, new GUIContent("Waypoints"));
+        EditorGUILayout.PropertyField(assignWaypoints, new GUIContent("Target Waypoints"));
         if (_ai.assignWaypoints)
         {
             EditorGUILayout.PropertyField(waypoints, new GUIContent(""));
@@ -148,6 +189,11 @@ public class AIEditor : Editor
 
         GUILayout.Label("Waypoints", CustomEditorStyles.header2Style);
         EditorGUILayout.PropertyField(currentWaypointIndex);
+
+        EditorGUILayout.Space(5.0f);
+
+        GUILayout.Label("Vision", CustomEditorStyles.header2Style);
+        EditorGUILayout.PropertyField(currentlyVisibleTargetObjects);
 
         EditorGUI.EndDisabledGroup();
         #endregion
