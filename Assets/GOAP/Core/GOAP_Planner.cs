@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Node
@@ -54,7 +55,7 @@ public class GOAP_Planner
         if (!successfulGraph)
         {
             if (debug)
-                Debug.LogWarning($"WARNING: No Plan found for goal: {goal}");
+                Debug.LogWarning($"WARNING: No Plan found for goal: {goal.First().Key}");
 
             return null;
         }

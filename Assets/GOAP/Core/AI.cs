@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 using UnityEngine.InputSystem;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// AIType.
@@ -56,10 +57,12 @@ public class AI: MonoBehaviour
 
     #region Private Properties
     private GOAP_Planner _planner;
+    private GOAP_Planner _validatePlanner;
 
     private AISensor _sensor;
 
     private Queue<GOAP_Action> _actionQueue;
+    private Queue<GOAP_Action> _validateActionQueue;
 
     private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
 
@@ -69,6 +72,7 @@ public class AI: MonoBehaviour
 
     private bool _isHandlingLink = false;
     private bool _invoked = false;
+    private bool _hasSeenPlayer = false;
     #endregion
 
     // Private Functions
@@ -106,6 +110,7 @@ public class AI: MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         agent.speed = runningSpeed;
+
         agent.angularSpeed = rotationSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
         agent.autoTraverseOffMeshLink = false;
@@ -128,74 +133,126 @@ public class AI: MonoBehaviour
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
 
-        if (_sensor.IsInSight(target) && target.activeSelf)
+        if (_sensor.IsInSight(target) && target.activeSelf && !_hasSeenPlayer)
         {
-            GOAP_World.Instance.worldStatesClass.AddState("seePlayer", 0);
+            AddState("seePlayer");
+            _hasSeenPlayer = true;
         }
 
-        // Check if the AI is performing an action and complete the action if it is done
-        // If it is not done, return 
         if (currentAction != null && currentAction.running)
         {
-            if (currentAction.IsComplete(this))
-            {
-                if (!_invoked)
-                {
-                    Invoke("CompleteAction", currentAction.duration);
-                    _invoked = true;
-                }
-            }
-            else
-            {
-                currentAction.DuringAction(this);
-            }
+            HandleCurrentAction();
             return;
         }
 
-        // Check if we have a plan
-        // If not, we make one
         if (_planner == null || _actionQueue == null)
-        {
-            _planner = new GOAP_Planner();
+            CreatePlan();
 
-            // Order the goals
-            var sortedGoals = from entry in _goals orderby entry.Value descending select entry;
-
-            // Make a plan
-            foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
-            {
-                _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, true);
-
-                if (_actionQueue != null)
-                {
-                    currentGoal = g.Key;
-                    break;
-                }
-            }
-        }
-
-        // Check if the AI has completed its plan
         if (_actionQueue != null && _actionQueue.Count == 0 && _goals.Count != 0)
-        {
-            if (!currentGoal.infinte)
-            {
-                _goals.Remove(currentGoal);
-            }
-            
-            _planner = null;
-        }
+            CompletePlan();
 
         if (_actionQueue != null && _actionQueue.Count > 0)
-        {
-            currentAction = _actionQueue.Dequeue();
+            QueueNextAction();
+    }
 
-            if (currentAction.PreAction(this))
+    private void CreatePlan()
+    {
+        _planner = new GOAP_Planner();
+
+        // Order the goals
+        var sortedGoals = from entry in _goals orderby entry.Value descending select entry;
+
+        // Make a plan
+        foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
+        {
+            _actionQueue = _planner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, true);
+
+            if (_actionQueue != null)
             {
-                // Agent specific behaviour here
+                currentGoal = g.Key;
+                break;
             }
-            else
-                _actionQueue = null;
         }
+    }
+
+    private void ValidatePlan()
+    {
+        _validatePlanner = new GOAP_Planner();
+
+        // Order the goals
+        var _sortedGoals = from entry in _goals orderby entry.Value descending select entry;
+
+        // Make a plan
+        foreach (KeyValuePair<GOAP_Goal, int> g in _sortedGoals)
+        {
+            _validateActionQueue = _validatePlanner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, true);
+
+            if (_validateActionQueue != null)
+            {
+                // We have a new plan to satisfy a new goal
+                if (g.Key != currentGoal)
+                {
+                    currentGoal = g.Key;
+                    CompleteAction();
+                    _actionQueue = _validateActionQueue;
+                    _planner = _validatePlanner;
+                }
+
+                break;
+            }
+        }
+    }
+
+    private void CompletePlan()
+    {
+        if (!currentGoal.infinte)
+        {
+            _goals.Remove(currentGoal);
+            ValidatePlan();
+        }
+
+        _planner = null;
+    }
+
+    private void HandleCurrentAction()
+    {
+        if (currentAction.IsComplete(this))
+        {
+            if (!_invoked)
+            {
+                Invoke("CompleteAction", currentAction.duration);
+                _invoked = true;
+            }
+        }
+        else
+        {
+            currentAction.DuringAction(this);
+        }
+    }
+
+    private void QueueNextAction()
+    {
+        currentAction = _actionQueue.Dequeue();
+
+        if (currentAction.PreAction(this))
+        {
+            // Agent specific behaviour here
+        }
+        else
+            _actionQueue = null;
+    }
+
+    private void CompleteAction()
+    {
+        currentAction.running = false;
+        currentAction.PostAction(this);
+        _invoked = false;
+    }
+
+    private void AddState(string stateName, int stateValue = 0)
+    {
+        GOAP_World.Instance.worldStatesClass.AddState(stateName, stateValue);
+        ValidatePlan();
     }
 
     private void SpeedControl()
@@ -233,13 +290,6 @@ public class AI: MonoBehaviour
             else
                 StartCoroutine(TraverseJump(jumpHeight, jumpDuration));
         }
-    }
-
-    private void CompleteAction()
-    {
-        currentAction.running = false;
-        currentAction.PostAction(this);
-        _invoked = false;
     }
 
     // Private Coroutines

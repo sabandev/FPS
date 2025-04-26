@@ -47,6 +47,7 @@ public class Idle : Animate
 
     public override bool PostAction(AI AI)
     {
+        AI.StopAllCoroutines();
         return true;
     }
 
