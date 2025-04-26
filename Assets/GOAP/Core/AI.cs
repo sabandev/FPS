@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
-using UnityEngine.InputSystem;
-using System.Runtime.CompilerServices;
 
 /// <summary>
 /// AIType.
