@@ -107,20 +107,16 @@ public class AI: MonoBehaviour
             }
         }
 
-        // Set NavMesh properties
         agent = GetComponent<NavMeshAgent>();
-
-        agent.speed = runningSpeed;
-
-        agent.angularSpeed = angularSpeed * 100f;
-        agent.stoppingDistance = stoppingDistance;
         agent.autoTraverseOffMeshLink = false;
     }
 
     private void Update()
     {
-        if (agent.hasPath)
-            SpeedControl();
+        SetNavMeshProperties();
+
+        // if (agent.hasPath)
+        //     SpeedControl();
 
         if (agent.isOnOffMeshLink)
             HandleNavMeshLink();
@@ -260,17 +256,19 @@ public class AI: MonoBehaviour
         ValidatePlan();
     }
 
-    private void SpeedControl()
+    private void SetNavMeshProperties()
     {
+        agent.speed = runningSpeed;
         agent.angularSpeed = angularSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
+    }
 
-        // if (agent.remainingDistance > stoppingDistance + 4f)
-        //     agent.speed = runningSpeed;
-        // else
-        //     agent.speed = walkingSpeed;
-
-        agent.speed = runningSpeed;
+    private void SpeedControl()
+    {
+        if (agent.remainingDistance > stoppingDistance + 4f)
+            agent.speed = runningSpeed;
+        else
+            agent.speed = walkingSpeed;
     }
 
     private void HandleNavMeshLink()
