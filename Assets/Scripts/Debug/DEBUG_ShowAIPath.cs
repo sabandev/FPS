@@ -38,12 +38,16 @@ public class DEBUG_ShowAIPath : MonoBehaviour
 
     private void Update()
     {
-        DEBUG_DrawLinePath();
+        if (agent.hasPath)
+            DEBUG_DrawLinePath();
+        else
+            lineRenderer.enabled = false;
     }
 
     private void DEBUG_DrawLinePath()
     {
-        if (!agent.hasPath) { return; }
+        // if (!agent.hasPath) { return; }
+        lineRenderer.enabled = true;
 
         Vector3[] agentPath = agent.path.corners;
 
