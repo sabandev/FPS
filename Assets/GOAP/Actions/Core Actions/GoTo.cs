@@ -49,7 +49,7 @@ public class GoTo : GOAP_Action
     {
         if (AI.agent != null)
         {
-            if (AI.agent.hasPath && AI.agent.remainingDistance < AI.agent.stoppingDistance)
+            if (AI.agent.hasPath && AI.agent.remainingDistance <= AI.agent.stoppingDistance && !AI.agent.pathPending)
             {
                 AI.agent.ResetPath();
                 return true;

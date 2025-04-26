@@ -560,6 +560,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &7684093
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1648,6 +1662,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &81877559
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2994,6 +3022,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &220025182
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5300,6 +5342,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &413886381
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5734,6 +5790,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &449926713
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6414,6 +6484,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &540106039
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8930,6 +9014,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &920047841
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10532,6 +10630,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &967668456
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11344,6 +11456,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1016150516
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11884,6 +12010,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1079417331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12241,6 +12381,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1109123105
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12690,6 +12844,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1147794170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14111,6 +14279,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1244071041
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14713,6 +14895,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1279399283
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15470,6 +15666,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1389368745
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15796,6 +16006,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1405150839
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -32376,6 +32600,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1443895926
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -33768,6 +34006,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1583469243
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -35876,6 +36128,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1715738745
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -36907,6 +37173,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1780561765
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -38576,6 +38856,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &1990819860
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -38994,6 +39288,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &2037972756
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -40330,6 +40638,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &2097558403
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -40948,6 +41270,20 @@ MonoBehaviour:
     importance: 0
     infinte: 0
     enabled: 0
+  visionDistance: 30
+  visionAngle: 45
+  visionHeight: 1.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 1}
+  visionScanFrequency: 30
+  visionTargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  visionOcclusionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  currentlyVisibleTargetObjects: []
+  drawViewCone: 1
+  drawInSightGizmos: 1
 --- !u!195 &2141408985
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -41202,6 +41538,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 921261730}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: drawViewCone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: visionHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: visionDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: drawInSightGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 194308659}
@@ -41221,6 +41573,14 @@ PrefabInstance:
       propertyPath: 'waypoints.Array.data[4]'
       value: 
       objectReference: {fileID: 1516752459}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: currentlyVisibleTargetObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: 'currentlyVisibleTargetObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 921261730}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -41248,7 +41608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.54
+      value: 12.248
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -41256,7 +41616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.09
+      value: -12.358
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41300,7 +41660,7 @@ Transform:
   m_GameObject: {fileID: 8902921984718550160}
   serializedVersion: 2
   m_LocalRotation: {x: 0.295477, y: 0.20236766, z: -0.05332195, w: 0.9321467}
-  m_LocalPosition: {x: 3.54, y: -0.719, z: -11.09}
+  m_LocalPosition: {x: 12.248, y: -0.719, z: -12.358}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1440,6 +1440,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: visionConeColor.a
+      value: 0.41960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
       value: 0
       objectReference: {fileID: 0}
