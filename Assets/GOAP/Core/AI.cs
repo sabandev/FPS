@@ -56,12 +56,10 @@ public class AI: MonoBehaviour
 
     #region Private Properties
     private GOAP_Planner _planner;
-    private GOAP_Planner _validatePlanner;
 
     private AISensor _sensor;
 
     private Queue<GOAP_Action> _actionQueue;
-    private Queue<GOAP_Action> _validateActionQueue;
 
     private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
 
@@ -149,7 +147,6 @@ public class AI: MonoBehaviour
             }
             else
             {
-                Invoke("ReValidatePlan", 1.0f);
                 currentAction.DuringAction(this);
             }
             return;
@@ -157,7 +154,7 @@ public class AI: MonoBehaviour
 
         // Check if we have a plan
         // If not, we make one
-        if (_planner == null || currentAction == null)
+        if (_planner == null || _actionQueue == null)
         {
             _planner = new GOAP_Planner();
 
@@ -198,35 +195,6 @@ public class AI: MonoBehaviour
             }
             else
                 _actionQueue = null;
-        }
-    }
-
-    private void ReValidatePlan()
-    {
-        _validatePlanner = new GOAP_Planner();
-
-        // Order the goals
-        var sortedGoals = from entry in _goals orderby entry.Value descending select entry;
-
-        // Make a plan
-        foreach (KeyValuePair<GOAP_Goal, int> g in sortedGoals)
-        {
-            _validateActionQueue = _validatePlanner.Plan(availableActions, g.Key.goalDictionary, GOAP_World.Instance.worldStatesClass, false);
-
-            if (_validateActionQueue != null)
-            {
-                // We found a new goal that needs immediate attention (higher priority)
-                if (g.Key != currentGoal)
-                {
-                    CompleteAction();
-                    currentGoal = g.Key;
-                    _actionQueue = _validateActionQueue;
-                }
-                if (_planner == null)
-                    _planner = _validatePlanner;
-
-                break;
-            }
         }
     }
 

@@ -15,11 +15,11 @@ MonoBehaviour:
   goals:
   - goalName: PatrolWaypoints
     importance: 3
-    infinte: 1
+    infinte: 0
     enabled: 0
   - goalName: Idle
     importance: 1
-    infinte: 1
+    infinte: 0
     enabled: 0
   - goalName: PatrolRandom
     importance: 3
@@ -31,5 +31,5 @@ MonoBehaviour:
     enabled: 0
   - goalName: chasePlayer
     importance: 10
-    infinte: 1
+    infinte: 0
     enabled: 1

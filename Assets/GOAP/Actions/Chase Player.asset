@@ -24,4 +24,4 @@ MonoBehaviour:
     value: 0
   worldStateEffects:
   - key: chasePlayer
-    value: 10
+    value: 0

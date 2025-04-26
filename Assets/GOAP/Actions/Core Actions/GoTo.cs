@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,7 +12,7 @@ public class GoTo : GOAP_Action
     // new readonly ActionType actionType = ActionType.GoTo;
 
     // Private Functions
-    private void MoveToTarget(AI AI)
+    private void SetDestinationTo(AI AI)
     {
         // If we have a target, set a destination to the target
         if (target == null && targetTag != string.Empty)
@@ -29,13 +28,13 @@ public class GoTo : GOAP_Action
     // Override Functions
     public override bool PreAction(AI AI)
     {
-        MoveToTarget(AI);
+        SetDestinationTo(AI);
         return true;
     }
 
     public override bool DuringAction(AI AI)
     {
-        MoveToTarget(AI);
+        SetDestinationTo(AI);
         return true;
     }
 
@@ -49,7 +48,9 @@ public class GoTo : GOAP_Action
         if (AI.agent != null)
         {
             if (AI.agent.hasPath && AI.agent.remainingDistance < AI.agent.stoppingDistance)
+            {
                 return true;
+            }
         }
         else
             Debug.LogWarning("ERROR: GoTo Core Action cannot find AI Agent. Cannot complete action.");

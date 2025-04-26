@@ -16,6 +16,7 @@ public class MoveToTarget : GoTo
             target = AI.target;
         else
             Debug.LogWarning("WARNING: AI has no target gameObject. Cannot move to null target.");
+
         return base.PreAction(AI);
     }
 
