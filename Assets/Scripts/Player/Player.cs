@@ -123,11 +123,6 @@ public class Player : MonoBehaviour
 
     private void InputManagement()
     {
-        // moveInput = Input.GetAxis("Vertical");
-        // turnInput = Input.GetAxis("Horizontal");
-        // mouseX = Input.GetAxis("Mouse X");
-        // mouseY = Input.GetAxis("Mouse Y");
-
         mouseX = lookInput.x * mouseSensitivity;
         mouseY = lookInput.y * mouseSensitivity;
 

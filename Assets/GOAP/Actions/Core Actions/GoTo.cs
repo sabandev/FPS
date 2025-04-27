@@ -22,14 +22,17 @@ public class GoTo : GOAP_Action
 
         if (target != null && AI.agent != null)
         {
-            running = true;
-            AI.agent.SetDestination(target.transform.position += targetOffset);
+            // running = true;
+            Vector3 targetPosition = target.transform.position;
+            Vector3 adjustedTarget = targetPosition += targetOffset;
+            AI.agent.SetDestination(adjustedTarget);
         }
     }
 
     // Override Functions
     public override bool PreAction(AI AI)
     {
+        running = true;
         SetDestinationTo(AI);
         return true;
     }
