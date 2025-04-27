@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
 
 [InitializeOnLoad]
 public static class CustomEditorStyles
@@ -8,14 +9,17 @@ public static class CustomEditorStyles
     public static GUIStyle header1Style;
     public static GUIStyle header2Style;
     public static GUIStyle titleStyle;
+    public static GUIStyle foldoutHeader1Style;
     #endregion
 
     // Public Static Functions
     public static void InitializeCustomStyles()
     {
+        int _header1FontSize = 18;
+
         #region Header 1
         header1Style = new GUIStyle(EditorStyles.boldLabel);
-        header1Style.fontSize = 18;
+        header1Style.fontSize = _header1FontSize;
         header1Style.normal.textColor = Color.white;
         header1Style.margin = new RectOffset(0, 0, 0, 10);
         header1Style.alignment = TextAnchor.MiddleLeft;
@@ -33,6 +37,24 @@ public static class CustomEditorStyles
         titleStyle.fontSize = 25;
         titleStyle.normal.textColor = Color.white;
         titleStyle.alignment = TextAnchor.MiddleCenter;
+        #endregion
+
+        #region Foldout Header 1
+        foldoutHeader1Style = new GUIStyle(EditorStyles.foldoutHeader);
+        foldoutHeader1Style.fontSize = _header1FontSize;
+        foldoutHeader1Style.margin = new RectOffset(0, 0, 0, 10);
+        foldoutHeader1Style.alignment = TextAnchor.MiddleLeft;
+        foldoutHeader1Style.fontStyle = FontStyle.Bold;
+
+        foldoutHeader1Style.normal.textColor = Color.white;
+        foldoutHeader1Style.hover.textColor = Color.white;
+        foldoutHeader1Style.focused.textColor = Color.white;
+        foldoutHeader1Style.active.textColor = Color.white;
+
+        foldoutHeader1Style.onNormal.textColor = Color.white;
+        foldoutHeader1Style.onHover.textColor = Color.white;
+        foldoutHeader1Style.onFocused.textColor = Color.white;
+        foldoutHeader1Style.onActive.textColor = Color.white;
         #endregion
     }
 

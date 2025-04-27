@@ -41,6 +41,11 @@ public class AIEditor : Editor
     SerializedProperty currentlyVisibleTargetObjects;
     #endregion
 
+    #region Private Properties
+    private bool showSenses = false;
+    private bool showNavigation = false;
+    #endregion
+
     private void OnEnable()
     {
         #region Set Serialized Properties
@@ -99,22 +104,28 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Senses
-        GUILayout.Label("Senses", CustomEditorStyles.header1Style);
+        // GUILayout.Label("Senses", CustomEditorStyles.header1Style);
+        showSenses = EditorGUILayout.BeginFoldoutHeaderGroup(showSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
+        
+        if (showSenses)
+        {
+            GUILayout.Label("Vision", CustomEditorStyles.header2Style);
+            EditorGUILayout.Slider(visionDistance, 0.0f, 100.0f, new GUIContent("View Distance"));
+            EditorGUILayout.Slider(visionAngle, 0.0f, 90.0f, new GUIContent("Viewing Angle"));
+            EditorGUILayout.PropertyField(visionHeight, new GUIContent("View Height"));
+            EditorGUILayout.PropertyField(visionScanFrequency, new GUIContent("Scan View Frequency"));
+            EditorGUILayout.PropertyField(visionConeColor, new GUIContent("View Cone Color"));
+            EditorGUILayout.PropertyField(visionTargetLayers, new GUIContent("View Target Layers"));
+            EditorGUILayout.PropertyField(visionOcclusionLayers, new GUIContent("View Occlusion Layers"));
 
-        GUILayout.Label("Vision", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(visionDistance, new GUIContent("View Distance"));
-        EditorGUILayout.PropertyField(visionAngle, new GUIContent("Viewing Angle"));
-        EditorGUILayout.PropertyField(visionHeight, new GUIContent("View Height"));
-        EditorGUILayout.PropertyField(visionScanFrequency, new GUIContent("Scan View Frequency"));
-        EditorGUILayout.PropertyField(visionConeColor, new GUIContent("View Cone Color"));
-        EditorGUILayout.PropertyField(visionTargetLayers, new GUIContent("View Target Layers"));
-        EditorGUILayout.PropertyField(visionOcclusionLayers, new GUIContent("View Occlusion Layers"));
+            EditorGUILayout.Space(5.0f);
 
-        EditorGUILayout.Space(5.0f);
+            GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(drawViewCone, new GUIContent("Draw View Cone Gizmo"));
+            EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
+        }
 
-        GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(drawViewCone, new GUIContent("Draw View Cone Gizmo"));
-        EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
+        EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
         EditorGUILayout.Space(10.0f);
