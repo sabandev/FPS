@@ -104,7 +104,6 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Senses
-        // GUILayout.Label("Senses", CustomEditorStyles.header1Style);
         showSenses = EditorGUILayout.BeginFoldoutHeaderGroup(showSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
         
         if (showSenses)
@@ -131,42 +130,49 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Navigation
-        GUILayout.Label("Navigation", CustomEditorStyles.header1Style);
+        // GUILayout.Label("Navigation", CustomEditorStyles.header1Style);
 
-        GUILayout.Label("Movement", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(walkingSpeed);
-        EditorGUILayout.PropertyField(runningSpeed);
-        EditorGUILayout.PropertyField(rotationTime);
-        EditorGUILayout.PropertyField(jumpHeight);
-        EditorGUILayout.PropertyField(jumpDuration);
-        EditorGUILayout.PropertyField(ladderClimbDuration);
+        showNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(showNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
 
-        EditorGUILayout.Space(5.0f);
-
-        GUILayout.Label("NavMeshAgent", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(stoppingDistance);
-        EditorGUILayout.PropertyField(angularSpeed);
-
-        EditorGUILayout.Space(5.0f);
-
-        GUILayout.Label("Targets", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(assignTargetGO, new GUIContent("Target Destination"));
-        if (_ai.assignTargetGameObject)
+        if(showNavigation)
         {
-            EditorGUILayout.PropertyField(targetGO, new GUIContent(""));
-        }
-        else
-            _ai.target = null;
+            GUILayout.Label("Movement", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(walkingSpeed);
+            EditorGUILayout.PropertyField(runningSpeed);
+            EditorGUILayout.PropertyField(rotationTime);
+            EditorGUILayout.PropertyField(jumpHeight);
+            EditorGUILayout.PropertyField(jumpDuration);
+            EditorGUILayout.PropertyField(ladderClimbDuration);
 
-        EditorGUILayout.Space(5.0f);
+            EditorGUILayout.Space(5.0f);
 
-        EditorGUILayout.PropertyField(assignWaypoints, new GUIContent("Target Waypoints"));
-        if (_ai.assignWaypoints)
-        {
-            EditorGUILayout.PropertyField(waypoints, new GUIContent(""));
+            GUILayout.Label("NavMeshAgent", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(stoppingDistance);
+            EditorGUILayout.PropertyField(angularSpeed);
+
+            EditorGUILayout.Space(5.0f);
+
+            GUILayout.Label("Targets", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(assignTargetGO, new GUIContent("Target Destination"));
+            if (_ai.assignTargetGameObject)
+            {
+                EditorGUILayout.PropertyField(targetGO, new GUIContent(""));
+            }
+            else
+                _ai.target = null;
+
+            EditorGUILayout.Space(5.0f);
+
+            EditorGUILayout.PropertyField(assignWaypoints, new GUIContent("Target Waypoints"));
+            if (_ai.assignWaypoints)
+            {
+                EditorGUILayout.PropertyField(waypoints, new GUIContent(""));
+            }
+            else
+                _ai.waypoints = new List<Transform>();
         }
-        else
-            _ai.waypoints = new List<Transform>();
+
+        EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
         EditorGUILayout.Space(10.0f);
