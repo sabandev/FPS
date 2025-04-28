@@ -15,16 +15,16 @@ MonoBehaviour:
   goals:
   - goalName: PatrolWaypoints
     importance: 3
-    infinte: 0
-    enabled: 0
+    infinte: 1
+    enabled: 1
   - goalName: Idle
     importance: 1
     infinte: 1
     enabled: 0
   - goalName: PatrolRandom
     importance: 3
-    infinte: 0
-    enabled: 1
+    infinte: 1
+    enabled: 0
   - goalName: AtTarget
     importance: 3
     infinte: 0

@@ -89,10 +89,13 @@ public class AI: MonoBehaviour
 
     private float _visionScanInterval;
     private float _visionScanTimer;
+    private float _continueActionCooldown = 0.5f;
+    private float _nextContinueActionTime = 0.0f;
 
     private bool _isHandlingLink = false;
     private bool _invoked = false;
     private bool _hasSeenPlayer = false;
+    private bool _canContinueAction = true;
     #endregion
 
     // Private Functions
@@ -128,20 +131,29 @@ public class AI: MonoBehaviour
 
         // Get/Set NavMesh properties
         agent = GetComponent<NavMeshAgent>();
-        agent.autoTraverseOffMeshLink = false;
+
+        SetNavMeshProperties();
     }
 
     private void Update()
     {
+        // Decrement the vision scan timer
         _visionScanTimer -= Time.deltaTime;
+
+        // DuringAction() call cooldown
+        if (Time.time >= _nextContinueActionTime)
+        {
+            _canContinueAction = true;
+            _nextContinueActionTime = Time.time + _continueActionCooldown;
+        }
+        else
+            _canContinueAction = false;
 
         if (_visionScanTimer < 0.0f)
         {
             _visionScanTimer += _visionScanInterval;
             ScanVision();
         }
-
-        SetNavMeshProperties();
 
         // if (agent.hasPath)
         //     SpeedControl();
@@ -278,8 +290,11 @@ public class AI: MonoBehaviour
         }
         else
         {
-            if (!_invoked)
+            if (!_invoked && _canContinueAction)
+            {
+                Debug.Log("Continue action");
                 currentAction.DuringAction(this);
+            }
         }
     }
 
@@ -325,6 +340,7 @@ public class AI: MonoBehaviour
         agent.speed = runningSpeed;
         agent.angularSpeed = angularSpeed * 100f;
         agent.stoppingDistance = stoppingDistance;
+        agent.autoTraverseOffMeshLink = false;
     }
 
     private void SpeedControl()

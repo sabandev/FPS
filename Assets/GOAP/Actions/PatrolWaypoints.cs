@@ -18,15 +18,19 @@ public class PatrolWaypoints : GoTo
     {
         activeWaypoints.Clear();
 
+        if (AI.waypoints == null) { return false; } 
+
         // Add active waypoints from the agent's waypoints list to our list
         if (AI.waypoints.Count == 0)
         {
             Debug.LogWarning("WARNING: No waypoints assigned to AI. Cannot patrol null waypoints.");
-            return base.PreAction(AI);
+            return false;
         }
 
         for (int i = 0; i < AI.waypoints.Count; i++)
         {
+            if (AI.waypoints[i] == null) { continue; }
+
             if (AI.waypoints[i].gameObject.activeSelf)
                 activeWaypoints.Add(AI.waypoints[i]);
         }

@@ -9,6 +9,7 @@ using UnityEngine;
 /// Creates a custom inspector for the AI class.
 /// </summary>
 [CustomEditor(typeof(AI))]
+[CanEditMultipleObjects]
 public class AIEditor : Editor
 {
     #region Serialized Properties
@@ -173,28 +174,29 @@ public class AIEditor : Editor
 
             if (_ai.assignWaypoints)
             {
-                for (int i = 0; i < _ai.waypoints.Count; i++)
+                for (int i = 0; i < waypoints.arraySize; i++)
                 {
-                    _ai.waypoints[i] = (Transform)EditorGUILayout.ObjectField(
-                        $"Waypoint {i}",
-                        _ai.waypoints[i],
-                        typeof(Transform),
-                        true
-                    );
+                    EditorGUILayout.BeginHorizontal();
+
+                    EditorGUILayout.PropertyField(waypoints.GetArrayElementAtIndex(i));
+
+                    if (GUILayout.Button("X", GUILayout.Width(20)))
+                    {
+                        waypoints.DeleteArrayElementAtIndex(i);
+                        break;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
                 }
 
                 EditorGUILayout.Space(5.0f);
 
-                EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Add Waypoint"))
-                    _ai.waypoints.Add(null);
-
-                if (GUILayout.Button("Remove Waypoint"))
                 {
-                    if (_ai.waypoints.Count > 0)
-                        _ai.waypoints.RemoveAt(_ai.waypoints.Count - 1);
+                    waypoints.arraySize++;
+                    SerializedProperty newWaypoint = waypoints.GetArrayElementAtIndex(waypoints.arraySize - 1);
+                    newWaypoint.objectReferenceValue = null;
                 }
-                EditorGUILayout.EndHorizontal();
             }
 
         }
