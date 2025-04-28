@@ -29,10 +29,16 @@ public class AI: MonoBehaviour
 {
     #region Public Properties
     public AIType aiType;
+
     public GOAP_GoalSet goalSet;
 
-    public NavMeshAgent agent;
+    public GOAP_Goal currentGoal;
+
+    public List<GOAP_Action> availableActions = new List<GOAP_Action>();
+    public List<GameObject> currentlyVisibleTargetObjects = new List<GameObject>();
     public List<Transform> waypoints;
+
+    public NavMeshAgent agent;
     public GameObject target;
 
     public int currentWaypointIndex = 0;
@@ -52,8 +58,6 @@ public class AI: MonoBehaviour
     [SerializeField] private float jumpDuration = 0.75f;
     [SerializeField] private float ladderClimbDuration = 3.0f;
     [SerializeField] private GOAP_Action currentAction;
-    [SerializeField] private List<GOAP_Action> availableActions = new List<GOAP_Action>();
-    [SerializeField] private GOAP_Goal currentGoal;
     [SerializeField] private float visionDistance = 30.0f;
     [SerializeField] private float visionAngle = 45.0f;
     [SerializeField] private float visionHeight = 1.5f;
@@ -61,7 +65,6 @@ public class AI: MonoBehaviour
     [SerializeField] private int visionScanFrequency = 30;
     [SerializeField] private LayerMask visionTargetLayers;
     [SerializeField] private LayerMask visionOcclusionLayers;
-    [SerializeField] private List<GameObject> currentlyVisibleTargetObjects = new List<GameObject>();
     [SerializeField] private bool drawViewCone = true;
     [SerializeField] private bool drawInSightGizmos = true;
     #endregion

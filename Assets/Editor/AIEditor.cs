@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -42,8 +43,11 @@ public class AIEditor : Editor
     #endregion
 
     #region Private Properties
+    private bool showType = false;
     private bool showSenses = false;
     private bool showNavigation = false;
+    private bool showGoals = false;
+    private bool showDebug = false;
     #endregion
 
     private void OnEnable()
@@ -91,14 +95,20 @@ public class AIEditor : Editor
         CustomEditorStyles.Title("AI");
         #endregion
 
-        EditorGUILayout.Space(10.0f);
+        EditorGUILayout.Space(20.0f);
 
         #region Type
-        GUILayout.Label("Type", CustomEditorStyles.header1Style);
-        EditorGUILayout.PropertyField(aiType, new GUIContent("AI Type"));
+        showType = EditorGUILayout.BeginFoldoutHeaderGroup(showType, new GUIContent("Type"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (_ai.aiType == null)
-            EditorGUILayout.HelpBox("WARNING: Must assign an AI type.", MessageType.Warning);
+        if (showType)
+        {
+            EditorGUILayout.PropertyField(aiType, new GUIContent("AI Type"));
+
+            if (_ai.aiType == null)
+                EditorGUILayout.HelpBox("ERROR: Must assign an AI type.", MessageType.Error);
+        }
+
+        EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
         EditorGUILayout.Space(10.0f);
@@ -130,8 +140,6 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Navigation
-        // GUILayout.Label("Navigation", CustomEditorStyles.header1Style);
-
         showNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(showNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
 
         if(showNavigation)
@@ -158,18 +166,37 @@ public class AIEditor : Editor
             {
                 EditorGUILayout.PropertyField(targetGO, new GUIContent(""));
             }
-            else
-                _ai.target = null;
 
             EditorGUILayout.Space(5.0f);
 
             EditorGUILayout.PropertyField(assignWaypoints, new GUIContent("Target Waypoints"));
+
             if (_ai.assignWaypoints)
             {
-                EditorGUILayout.PropertyField(waypoints, new GUIContent(""));
+                for (int i = 0; i < _ai.waypoints.Count; i++)
+                {
+                    _ai.waypoints[i] = (Transform)EditorGUILayout.ObjectField(
+                        $"Waypoint {i}",
+                        _ai.waypoints[i],
+                        typeof(Transform),
+                        true
+                    );
+                }
+
+                EditorGUILayout.Space(5.0f);
+
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Add Waypoint"))
+                    _ai.waypoints.Add(null);
+
+                if (GUILayout.Button("Remove Waypoint"))
+                {
+                    if (_ai.waypoints.Count > 0)
+                        _ai.waypoints.RemoveAt(_ai.waypoints.Count - 1);
+                }
+                EditorGUILayout.EndHorizontal();
             }
-            else
-                _ai.waypoints = new List<Transform>();
+
         }
 
         EditorGUILayout.EndFoldoutHeaderGroup();
@@ -178,41 +205,89 @@ public class AIEditor : Editor
         EditorGUILayout.Space(10.0f);
 
         #region Goals
-        GUILayout.Label("Goals", CustomEditorStyles.header1Style);
+        showGoals = EditorGUILayout.BeginFoldoutHeaderGroup(showGoals, new GUIContent("Goals"), CustomEditorStyles.foldoutHeader1Style);
 
-        EditorGUILayout.PropertyField(goalSet, new GUIContent("AI Goal Set"));
+        if (showGoals)
+        {
+            EditorGUILayout.PropertyField(goalSet, new GUIContent("AI Goal Set"));
 
-        if (_ai.goalSet == null)
-            EditorGUILayout.HelpBox("WARNING: Must assign a goal set for AI to have goals.", MessageType.Warning);
+            if (_ai.goalSet == null)
+                EditorGUILayout.HelpBox("Error: Must assign a goal set. The AI must have goals.", MessageType.Error);
+        }
+        
+        EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
         EditorGUILayout.Space(10.0f);
 
         #region Debug
-        GUILayout.Label("Debug", CustomEditorStyles.header1Style);
+        showDebug = EditorGUILayout.BeginFoldoutHeaderGroup(showDebug, new GUIContent("Debug"), CustomEditorStyles.foldoutHeader1Style);
 
-        EditorGUI.BeginDisabledGroup(true);
+        if (showDebug)
+        {
+            EditorGUI.BeginDisabledGroup(true);
 
-        GUILayout.Label("Actions", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(currentAction);
-        EditorGUILayout.PropertyField(availableActions, new GUIContent("Available Actions"));
+            GUILayout.Label("Current Action", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(currentAction, new GUIContent("Performing:"));
 
-        EditorGUILayout.Space(5.0f);
+            EditorGUILayout.Space(5.0f);
 
-        GUILayout.Label("Goals", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(currentGoal);
+            GUILayout.Label("Available Actions", CustomEditorStyles.header2Style);
 
-        EditorGUILayout.Space(5.0f);
+            if (_ai.availableActions.Count == 0)
+                GUILayout.Label("No available actions");
 
-        GUILayout.Label("Waypoints", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(currentWaypointIndex);
+            if (_ai.availableActions != null)
+            {
+                for (int i = 0; i < _ai.availableActions.Count; i++)
+                {
+                    _ai.availableActions[i] = (GOAP_Action)EditorGUILayout.ObjectField(
+                        "",
+                        _ai.availableActions[i],
+                        typeof(GOAP_Action),
+                        true
+                    );
+                }
+            }
 
-        EditorGUILayout.Space(5.0f);
+            EditorGUILayout.Space(5.0f);
 
-        GUILayout.Label("Vision", CustomEditorStyles.header2Style);
-        EditorGUILayout.PropertyField(currentlyVisibleTargetObjects);
+            GUILayout.Label("Current Goal", CustomEditorStyles.header2Style);
 
-        EditorGUI.EndDisabledGroup();
+            if (_ai.currentGoal.goalName != string.Empty)
+                EditorGUILayout.PropertyField(currentGoal, true);
+            else
+                GUILayout.Label("No current goal");
+
+            EditorGUILayout.Space(5.0f);
+
+            GUILayout.Label("Waypoints", CustomEditorStyles.header2Style);
+            EditorGUILayout.PropertyField(currentWaypointIndex);
+
+            EditorGUILayout.Space(5.0f);
+
+            GUILayout.Label("Visible Target Objects", CustomEditorStyles.header2Style);
+
+            if (_ai.currentlyVisibleTargetObjects.Count == 0)
+                GUILayout.Label("No target objects visisble");
+            
+            if (_ai.currentlyVisibleTargetObjects != null)
+            {
+                for (int i = 0; i < _ai.currentlyVisibleTargetObjects.Count; i++)
+                {
+                    _ai.currentlyVisibleTargetObjects[i] = (GameObject)EditorGUILayout.ObjectField(
+                        "",
+                        _ai.currentlyVisibleTargetObjects[i],
+                        typeof(GameObject),
+                        true
+                    );
+                }
+            }
+
+            EditorGUI.EndDisabledGroup();
+        }
+
+        EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
         serializedObject.ApplyModifiedProperties();

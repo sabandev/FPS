@@ -43,7 +43,7 @@ public static class CustomEditorStyles
         foldoutHeader1Style = new GUIStyle(EditorStyles.foldoutHeader);
         foldoutHeader1Style.fontSize = _header1FontSize;
         foldoutHeader1Style.margin = new RectOffset(0, 0, 0, 10);
-        foldoutHeader1Style.alignment = TextAnchor.MiddleLeft;
+        foldoutHeader1Style.alignment = TextAnchor.MiddleCenter;
         foldoutHeader1Style.fontStyle = FontStyle.Bold;
 
         foldoutHeader1Style.normal.textColor = Color.white;

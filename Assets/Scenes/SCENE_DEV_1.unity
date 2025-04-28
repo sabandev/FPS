@@ -536,11 +536,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -554,12 +561,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -571,7 +572,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &7684093
@@ -1638,11 +1638,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -1656,12 +1663,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -1673,7 +1674,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &81877559
@@ -2998,11 +2998,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -3016,12 +3023,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -3033,7 +3034,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &220025182
@@ -5318,11 +5318,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -5336,12 +5343,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -5353,7 +5354,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &413886381
@@ -5766,11 +5766,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -5784,12 +5791,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -5801,7 +5802,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &449926713
@@ -6460,11 +6460,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -6478,12 +6485,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -6495,7 +6496,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &540106039
@@ -8990,11 +8990,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -9008,12 +9015,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -9025,7 +9026,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &920047841
@@ -10606,11 +10606,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -10624,12 +10631,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -10641,7 +10642,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &967668456
@@ -11432,11 +11432,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -11450,12 +11457,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -11467,7 +11468,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1016150516
@@ -11986,11 +11986,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -12004,12 +12011,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -12021,7 +12022,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1079417331
@@ -12357,11 +12357,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -12375,12 +12382,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -12392,7 +12393,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1109123105
@@ -12820,11 +12820,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -12838,12 +12845,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -12855,7 +12856,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1147794170
@@ -14255,11 +14255,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -14273,12 +14280,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -14290,7 +14291,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1244071041
@@ -14871,11 +14871,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -14889,12 +14896,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -14906,7 +14907,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1279399283
@@ -15642,11 +15642,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -15660,12 +15667,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -15677,7 +15678,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1389368745
@@ -15982,11 +15982,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -16000,12 +16007,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -16017,7 +16018,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1405150839
@@ -32576,11 +32576,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -32594,12 +32601,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -32611,7 +32612,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1443895926
@@ -33982,11 +33982,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -34000,12 +34007,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -34017,7 +34018,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1583469243
@@ -36104,11 +36104,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -36122,12 +36129,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -36139,7 +36140,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1715738745
@@ -37149,11 +37149,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -37167,12 +37174,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -37184,7 +37185,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1780561765
@@ -38832,11 +38832,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -38850,12 +38857,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -38867,7 +38868,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &1990819860
@@ -39264,11 +39264,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -39282,12 +39289,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -39299,7 +39300,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &2037972756
@@ -40614,11 +40614,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -40632,12 +40639,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -40649,7 +40650,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &2097558403
@@ -41246,11 +41246,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 194308659}
   - {fileID: 1929673816}
   - {fileID: 1516752459}
+  agent: {fileID: 0}
   target: {fileID: 169006218}
   currentWaypointIndex: 0
   stoppingDistance: 2
@@ -41264,12 +41271,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -41281,7 +41282,6 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 0
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
 --- !u!195 &2141408985
@@ -41534,9 +41534,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: aiType
+      value: 
+      objectReference: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 921261730}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: goalSet
+      value: 
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -41558,8 +41566,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
-      propertyPath: waypoints.Array.size
+      propertyPath: visionConeColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: visionConeColor.g
+      value: 0.8305149
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: visionConeColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
@@ -41624,7 +41644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.18
+      value: -10.14
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41672,7 +41692,7 @@ Transform:
   m_GameObject: {fileID: 8902921984718550160}
   serializedVersion: 2
   m_LocalRotation: {x: 0.295477, y: 0.20236766, z: -0.05332195, w: 0.9321467}
-  m_LocalPosition: {x: 12.25, y: -0.176, z: -10.18}
+  m_LocalPosition: {x: 12.25, y: -0.176, z: -10.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
