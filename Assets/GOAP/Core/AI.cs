@@ -38,7 +38,11 @@ public class AI: MonoBehaviour
     public List<GameObject> currentlyVisibleTargetObjects = new List<GameObject>();
     public List<Transform> waypoints;
 
-    public NavMeshAgent agent;
+    public NavMeshAgent Agent
+    {
+        get { return _agent; }
+    }
+
     public GameObject target;
 
     public int currentWaypointIndex = 0;
@@ -47,6 +51,7 @@ public class AI: MonoBehaviour
 
     public bool assignTargetGameObject = false;
     public bool assignWaypoints = false;
+    public bool canContinueGoToAction = true;
     #endregion
 
     #region Serializable Properties
@@ -67,6 +72,8 @@ public class AI: MonoBehaviour
     [SerializeField] private LayerMask visionOcclusionLayers;
     [SerializeField] private bool drawViewCone = true;
     [SerializeField] private bool drawInSightGizmos = true;
+    [SerializeField] private float goToActionUpdateCooldown = 0.25f;
+    [SerializeField] public bool vision = true;
     #endregion
 
     #region Private Properties
@@ -77,6 +84,8 @@ public class AI: MonoBehaviour
     private Queue<GOAP_Action> _validateActionQueue;
 
     private Dictionary<GOAP_Goal, int> _goals = new Dictionary<GOAP_Goal, int>();
+
+    private NavMeshAgent _agent;
 
     private Vector3 _navMeshLinkStartPos;
     private Vector3 _navMeshLinkEndPos;
@@ -89,22 +98,26 @@ public class AI: MonoBehaviour
 
     private float _visionScanInterval;
     private float _visionScanTimer;
-    private float _continueActionCooldown = 0.5f;
     private float _nextContinueActionTime = 0.0f;
 
     private bool _isHandlingLink = false;
     private bool _invoked = false;
     private bool _hasSeenPlayer = false;
-    private bool _canContinueAction = true;
     #endregion
 
     // Private Functions
     private void Start()
     {
         // Get sensor
-        _visionScanInterval = 1.0f / visionScanFrequency;
-
+        SetScanVisionTimer();
+        
         // Get available actions
+        if (aiType == null)
+        {
+            Debug.LogError($"ERROR: AI Type not set on Agent: {gameObject.name}");
+            return;
+        }
+
         if (aiType.availableActions.Count <= 0)
             Debug.LogWarning("WARNING: AI Type has no assigned actions. AI cannot operate with no available actions.");
         else
@@ -130,35 +143,28 @@ public class AI: MonoBehaviour
         }
 
         // Get/Set NavMesh properties
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
 
         SetNavMeshProperties();
     }
 
     private void Update()
     {
-        // Decrement the vision scan timer
-        _visionScanTimer -= Time.deltaTime;
-
-        // DuringAction() call cooldown
+        // Optional DuringAction() call cooldown
         if (Time.time >= _nextContinueActionTime)
         {
-            _canContinueAction = true;
-            _nextContinueActionTime = Time.time + _continueActionCooldown;
+            canContinueGoToAction = true;
+            _nextContinueActionTime = Time.time + goToActionUpdateCooldown;
         }
         else
-            _canContinueAction = false;
+            canContinueGoToAction = false;
 
-        if (_visionScanTimer < 0.0f)
-        {
-            _visionScanTimer += _visionScanInterval;
-            ScanVision();
-        }
+        ScanVisionTimer();
 
         // if (agent.hasPath)
         //     SpeedControl();
 
-        if (agent.isOnOffMeshLink)
+        if (Agent != null && Agent.isOnOffMeshLink)
             HandleNavMeshLink();
 
         if (IsInSight(target) && target.activeSelf && !_hasSeenPlayer)
@@ -185,13 +191,18 @@ public class AI: MonoBehaviour
 
     private void OnValidate()
     {
-        _mesh = WedgeMesh();
-        _visionScanInterval = 1.0f / visionScanFrequency;
+        if (vision)
+        {
+            // Create the mesh and reset the vision scan timer
+            _mesh = ViewConeMesh();
+            _visionScanInterval = 1.0f / visionScanFrequency;
+        }
     }
 
     private void OnDrawGizmos()
     {
-        if (_mesh && drawViewCone)
+        // Draw vision cone
+        if (_mesh && drawViewCone && vision)
         {
             Gizmos.color = visionConeColor;
             Gizmos.DrawMesh(_mesh, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), transform.rotation);
@@ -200,7 +211,7 @@ public class AI: MonoBehaviour
         }
 
         // In sensor / sight
-        if (drawInSightGizmos)
+        if (drawInSightGizmos && vision)
         {
             ScanVision();
 
@@ -290,9 +301,8 @@ public class AI: MonoBehaviour
         }
         else
         {
-            if (!_invoked && _canContinueAction)
+            if (!_invoked)
             {
-                Debug.Log("Continue action");
                 currentAction.DuringAction(this);
             }
         }
@@ -337,18 +347,18 @@ public class AI: MonoBehaviour
 
     private void SetNavMeshProperties()
     {
-        agent.speed = runningSpeed;
-        agent.angularSpeed = angularSpeed * 100f;
-        agent.stoppingDistance = stoppingDistance;
-        agent.autoTraverseOffMeshLink = false;
+        Agent.speed = runningSpeed;
+        Agent.angularSpeed = angularSpeed * 100f;
+        Agent.stoppingDistance = stoppingDistance;
+        Agent.autoTraverseOffMeshLink = false;
     }
 
     private void SpeedControl()
     {
-        if (agent.remainingDistance > stoppingDistance + 4f)
-            agent.speed = runningSpeed;
+        if (Agent.remainingDistance > stoppingDistance + 4f)
+            Agent.speed = runningSpeed;
         else
-            agent.speed = walkingSpeed;
+            Agent.speed = walkingSpeed;
     }
 
     private void HandleNavMeshLink()
@@ -356,8 +366,8 @@ public class AI: MonoBehaviour
         if (!_isHandlingLink)
         {
             // Distinguish between NavMeshLink types
-            OffMeshLinkData data = agent.currentOffMeshLinkData;
-            NavMeshLink link = (NavMeshLink)agent.navMeshOwner;
+            OffMeshLinkData data = Agent.currentOffMeshLinkData;
+            NavMeshLink link = (NavMeshLink)Agent.navMeshOwner;
             int areaType = link.area;
 
             // Get the ladder's index
@@ -391,7 +401,7 @@ public class AI: MonoBehaviour
         }
     }
 
-    private Mesh WedgeMesh()
+    private Mesh ViewConeMesh()
     {
         Mesh mesh = new Mesh();
 
@@ -486,6 +496,8 @@ public class AI: MonoBehaviour
 
     private bool IsInSight(GameObject obj)
     {
+        if (!vision) { return false; }
+
         Vector3 origin = transform.position;
         Vector3 destination = obj.transform.position;
         Vector3 direction = destination - origin;
@@ -505,6 +517,26 @@ public class AI: MonoBehaviour
             return false;
 
         return true;
+    }
+
+    private void SetScanVisionTimer()
+    {
+        if (!vision) { return; }
+
+        _visionScanInterval = 1.0f / visionScanFrequency;
+    }
+
+    private void ScanVisionTimer()
+    {
+        if (!vision) { return; }
+
+        _visionScanTimer -= Time.deltaTime;
+
+        if (_visionScanTimer < 0.0f)
+        {
+            _visionScanTimer += _visionScanInterval;
+            ScanVision();
+        }
     }
 
     // Private Coroutines
@@ -529,11 +561,11 @@ public class AI: MonoBehaviour
     private IEnumerator TraverseLadder()
     {
         // Get OffMeshLinkData
-        OffMeshLinkData data = agent.currentOffMeshLinkData;
+        OffMeshLinkData data = Agent.currentOffMeshLinkData;
 
         // Calculate start and end positions of OffMeshLinks
-        _navMeshLinkStartPos = data.startPos + Vector3.up * agent.baseOffset;
-        _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
+        _navMeshLinkStartPos = data.startPos + Vector3.up * Agent.baseOffset;
+        _navMeshLinkEndPos = data.endPos + Vector3.up * Agent.baseOffset;
 
         // Check if we're going down or up the ladder
         bool goingDown = _navMeshLinkEndPos.y < _navMeshLinkStartPos.y;
@@ -637,15 +669,15 @@ public class AI: MonoBehaviour
         _isHandlingLink = true;
 
         // Get OffMeshLinkData
-        OffMeshLinkData data = agent.currentOffMeshLinkData;
+        OffMeshLinkData data = Agent.currentOffMeshLinkData;
 
         // Calculate start and end positions of OffMeshLinks
-        _navMeshLinkStartPos = data.startPos + Vector3.up * agent.baseOffset;
-        _navMeshLinkEndPos = data.endPos + Vector3.up * agent.baseOffset;
+        _navMeshLinkStartPos = data.startPos + Vector3.up * Agent.baseOffset;
+        _navMeshLinkEndPos = data.endPos + Vector3.up * Agent.baseOffset;
 
         // Disable NavMesh movement
-        agent.updatePosition = false;
-        agent.updateRotation = false;
+        Agent.updatePosition = false;
+        Agent.updateRotation = false;
 
         yield return StartCoroutine(MoveToNavMeshLink(_navMeshLinkStartPos, 0.25f));
         yield return StartCoroutine(LookAt(_navMeshLinkEndPos - _navMeshLinkStartPos));
@@ -658,23 +690,23 @@ public class AI: MonoBehaviour
         transform.position = _navMeshLinkEndPos;
 
         // Reset velocity
-        agent.velocity = Vector3.zero;
+        Agent.velocity = Vector3.zero;
 
         // Face destination
-        Vector3 destination = agent.destination;
+        Vector3 destination = Agent.destination;
 
-        if (agent.path.corners.Length > 1)
-            destination = agent.path.corners[1] - transform.position;
+        if (Agent.path.corners.Length > 1)
+            destination = Agent.path.corners[1] - transform.position;
 
         yield return StartCoroutine(LookAt(destination));
 
         // Re-enable NavMeshAgent updating
-        agent.updateRotation = true;
-        agent.updatePosition = true;
+        Agent.updateRotation = true;
+        Agent.updatePosition = true;
 
         _isHandlingLink = false;
 
-        agent.CompleteOffMeshLink();
+        Agent.CompleteOffMeshLink();
     }
 
     private IEnumerator MoveToNavMeshLink(Vector3 target, float duration = 0.2f)

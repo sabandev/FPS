@@ -41,14 +41,20 @@ public class AIEditor : Editor
     SerializedProperty drawViewCone;
     SerializedProperty drawInSightGizmos;
     SerializedProperty currentlyVisibleTargetObjects;
+    SerializedProperty goToActionUpdateCooldown;
+    SerializedProperty vision;
     #endregion
 
     #region Private Properties
-    private bool showType = false;
-    private bool showSenses = false;
-    private bool showNavigation = false;
-    private bool showGoals = false;
-    private bool showDebug = false;
+    private string _AITypeName = "Unspecified";
+
+    private float _spaceBetweenCategories = 20.0f;
+
+    private bool _showType = false;
+    private bool _showSenses = false;
+    private bool _showNavigation = false;
+    private bool _showPlanning = false;
+    private bool _showDebug = false;
     #endregion
 
     private void OnEnable()
@@ -82,6 +88,8 @@ public class AIEditor : Editor
         drawViewCone = serializedObject.FindProperty("drawViewCone");
         drawInSightGizmos = serializedObject.FindProperty("drawInSightGizmos");
         currentlyVisibleTargetObjects = serializedObject.FindProperty("currentlyVisibleTargetObjects");
+        goToActionUpdateCooldown = serializedObject.FindProperty("goToActionUpdateCooldown");
+        vision = serializedObject.FindProperty("vision");
         #endregion
     }
 
@@ -96,30 +104,51 @@ public class AIEditor : Editor
         CustomEditorStyles.Title("AI");
         #endregion
 
-        EditorGUILayout.Space(20.0f);
+        GUILayout.Label(_AITypeName, CustomEditorStyles.titleStyle);
+
+        EditorGUILayout.Space(_spaceBetweenCategories + 10.0f);
 
         #region Type
-        showType = EditorGUILayout.BeginFoldoutHeaderGroup(showType, new GUIContent("Type"), CustomEditorStyles.foldoutHeader1Style);
+        _showType = EditorGUILayout.BeginFoldoutHeaderGroup(_showType, new GUIContent("Type"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (showType)
+        if (_showType)
         {
-            EditorGUILayout.PropertyField(aiType, new GUIContent("AI Type"));
-
+            EditorGUILayout.ObjectField(aiType, new GUIContent(""));
+            
             if (_ai.aiType == null)
+            {
                 EditorGUILayout.HelpBox("ERROR: Must assign an AI type.", MessageType.Error);
+            }
         }
+
+        if (_ai.aiType != null)
+            _AITypeName = _ai.aiType.name;
+        else
+            _AITypeName = "Unspecified";
 
         EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
-        EditorGUILayout.Space(10.0f);
+        EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Senses
-        showSenses = EditorGUILayout.BeginFoldoutHeaderGroup(showSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
+        _showSenses = EditorGUILayout.BeginFoldoutHeaderGroup(_showSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
         
-        if (showSenses)
+        if (_showSenses)
         {
+            EditorGUILayout.BeginHorizontal();
+
             GUILayout.Label("Vision", CustomEditorStyles.header2Style);
+            
+            GUILayout.FlexibleSpace();
+
+            EditorGUILayout.PropertyField(vision, new GUIContent(""), GUILayout.Width(20));
+
+            EditorGUILayout.EndHorizontal();
+
+            if (!_ai.vision)
+                EditorGUI.BeginDisabledGroup(true);
+
             EditorGUILayout.Slider(visionDistance, 0.0f, 100.0f, new GUIContent("View Distance"));
             EditorGUILayout.Slider(visionAngle, 0.0f, 90.0f, new GUIContent("Viewing Angle"));
             EditorGUILayout.PropertyField(visionHeight, new GUIContent("View Height"));
@@ -133,17 +162,20 @@ public class AIEditor : Editor
             GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
             EditorGUILayout.PropertyField(drawViewCone, new GUIContent("Draw View Cone Gizmo"));
             EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
+
+            if (!_ai.vision)
+                EditorGUI.EndDisabledGroup();
         }
 
         EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
-        EditorGUILayout.Space(10.0f);
+        EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Navigation
-        showNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(showNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
+        _showNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(_showNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
 
-        if(showNavigation)
+        if(_showNavigation)
         {
             GUILayout.Label("Movement", CustomEditorStyles.header2Style);
             EditorGUILayout.PropertyField(walkingSpeed);
@@ -204,28 +236,36 @@ public class AIEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
-        EditorGUILayout.Space(10.0f);
+        EditorGUILayout.Space(_spaceBetweenCategories);
 
-        #region Goals
-        showGoals = EditorGUILayout.BeginFoldoutHeaderGroup(showGoals, new GUIContent("Goals"), CustomEditorStyles.foldoutHeader1Style);
+        #region Planning
+        _showPlanning = EditorGUILayout.BeginFoldoutHeaderGroup(_showPlanning, new GUIContent("Planning"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (showGoals)
+        if (_showPlanning)
         {
+            GUILayout.Label("Goals", CustomEditorStyles.header2Style);
+
             EditorGUILayout.PropertyField(goalSet, new GUIContent("AI Goal Set"));
 
             if (_ai.goalSet == null)
                 EditorGUILayout.HelpBox("Error: Must assign a goal set. The AI must have goals.", MessageType.Error);
+
+            EditorGUILayout.Space(5.0f);
+
+            GUILayout.Label("Actions", CustomEditorStyles.header2Style);
+
+            EditorGUILayout.PropertyField(goToActionUpdateCooldown, new GUIContent("Update GoTo Actions Delay"));
         }
         
         EditorGUILayout.EndFoldoutHeaderGroup();
         #endregion
 
-        EditorGUILayout.Space(10.0f);
+        EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Debug
-        showDebug = EditorGUILayout.BeginFoldoutHeaderGroup(showDebug, new GUIContent("Debug"), CustomEditorStyles.foldoutHeader1Style);
+        _showDebug = EditorGUILayout.BeginFoldoutHeaderGroup(_showDebug, new GUIContent("Debug"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (showDebug)
+        if (_showDebug)
         {
             EditorGUI.BeginDisabledGroup(true);
 
@@ -257,7 +297,7 @@ public class AIEditor : Editor
             GUILayout.Label("Current Goal", CustomEditorStyles.header2Style);
 
             if (_ai.currentGoal.goalName != string.Empty)
-                EditorGUILayout.PropertyField(currentGoal, true);
+                EditorGUILayout.PropertyField(currentGoal, new GUIContent($"{_ai.currentGoal.goalName}"), true);
             else
                 GUILayout.Label("No current goal");
 

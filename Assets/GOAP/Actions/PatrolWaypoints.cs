@@ -47,7 +47,7 @@ public class PatrolWaypoints : GoTo
             return base.DuringAction(AI);
         }
 
-        if (AI.agent != null && AI.agent.hasPath && AI.agent.remainingDistance < AI.stoppingDistance && !AI.agent.pathPending)
+        if (AI.Agent != null && AI.Agent.hasPath && AI.Agent.remainingDistance < AI.stoppingDistance && !AI.Agent.pathPending)
         {
             AI.currentWaypointIndex++;
             target = NextAvailableWaypoint(AI);

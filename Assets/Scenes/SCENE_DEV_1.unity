@@ -2547,7 +2547,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -3174,7 +3174,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -3533,7 +3533,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -3630,7 +3630,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -6148,7 +6148,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -6924,7 +6924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &960277629
 Transform:
   m_ObjectHideFlags: 0
@@ -8277,7 +8277,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -8374,7 +8374,7 @@ PrefabInstance:
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -29291,9 +29291,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 921261730}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: vision
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: goalSet
       value: 
-      objectReference: {fileID: 11400000, guid: aee0469d31b394b6783fc72ec60a4997, type: 2}
+      objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
       value: 1
@@ -29355,8 +29359,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1516752459}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: goToActionUpdateCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: currentlyVisibleTargetObjects.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: 'currentlyVisibleTargetObjects.Array.data[0]'
@@ -29397,7 +29405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.11
+      value: -10.85
       objectReference: {fileID: 0}
     - target: {fileID: 4534882536629374855, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29441,7 +29449,7 @@ Transform:
   m_GameObject: {fileID: 8902921984718550160}
   serializedVersion: 2
   m_LocalRotation: {x: 0.295477, y: 0.20236766, z: -0.05332195, w: 0.9321467}
-  m_LocalPosition: {x: 12.25, y: -0.176, z: -1.11}
+  m_LocalPosition: {x: 12.25, y: -0.176, z: -10.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

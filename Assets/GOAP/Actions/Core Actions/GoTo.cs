@@ -20,12 +20,12 @@ public class GoTo : GOAP_Action
         if (target == null && targetTag != string.Empty)
             target = GameObject.FindWithTag(targetTag);
 
-        if (target != null && AI.agent != null)
+        if (target != null && AI.Agent != null)
         {
             // running = true;
             Vector3 targetPosition = target.transform.position;
             Vector3 adjustedTarget = targetPosition += targetOffset;
-            AI.agent.SetDestination(adjustedTarget);
+            AI.Agent.SetDestination(adjustedTarget);
         }
     }
 
@@ -39,7 +39,9 @@ public class GoTo : GOAP_Action
 
     public override bool DuringAction(AI AI)
     {
-        SetDestinationTo(AI);
+        if (AI.canContinueGoToAction)
+            SetDestinationTo(AI);
+        
         return true;
     }
 
@@ -50,11 +52,11 @@ public class GoTo : GOAP_Action
 
     public override bool IsComplete(AI AI)
     {
-        if (AI.agent != null)
+        if (AI.Agent != null)
         {
-            if (AI.agent.hasPath && AI.agent.remainingDistance <= AI.agent.stoppingDistance && !AI.agent.pathPending)
+            if (AI.Agent.hasPath && AI.Agent.remainingDistance <= AI.Agent.stoppingDistance && !AI.Agent.pathPending)
             {
-                AI.agent.ResetPath();
+                AI.Agent.ResetPath();
                 return true;
             }
         }

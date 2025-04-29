@@ -42,21 +42,31 @@ public class PatrolRandom : GoTo
     // Overriden functions
     public override bool PreAction(AI AI)
     {
+        running = true;
+
         GetRandomPoints(AI.transform.position, waypointRange);
 
         // Create a gameObject at the random position to set as the target
-        target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
+        // target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
 
-        return base.PreAction(AI);
+        Vector3 targetPosition = _randomWaypointPositions[_currentWaypointIndex];
+        Vector3 adjustedTarget = targetPosition += targetOffset;
+        AI.Agent.SetDestination(adjustedTarget);
+
+        return true;
     }
 
     public override bool DuringAction(AI AI)
     {
-        if (AI.agent.remainingDistance < AI.stoppingDistance)
+        Vector3 targetPosition = _randomWaypointPositions[_currentWaypointIndex];
+        Vector3 adjustedTarget = targetPosition += targetOffset;
+        AI.Agent.SetDestination(adjustedTarget);
+
+        if (AI.Agent.remainingDistance < AI.stoppingDistance)
         {
             // Destroy the target and any other clone instances
-            Destroy(target);
-            Destroy(GameObject.Find("$$Random Waypoint$$"));
+            // Destroy(target);
+            // Destroy(GameObject.Find("$$Random Waypoint$$"));
 
             // Increment to the next waypoint
             if (_currentWaypointIndex != _randomWaypointPositions.Count - 1)
@@ -64,13 +74,17 @@ public class PatrolRandom : GoTo
                 _currentWaypointIndex++;
 
                 // Create a gameObject at the random position to set as the target
-                target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
+                // target = Instantiate(new GameObject("$$Random Waypoint$$"), _randomWaypointPositions[_currentWaypointIndex], Quaternion.identity);
+
+                targetPosition = _randomWaypointPositions[_currentWaypointIndex];
+                adjustedTarget = targetPosition += targetOffset;
+                AI.Agent.SetDestination(adjustedTarget);
             }
             else
                 _visitedEveryWaypoint = true;
         }
 
-        return base.DuringAction(AI);
+        return true;
     }
 
     public override bool PostAction(AI AI)
@@ -79,8 +93,8 @@ public class PatrolRandom : GoTo
         _visitedEveryWaypoint = false;
 
         // Destroy the target and any other clone instances
-        Destroy(target);
-        Destroy(GameObject.Find("$$Random Waypoint$$"));
+        // Destroy(target);
+        // Destroy(GameObject.Find("$$Random Waypoint$$"));
 
         return true;
     }
