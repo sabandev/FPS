@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 /// <summary>
 /// AIEditor.
@@ -50,11 +51,42 @@ public class AIEditor : Editor
 
     private float _spaceBetweenCategories = 20.0f;
 
-    private bool _showType = false;
-    private bool _showSenses = false;
-    private bool _showNavigation = false;
-    private bool _showPlanning = false;
-    private bool _showDebug = false;
+    private bool ShowType
+    {
+        get => EditorPrefs.GetBool(nameof(_showType), false);
+        set => EditorPrefs.SetBool(nameof(_showType), value);
+    }
+
+    private bool ShowSenses
+    {
+        get => EditorPrefs.GetBool(nameof(_showSenses), false);
+        set => EditorPrefs.SetBool(nameof(_showSenses), value);
+    }
+
+    private bool ShowNavigation
+    {
+        get => EditorPrefs.GetBool(nameof(_showNavigation), false);
+        set => EditorPrefs.SetBool(nameof(_showNavigation), value);
+    }
+
+    private bool ShowPlanning
+    {
+        get => EditorPrefs.GetBool(nameof(_showPlanning), false);
+        set => EditorPrefs.SetBool(nameof(_showPlanning), value);
+    }
+
+    private bool ShowDebug
+    {
+        get => EditorPrefs.GetBool(nameof(_showDebug), true);
+        set => EditorPrefs.SetBool(nameof(_showDebug), value);
+    }
+
+    private bool _showType;
+    private bool _showSenses;
+    private bool _showNavigation;
+    private bool _showPlanning;
+    private bool _showDebug;
+    private bool _notAutoOpenedDebugFoldout = true;
     #endregion
 
     private void OnEnable()
@@ -109,9 +141,9 @@ public class AIEditor : Editor
         EditorGUILayout.Space(_spaceBetweenCategories + 10.0f);
 
         #region Type
-        _showType = EditorGUILayout.BeginFoldoutHeaderGroup(_showType, new GUIContent("Type"), CustomEditorStyles.foldoutHeader1Style);
+        ShowType = EditorGUILayout.BeginFoldoutHeaderGroup(ShowType, new GUIContent("Type"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (_showType)
+        if (ShowType)
         {
             EditorGUILayout.ObjectField(aiType, new GUIContent(""));
             
@@ -132,9 +164,9 @@ public class AIEditor : Editor
         EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Senses
-        _showSenses = EditorGUILayout.BeginFoldoutHeaderGroup(_showSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
+        ShowSenses = EditorGUILayout.BeginFoldoutHeaderGroup(ShowSenses, new GUIContent("Senses"), CustomEditorStyles.foldoutHeader1Style);
         
-        if (_showSenses)
+        if (ShowSenses)
         {
             EditorGUILayout.BeginHorizontal();
 
@@ -173,9 +205,9 @@ public class AIEditor : Editor
         EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Navigation
-        _showNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(_showNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
+        ShowNavigation = EditorGUILayout.BeginFoldoutHeaderGroup(ShowNavigation, new GUIContent("Navigation"), CustomEditorStyles.foldoutHeader1Style);
 
-        if(_showNavigation)
+        if(ShowNavigation)
         {
             GUILayout.Label("Movement", CustomEditorStyles.header2Style);
             EditorGUILayout.PropertyField(walkingSpeed);
@@ -190,6 +222,7 @@ public class AIEditor : Editor
             GUILayout.Label("NavMeshAgent", CustomEditorStyles.header2Style);
             EditorGUILayout.PropertyField(stoppingDistance);
             EditorGUILayout.PropertyField(angularSpeed);
+            EditorGUILayout.PropertyField(goToActionUpdateCooldown, new GUIContent("Update Path Cooldown"));
 
             EditorGUILayout.Space(5.0f);
 
@@ -239,9 +272,9 @@ public class AIEditor : Editor
         EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Planning
-        _showPlanning = EditorGUILayout.BeginFoldoutHeaderGroup(_showPlanning, new GUIContent("Planning"), CustomEditorStyles.foldoutHeader1Style);
+        ShowPlanning = EditorGUILayout.BeginFoldoutHeaderGroup(ShowPlanning, new GUIContent("Planning"), CustomEditorStyles.foldoutHeader1Style);
 
-        if (_showPlanning)
+        if (ShowPlanning)
         {
             GUILayout.Label("Goals", CustomEditorStyles.header2Style);
 
@@ -254,7 +287,6 @@ public class AIEditor : Editor
 
             GUILayout.Label("Actions", CustomEditorStyles.header2Style);
 
-            EditorGUILayout.PropertyField(goToActionUpdateCooldown, new GUIContent("Update GoTo Actions Delay"));
         }
         
         EditorGUILayout.EndFoldoutHeaderGroup();
@@ -263,9 +295,15 @@ public class AIEditor : Editor
         EditorGUILayout.Space(_spaceBetweenCategories);
 
         #region Debug
-        _showDebug = EditorGUILayout.BeginFoldoutHeaderGroup(_showDebug, new GUIContent("Debug"), CustomEditorStyles.foldoutHeader1Style);
+        if (EditorApplication.isPlaying && _notAutoOpenedDebugFoldout)
+        {
+            _notAutoOpenedDebugFoldout = false;
+            ShowDebug = true;
+        }
 
-        if (_showDebug)
+        ShowDebug = EditorGUILayout.BeginFoldoutHeaderGroup(ShowDebug, new GUIContent("Debug"), CustomEditorStyles.foldoutHeader1Style);
+
+        if (ShowDebug)
         {
             EditorGUI.BeginDisabledGroup(true);
 

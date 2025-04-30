@@ -2550,11 +2550,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -3177,11 +3177,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -3203,6 +3203,14 @@ PrefabInstance:
       propertyPath: 'waypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1516752459}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: currentlyVisibleTargetObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: 'currentlyVisibleTargetObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 921261730}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3536,11 +3544,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -3633,11 +3641,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -3661,7 +3669,7 @@ PrefabInstance:
       objectReference: {fileID: 1516752459}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: currentlyVisibleTargetObjects.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: 'currentlyVisibleTargetObjects.Array.data[0]'
@@ -6151,11 +6159,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -6924,7 +6932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &960277629
 Transform:
   m_ObjectHideFlags: 0
@@ -8280,11 +8288,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -8377,11 +8385,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: waypoints.Array.size
@@ -29300,7 +29308,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawViewCone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: visionHeight
@@ -29316,7 +29324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: drawInSightGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: visionConeColor.b
