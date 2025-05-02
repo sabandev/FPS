@@ -42,7 +42,7 @@ public class AIEditor : Editor
     SerializedProperty drawViewCone;
     SerializedProperty drawInSightGizmos;
     SerializedProperty currentlyVisibleTargetObjects;
-    SerializedProperty goToActionUpdateCooldown;
+    SerializedProperty updatePathCooldown;
     SerializedProperty vision;
     #endregion
 
@@ -120,7 +120,7 @@ public class AIEditor : Editor
         drawViewCone = serializedObject.FindProperty("drawViewCone");
         drawInSightGizmos = serializedObject.FindProperty("drawInSightGizmos");
         currentlyVisibleTargetObjects = serializedObject.FindProperty("currentlyVisibleTargetObjects");
-        goToActionUpdateCooldown = serializedObject.FindProperty("goToActionUpdateCooldown");
+        updatePathCooldown = serializedObject.FindProperty("updatePathCooldown");
         vision = serializedObject.FindProperty("vision");
         #endregion
     }
@@ -222,7 +222,7 @@ public class AIEditor : Editor
             GUILayout.Label("NavMeshAgent", CustomEditorStyles.header2Style);
             EditorGUILayout.PropertyField(stoppingDistance);
             EditorGUILayout.PropertyField(angularSpeed);
-            EditorGUILayout.PropertyField(goToActionUpdateCooldown, new GUIContent("Update Path Cooldown"));
+            EditorGUILayout.PropertyField(updatePathCooldown);
 
             EditorGUILayout.Space(5.0f);
 

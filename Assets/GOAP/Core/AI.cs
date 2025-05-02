@@ -49,9 +49,9 @@ public class AI: MonoBehaviour
 
     public float stoppingDistance = 2.0f;
 
+    public bool canUpdatePath = true;
     public bool assignTargetGameObject = false;
     public bool assignWaypoints = false;
-    public bool canContinueGoToAction = true;
     #endregion
 
     #region Serializable Properties
@@ -72,7 +72,7 @@ public class AI: MonoBehaviour
     [SerializeField] private LayerMask visionOcclusionLayers;
     [SerializeField] private bool drawViewCone = true;
     [SerializeField] private bool drawInSightGizmos = true;
-    [SerializeField] private float goToActionUpdateCooldown = 0.25f;
+    [SerializeField] private float updatePathCooldown = 0.25f;
     [SerializeField] public bool vision = true;
     #endregion
 
@@ -153,11 +153,11 @@ public class AI: MonoBehaviour
         // Optional DuringAction() call cooldown
         if (Time.time >= _nextContinueActionTime)
         {
-            canContinueGoToAction = true;
-            _nextContinueActionTime = Time.time + goToActionUpdateCooldown;
+            canUpdatePath = true;
+            _nextContinueActionTime = Time.time + updatePathCooldown;
         }
         else
-            canContinueGoToAction = false;
+            canUpdatePath = false;
 
         ScanVisionTimer();
 
@@ -300,12 +300,7 @@ public class AI: MonoBehaviour
             }
         }
         else
-        {
-            if (!_invoked)
-            {
-                currentAction.DuringAction(this);
-            }
-        }
+            currentAction.DuringAction(this);
     }
 
     private void QueueNextAction()

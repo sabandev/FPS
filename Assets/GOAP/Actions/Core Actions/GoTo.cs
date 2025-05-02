@@ -39,7 +39,7 @@ public class GoTo : GOAP_Action
 
     public override bool DuringAction(AI AI)
     {
-        if (AI.canContinueGoToAction)
+        if (AI.canUpdatePath)
             SetDestinationTo(AI);
         
         return true;
