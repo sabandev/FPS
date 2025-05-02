@@ -18,7 +18,10 @@ public class PatrolWaypoints : GoTo
     {
         activeWaypoints.Clear();
 
-        if (AI.waypoints == null) { return false; } 
+        if (AI.waypoints == null)
+        { 
+            return false; 
+        } 
 
         // Add active waypoints from the agent's waypoints list to our list
         if (AI.waypoints.Count == 0)
