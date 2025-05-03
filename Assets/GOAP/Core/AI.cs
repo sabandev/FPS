@@ -101,7 +101,7 @@ public class AI: MonoBehaviour
     private float _nextContinueActionTime = 0.0f;
 
     private bool _isHandlingLink = false;
-    private bool _invoked = false;
+    private bool _completeInvoked = false;
     private bool _hasSeenPlayer = false;
     #endregion
 
@@ -293,14 +293,17 @@ public class AI: MonoBehaviour
     {
         if (currentAction.IsComplete(this))
         {
-            if (!_invoked)
+            if (!_completeInvoked)
             {
-                _invoked = true;
+                _completeInvoked = true;
                 Invoke("CompleteAction", currentAction.duration);
             }
         }
         else
-            currentAction.DuringAction(this);
+        {
+            if (!_completeInvoked)
+                currentAction.DuringAction(this);
+        }
     }
 
     private void QueueNextAction()
@@ -322,7 +325,7 @@ public class AI: MonoBehaviour
             currentAction.running = false;
             currentAction.PostAction(this);
         }
-        _invoked = false;
+        _completeInvoked = false;
     }
 
     private void AddGoal(string name, bool infinite, int importance)

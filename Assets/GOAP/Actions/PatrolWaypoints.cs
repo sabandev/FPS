@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class PatrolWaypoints : GoTo
 {
     // Private Variables
     private List<Transform> activeWaypoints = new List<Transform>();
+
+    private bool _hasIncremented = false;
 
     // Overriden functions
     public override bool PreAction(AI AI)
@@ -47,10 +50,15 @@ public class PatrolWaypoints : GoTo
 
         if (AI.Agent != null && AI.Agent.hasPath && AI.Agent.remainingDistance < AI.stoppingDistance && !AI.Agent.pathPending)
         {
-            AI.currentWaypointIndex++;
-            target = NextAvailableWaypoint(AI);
+            if (!_hasIncremented)
+            {
+                _hasIncremented = true;
+                AI.currentWaypointIndex++;
+                target = NextAvailableWaypoint(AI);
+            }
         }
-
+        else
+            _hasIncremented = false;
         return base.DuringAction(AI);
     }
 
@@ -73,7 +81,9 @@ public class PatrolWaypoints : GoTo
         for (int w = AI.currentWaypointIndex; w < activeWaypoints.Count; w++)
         {
             if (activeWaypoints[w].gameObject.activeSelf)
+            { 
                 return activeWaypoints[w].gameObject;
+            }
             else
             {
                 // If a waypoint is disabled during runtime, stop patrolling waypoints and give a warning
