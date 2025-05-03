@@ -179,7 +179,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiType: {fileID: 11400000, guid: 6e75e9e5579964ecf82393d94fc75e3f, type: 2}
   goalSet: {fileID: 11400000, guid: 8497b49122cd043ffafc55d2dbcb4de7, type: 2}
-  agent: {fileID: 0}
+  currentGoal:
+    goalName: 
+    importance: 0
+    infinte: 0
+    enabled: 0
+  availableActions: []
+  currentlyVisibleTargetObjects: []
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -189,6 +195,7 @@ MonoBehaviour:
   target: {fileID: 0}
   currentWaypointIndex: 0
   stoppingDistance: 2
+  canUpdatePath: 1
   assignTargetGameObject: 1
   assignWaypoints: 1
   walkingSpeed: 2
@@ -199,12 +206,6 @@ MonoBehaviour:
   jumpDuration: 0.75
   ladderClimbDuration: 3
   currentAction: {fileID: 0}
-  availableActions: []
-  currentGoal:
-    goalName: 
-    importance: 0
-    infinte: 0
-    enabled: 0
   visionDistance: 30
   visionAngle: 45
   visionHeight: 1.5
@@ -216,9 +217,10 @@ MonoBehaviour:
   visionOcclusionLayers:
     serializedVersion: 2
     m_Bits: 1
-  currentlyVisibleTargetObjects: []
   drawViewCone: 1
   drawInSightGizmos: 1
+  updatePathCooldown: 0.25
+  vision: 1
 --- !u!120 &3829767812618002159
 LineRenderer:
   serializedVersion: 2
