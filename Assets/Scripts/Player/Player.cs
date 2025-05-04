@@ -1,132 +1,88 @@
 using UnityEngine;
-using Unity.Cinemachine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
-[RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
-    [Header("References")]
-    private CharacterController controller;
-    [SerializeField] private CinemachineCamera playerCamera;
+    [SerializeField] private PlayerCharacter playerCharacter;
+    [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private CameraSpring cameraSpring;
+    [SerializeField] private CameraLean cameraLean;
+    // [SerializeField] private Volume volume;
+    // [SerializeField] private StanceVignette stanceVignette;
 
-    [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float gravity = 50.0f;
-    [SerializeField] private float jumpHeight = 1.0f;
+    private PlayerInputActions _inputActions;
 
-    private float verticalVelocity;
-    private float xRotation;
-
-    [Header("Input")]
-    [SerializeField] private InputActionAsset playerControls;
-    [SerializeField] private float mouseSensitivity;
-
-    private InputAction moveAction;
-    private InputAction lookAction;
-    private InputAction jumpAction;
-    private Vector2 moveInput;
-    private Vector2 lookInput;
-
-    private float verticalInput;
-    private float horizontalInput;
-    private float mouseX;
-    private float mouseY;
-
-    Vector3 move;
-
-    private void Awake()
+    private void Start()
     {
-        controller = GetComponent<CharacterController>();
-
-        moveAction = playerControls.FindActionMap("Base Movement").FindAction("Move");
-        lookAction = playerControls.FindActionMap("Base Movement").FindAction("Look");
-        jumpAction = playerControls.FindActionMap("Base Movement").FindAction("Jump");
-
-        moveAction.performed += context => moveInput = context.ReadValue<Vector2>();
-        moveAction.canceled += context => moveInput = Vector2.zero;
-
-        lookAction.performed += context => lookInput = context.ReadValue<Vector2>();
-        lookAction.canceled += context => lookInput = Vector2.zero;
-
-        // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
+        _inputActions = new PlayerInputActions();
+        _inputActions.Enable();
+
+        playerCharacter.Initialise();
+        playerCamera.Initialise(playerCharacter.GetCameraTarget());
+
+        cameraSpring.Initialise();
+        cameraLean.Initialise();
+
+        // stanceVignette.Initialise(volume.profile);
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        moveAction.Enable();
-        lookAction.Enable();
-        jumpAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        moveAction.Disable();
-        lookAction.Disable();
-        jumpAction.Disable();
+        _inputActions.Dispose(); 
     }
 
     private void Update()
     {
-        InputManagement();
-        Movement();
-    }
+        var input = _inputActions.Gameplay;
+        var deltaTime = Time.deltaTime;
 
-    private void Movement()
-    {
-        GroundMovement();
-        Turn();
-    }
+        // Get camera input and update its rotations
+        var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>() };
+        playerCamera.UpdateRotation(cameraInput);
 
-    private void GroundMovement()
-    {
-        move = new Vector3(horizontalInput, 0, verticalInput);
-        move = playerCamera.transform.TransformDirection(move);
-
-        move *= moveSpeed;
-
-        move.y = Jump();
-
-        controller.Move(move * Time.deltaTime);
-    }
-
-    private void Turn()
-    {
-        mouseX *= mouseSensitivity * Time.deltaTime;
-        mouseY *= mouseSensitivity * Time.deltaTime;
-
-        xRotation -= mouseY;
-
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-
-        transform.Rotate(Vector3.up * mouseX);
-    }
-
-    private float Jump()
-    {
-        if (controller.isGrounded)
+        // Get character input and update it
+        var characterInput = new CharacterInput
         {
-            verticalVelocity = -1;
+            Rotation = playerCamera.transform.rotation,
+            Move = input.Move.ReadValue<Vector2>(),
+            Jump = input.Jump.WasPressedThisFrame(),
+            JumpSustain = input.Jump.IsPressed(),
+            Crouch = input.Crouch.WasPressedThisFrame()
+            ? CrouchInput.Toggle : CrouchInput.None
+        };
+        playerCharacter.UpdateInput(characterInput);
+        playerCharacter.UpdateBody(deltaTime);
 
-            if(jumpAction.triggered)
-                verticalVelocity = Mathf.Sqrt(jumpHeight * gravity * 2);
-        }
-        else
+        #if UNITY_EDITOR
+        if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            verticalVelocity -= gravity * Time.deltaTime;
+            var ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                Teleport(hit.point);
+            }
         }
-        return verticalVelocity;
+        #endif
     }
 
-    private void InputManagement()
+    private void LateUpdate()
     {
-        mouseX = lookInput.x * mouseSensitivity;
-        mouseY = lookInput.y * mouseSensitivity;
+        var deltaTime = Time.deltaTime;
+        var cameraTarget = playerCharacter.GetCameraTarget();
+        var state = playerCharacter.GetState();
 
-        verticalInput = moveInput.y * moveSpeed;
-        horizontalInput = moveInput.x * moveSpeed;
+        playerCamera.UpdatePosition(cameraTarget);
+        cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
+        cameraLean.UpdateLean(deltaTime, state.Stance is Stance.Slide, state.Acceleration, cameraTarget.up);
+
+        // stanceVignette.UpdateVignette(deltaTime, state.Stance);
+    }
+    
+    private void Teleport(Vector3 position)
+    {
+        playerCharacter.SetPosition(position);
     }
 }

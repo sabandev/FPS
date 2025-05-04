@@ -225,7 +225,7 @@ public class AI: MonoBehaviour
             Gizmos.color = Color.green;
             foreach (var obj in currentlyVisibleTargetObjects)
             {
-                Gizmos.DrawSphere(obj.transform.position, 0.5f);
+                Gizmos.DrawSphere(obj.transform.position, 1f);
             }
         }
     }
@@ -498,6 +498,9 @@ public class AI: MonoBehaviour
 
         Vector3 origin = transform.position;
         Vector3 destination = obj.transform.position;
+
+        destination.y += 0.5f;
+
         Vector3 direction = destination - origin;
 
         if (direction.y < 0 || direction.y > visionHeight)
