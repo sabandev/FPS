@@ -218,14 +218,18 @@ public class AI: MonoBehaviour
             Gizmos.color = Color.red;
             for (int i = 0; i < _visionScanCount; i++)
             {
-                Gizmos.DrawSphere(_visionColliders[i].transform.position, 0.5f);
+                Vector3 effectiveCenter = _visionColliders[i].transform.position;
+                effectiveCenter.y += 1f;
+                Gizmos.DrawSphere(effectiveCenter, 0.5f);
             }
 
             // In sight
             Gizmos.color = Color.green;
             foreach (var obj in currentlyVisibleTargetObjects)
             {
-                Gizmos.DrawSphere(obj.transform.position, 1f);
+                Vector3 effectiveCenter = obj.transform.position;
+                effectiveCenter.y += 1f;
+                Gizmos.DrawSphere(effectiveCenter, 0.5f);
             }
         }
     }
@@ -499,7 +503,7 @@ public class AI: MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 destination = obj.transform.position;
 
-        destination.y += 0.5f;
+        destination.y += 1f;
 
         Vector3 direction = destination - origin;
 
