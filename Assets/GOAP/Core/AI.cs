@@ -169,9 +169,13 @@ public class AI: MonoBehaviour
 
         if (IsInSight(target) && target.activeSelf && !_hasSeenPlayer)
         {
+            Debug.Log("see");
             AddState("seePlayer");
             _hasSeenPlayer = true;
         }
+
+        if (target.activeSelf && !_hasSeenPlayer)
+            ListenForSounds();
 
         if (currentAction != null && currentAction.running)
         {
@@ -541,6 +545,20 @@ public class AI: MonoBehaviour
         {
             _visionScanTimer += _visionScanInterval;
             ScanVision();
+        }
+    }
+
+    private void ListenForSounds()
+    {
+        foreach (SoundEvent sound in GOAP_World.Instance.GetRecentSounds())
+        {
+            if (Vector3.Distance(transform.position, sound.position) <= sound.radius)
+            {
+                Debug.Log("hear");
+                AddState("seePlayer");
+                _hasSeenPlayer = true;
+                break;
+            }
         }
     }
 

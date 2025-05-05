@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
-    // [SerializeField] private Volume volume;
-    // [SerializeField] private StanceVignette stanceVignette;
+    [SerializeField] private PlayerSFX playerSFX;
 
     private PlayerInputActions _inputActions;
 
@@ -26,7 +25,7 @@ public class Player : MonoBehaviour
         cameraSpring.Initialise();
         cameraLean.Initialise();
 
-        // stanceVignette.Initialise(volume.profile);
+        playerSFX.Initialise();
     }
 
     private void OnDestroy()
@@ -38,6 +37,7 @@ public class Player : MonoBehaviour
     {
         var input = _inputActions.Gameplay;
         var deltaTime = Time.deltaTime;
+        var state = playerCharacter.GetState();
 
         // Get camera input and update its rotations
         var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>() };
@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         };
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
+        playerSFX.UpdateSFX(state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump);
 
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraLean : MonoBehaviour
 {
+    [SerializeField] private bool doLean = true;
     [SerializeField] private float attackDamping = 0.5f;
     [SerializeField] private float decayDamping = 0.3f;
     [SerializeField] private float strength = 3f;
@@ -11,15 +12,12 @@ public class CameraLean : MonoBehaviour
     private Vector3 _dampedAcceleration;
     private Vector3 _dampedAccelerationVel;
 
-    private float _smoothStrength;
-
-    public void Initialise()
-    {
-        _smoothStrength = strength;
-    }
+    public void Initialise() {}
 
     public void UpdateLean(float deltaTime, Vector3 acceleration, Vector3 up)
     {
+        if (!doLean) { return; }
+
         var planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
         var damping = planarAcceleration.magnitude > _dampedAcceleration.magnitude
         ? attackDamping

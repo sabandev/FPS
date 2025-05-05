@@ -22,18 +22,17 @@ public class CameraSpring : MonoBehaviour
 
     public void UpdateSpring(float deltaTime, Vector3 up)
     {
-        if (doSpring)
-        {
-            transform.localPosition = Vector3.zero;
+        if (!doSpring) { return; }
 
-            Spring(ref _springPosition, ref _springVelocity, transform.position, halfLife, frequency, deltaTime);
+        transform.localPosition = Vector3.zero;
 
-            var localSpringPosition = _springPosition - transform.position;
-            var springHeight = Vector3.Dot(localSpringPosition, up);
+        Spring(ref _springPosition, ref _springVelocity, transform.position, halfLife, frequency, deltaTime);
 
-            transform.localEulerAngles = new Vector3(-springHeight * angularDisplacement, 0.0f, 0.0f);
-            transform.localPosition = localSpringPosition * linearDisplacement;
-        }
+        var localSpringPosition = _springPosition - transform.position;
+        var springHeight = Vector3.Dot(localSpringPosition, up);
+
+        transform.localEulerAngles = new Vector3(-springHeight * angularDisplacement, 0.0f, 0.0f);
+        transform.localPosition = localSpringPosition * linearDisplacement;
     }
 
     private void Spring(ref Vector3 current, ref Vector3 velocity, Vector3 target, float halfLife, float frequency, float timeStep)

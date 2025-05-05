@@ -1,7 +1,5 @@
 using UnityEngine;
 using KinematicCharacterController;
-using TMPro;
-using UnityEngine.InputSystem.Controls;
 
 public enum CrouchInput
 {
@@ -16,9 +14,14 @@ public enum Stance
 public struct CharacterState
 {
     public bool Grounded;
+
     public Stance Stance;
+
     public Vector3 Velocity;
     public Vector3 Acceleration;
+
+    public Vector3 InputVelocity;
+    public bool InputJump;
 }
 
 public struct CharacterInput
@@ -64,7 +67,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float crouchHeightResponse = 15.0f;
     [Range(0.0f, 1.0f)] [SerializeField] private float standCameraTargetHeight = 0.9f;
     [Range(0.0f, 1.0f)] [SerializeField] private float crouchCameraTargetHeight = 0.7f;
-    
 
     private CharacterState _state;
     private CharacterState _lastState;
@@ -106,6 +108,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         // Orient input so it's relative to where the player is facing (not global)
         _requestedMovement = input.Rotation * _requestedMovement;
+        _state.InputVelocity = _requestedMovement;
 
         var wasRequestingJump = _requestedJump;
 
@@ -117,6 +120,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         // Check if we have requested a sustained jump
         _requestedSustainedJump = input.JumpSustain;
+
+        _state.InputJump = _requestedJump;
 
         var wasRequestingCrouch = _requestedCrouch;
 
@@ -236,6 +241,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                 );
                 _state.Acceleration = moveVelocity - currentVelocity;
                 currentVelocity = moveVelocity;
+                // if (_lastState.Grounded == true)
+                //     HandleFootsteps();
             }
             // Continue sliding
             // else
@@ -468,6 +475,41 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         _lastState = _tempState;
     }
+
+    // private void HandleFootsteps()
+    // {
+    //     if (_requestedMovement != Vector3.zero && Time.time > _nextStepTime && _state.Velocity.magnitude > speedThreshold)
+    //     {
+    //         PlayFootstepSounds();
+    //         _nextStepTime = Time.time + walkStepInterval;
+    //     }
+    // }
+
+    // private void PlayFootstepSounds()
+    // {
+    //     if (footstepSounds == null || footstepSounds.Length == 0)
+    //     {
+    //         Debug.LogWarning("WARNING: No footstep sounds assigned. Cannot play null footstep sounds.");
+    //     }
+
+    //     int randomIndex;
+    //     if (footstepSounds.Length == 1)
+    //     {
+    //         randomIndex = 0;
+    //     }
+    //     else
+    //     {
+    //         randomIndex = Random.Range(0, footstepSounds.Length - 1);
+    //         if (randomIndex >= _lastPlayedFootstepIndex)
+    //         {
+    //             randomIndex++;
+    //         }
+    //     }
+
+    //     _lastPlayedFootstepIndex = randomIndex;
+    //     foostepSource.clip = footstepSounds[randomIndex];
+    //     foostepSource.Play();
+    // }
 
     public void PostGroundingUpdate(float deltaTime)
     {
