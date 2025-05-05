@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
         playerCamera.UpdatePosition(cameraTarget);
         cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
-        cameraLean.UpdateLean(deltaTime, state.Stance is Stance.Slide, state.Acceleration, cameraTarget.up);
+        cameraLean.UpdateLean(deltaTime, state.Acceleration, cameraTarget.up);
 
         // stanceVignette.UpdateVignette(deltaTime, state.Stance);
     }

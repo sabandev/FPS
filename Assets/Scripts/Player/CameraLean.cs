@@ -4,8 +4,8 @@ public class CameraLean : MonoBehaviour
 {
     [SerializeField] private float attackDamping = 0.5f;
     [SerializeField] private float decayDamping = 0.3f;
-    [SerializeField] private float walkStrength = 3f;
-    [SerializeField] private float slideStrength = 0.075f;
+    [SerializeField] private float strength = 3f;
+    // [SerializeField] private float slideStrength = 0.075f;
     [SerializeField] private float strengthResponse = 5.0f;
 
     private Vector3 _dampedAcceleration;
@@ -15,10 +15,10 @@ public class CameraLean : MonoBehaviour
 
     public void Initialise()
     {
-        _smoothStrength = walkStrength;
+        _smoothStrength = strength;
     }
 
-    public void UpdateLean(float deltaTime, bool sliding, Vector3 acceleration, Vector3 up)
+    public void UpdateLean(float deltaTime, Vector3 acceleration, Vector3 up)
     {
         var planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
         var damping = planarAcceleration.magnitude > _dampedAcceleration.magnitude
@@ -39,12 +39,12 @@ public class CameraLean : MonoBehaviour
 
         transform.localRotation = Quaternion.identity;
 
-        var targetStrength = sliding
-        ? slideStrength
-        : walkStrength;
+        // var targetStrength = sliding
+        // ? slideStrength
+        // : strength;
 
-        _smoothStrength = Mathf.Lerp(_smoothStrength, targetStrength, 1.0f - Mathf.Exp(-strengthResponse * deltaTime));
+        // _smoothStrength = Mathf.Lerp(_smoothStrength, targetStrength, 1.0f - Mathf.Exp(-strengthResponse * deltaTime));
 
-        transform.rotation = Quaternion.AngleAxis(-_dampedAcceleration.magnitude * _smoothStrength, leanAxis) * transform.rotation;
+        transform.rotation = Quaternion.AngleAxis(-_dampedAcceleration.magnitude * strength, leanAxis) * transform.rotation;
     }
 }

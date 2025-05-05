@@ -10,7 +10,7 @@ public enum CrouchInput
 
 public enum Stance
 {
-    Stand, Crouch, Slide
+    Stand, Crouch //, Slide
 }
 
 public struct CharacterState
@@ -48,11 +48,11 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float airSpeed = 20.0f;
     [SerializeField] private float airAcceleration = 70.0f;
 
-    [SerializeField] private float slideStartSpeed = 25.0f;
-    [SerializeField] private float slideEndSpeed = 15.0f;
-    [SerializeField] private float slideFriction = 0.8f;
-    [SerializeField] private float slideSteerAcceleration = 5.0f;
-    [SerializeField] private float slideGravity = -90f;
+    // [SerializeField] private float slideStartSpeed = 25.0f;
+    // [SerializeField] private float slideEndSpeed = 15.0f;
+    // [SerializeField] private float slideFriction = 0.8f;
+    // [SerializeField] private float slideSteerAcceleration = 5.0f;
+    // [SerializeField] private float slideGravity = -90f;
     
     [SerializeField] private float jumpSpeed = 20.0f;
     [Range(0.0f, 1.0f)] [SerializeField] private float jumpSustainGravity = 0.4f;
@@ -181,43 +181,43 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                 surfaceNormal: motor.GroundingStatus.GroundNormal
             ) * _requestedMovement.magnitude;
 
-            // Start sliding
-            {
-                var moving = groundedMovement.sqrMagnitude > 0.0f;
-                var crouching = _state.Stance is Stance.Crouch;
-                var wasStanding = _lastState.Stance is Stance.Stand; // Check if we were standing LAST frame
-                var wasInAir = !_lastState.Grounded; // Check if we were standing LAST frame
+            // // Start sliding
+            // {
+            //     var moving = groundedMovement.sqrMagnitude > 0.0f;
+            //     var crouching = _state.Stance is Stance.Crouch;
+            //     var wasStanding = _lastState.Stance is Stance.Stand; // Check if we were standing LAST frame
+            //     var wasInAir = !_lastState.Grounded; // Check if we were standing LAST frame
 
-                if (moving && crouching && (wasStanding || wasInAir))
-                {
-                    _state.Stance = Stance.Slide;
+            //     if (moving && crouching && (wasStanding || wasInAir))
+            //     {
+            //         _state.Stance = Stance.Slide;
 
-                    // Preserve velocity from the last frame
-                    if (wasInAir)
-                    {
-                        currentVelocity = Vector3.ProjectOnPlane
-                        (
-                            vector: _lastState.Velocity,
-                            planeNormal: motor.GroundingStatus.GroundNormal
-                        );
-                    }
+            //         // Preserve velocity from the last frame
+            //         if (wasInAir)
+            //         {
+            //             currentVelocity = Vector3.ProjectOnPlane
+            //             (
+            //                 vector: _lastState.Velocity,
+            //                 planeNormal: motor.GroundingStatus.GroundNormal
+            //             );
+            //         }
                     
-                    var effectiveSlideStartSpeed = slideStartSpeed; 
+            //         var effectiveSlideStartSpeed = slideStartSpeed; 
 
-                    if (!_lastState.Grounded && !_requestedCrouchInAir)
-                    {
-                        effectiveSlideStartSpeed = 0.0f;
-                        _requestedCrouchInAir = false;
-                    }
+            //         if (!_lastState.Grounded && !_requestedCrouchInAir)
+            //         {
+            //             effectiveSlideStartSpeed = 0.0f;
+            //             _requestedCrouchInAir = false;
+            //         }
 
-                    var slideSpeed = Mathf.Max(effectiveSlideStartSpeed, currentVelocity.magnitude);
-                    currentVelocity = motor.GetDirectionTangentToSurface
-                    (
-                        direction: currentVelocity,
-                        surfaceNormal: motor.GroundingStatus.GroundNormal
-                    ) * slideSpeed;
-                }
-            }
+            //         var slideSpeed = Mathf.Max(effectiveSlideStartSpeed, currentVelocity.magnitude);
+            //         currentVelocity = motor.GetDirectionTangentToSurface
+            //         (
+            //             direction: currentVelocity,
+            //             surfaceNormal: motor.GroundingStatus.GroundNormal
+            //         ) * slideSpeed;
+            //     }
+            // }
 
             // Grounded Movement
             if (_state.Stance is Stance.Stand or Stance.Crouch)
@@ -238,43 +238,43 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
                 currentVelocity = moveVelocity;
             }
             // Continue sliding
-            else
-            {
-                // Apply sliding friction
-                currentVelocity -= currentVelocity * (slideFriction * deltaTime);
+            // else
+            // {
+            //     // Apply sliding friction
+            //     currentVelocity -= currentVelocity * (slideFriction * deltaTime);
 
-                // Handle slopes
-                {
-                    var force = Vector3.ProjectOnPlane
-                    (
-                        vector: -motor.CharacterUp,
-                        planeNormal: motor.GroundingStatus.GroundNormal
-                    ) * slideGravity;
+            //     // Handle slopes
+            //     {
+            //         var force = Vector3.ProjectOnPlane
+            //         (
+            //             vector: -motor.CharacterUp,
+            //             planeNormal: motor.GroundingStatus.GroundNormal
+            //         ) * slideGravity;
 
-                    currentVelocity -= force * deltaTime;
-                }
+            //         currentVelocity -= force * deltaTime;
+            //     }
 
-                // Steer
-                {
-                    // Steer sliding
-                    var currentSpeed = currentVelocity.magnitude;
-                    var targetVelocity = groundedMovement * currentVelocity.magnitude;
-                    var steerVelocity = currentVelocity;
-                    var steerForce = (targetVelocity - steerVelocity) * slideSteerAcceleration * deltaTime;
+            //     // Steer
+            //     {
+            //         // Steer sliding
+            //         var currentSpeed = currentVelocity.magnitude;
+            //         var targetVelocity = groundedMovement * currentVelocity.magnitude;
+            //         var steerVelocity = currentVelocity;
+            //         var steerForce = (targetVelocity - steerVelocity) * slideSteerAcceleration * deltaTime;
 
-                    // Add steer force to velocity
-                    steerVelocity += steerForce;
+            //         // Add steer force to velocity
+            //         steerVelocity += steerForce;
 
-                    // Clamp speed to not exceed target velocity
-                    steerVelocity = Vector3.ClampMagnitude(steerVelocity, currentSpeed);
+            //         // Clamp speed to not exceed target velocity
+            //         steerVelocity = Vector3.ClampMagnitude(steerVelocity, currentSpeed);
 
-                    _state.Acceleration = (steerVelocity - currentVelocity) / deltaTime;
-                    currentVelocity = steerVelocity;
-                }
+            //         _state.Acceleration = (steerVelocity - currentVelocity) / deltaTime;
+            //         currentVelocity = steerVelocity;
+            //     }
 
-                if (currentVelocity.magnitude < slideEndSpeed)
-                    _state.Stance = Stance.Crouch;
-            }
+            //     if (currentVelocity.magnitude < slideEndSpeed)
+            //         _state.Stance = Stance.Crouch;
+            // }
 
         }
         // Else, in the air
@@ -471,9 +471,9 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public void PostGroundingUpdate(float deltaTime)
     {
-        // If we're sliding, then end up in the air, go to a crouch
-        if (!motor.GroundingStatus.IsStableOnGround && _state.Stance is Stance.Slide)
-            _state.Stance = Stance.Crouch;
+        // // If we're sliding, then end up in the air, go to a crouch
+        // if (!motor.GroundingStatus.IsStableOnGround && _state.Stance is Stance.Slide)
+        //     _state.Stance = Stance.Crouch;
     }
 
 
