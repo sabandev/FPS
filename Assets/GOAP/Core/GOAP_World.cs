@@ -81,12 +81,12 @@ public sealed class GOAP_World : MonoBehaviour
         activeSounds.Add(new SoundEvent(type, position, radius));
     }
 
-    public List<SoundEvent> GetRecentSounds(float maxAge = 1.0f)
+    public List<SoundEvent> GetRecentSounds(float maxAge = 2.0f)
     {
-        List<SoundEvent> recentSounds = activeSounds;
+        // List<SoundEvent> recentSounds = activeSounds;
 
-        recentSounds.RemoveAll(s => Time.time - s.timestamp > maxAge);
-        return recentSounds;
+        activeSounds.RemoveAll(s => Time.time - s.timestamp > maxAge);
+        return activeSounds;
     }
 
     // Public Functions
