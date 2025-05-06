@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -53,6 +54,8 @@ public sealed class GOAP_World : MonoBehaviour
     // Private Variables
     private List<SoundEvent> activeSounds = new List<SoundEvent>();
 
+    public bool noSounds = false;
+
     // Private Functions
     private void Awake()
     {
@@ -81,12 +84,16 @@ public sealed class GOAP_World : MonoBehaviour
         activeSounds.Add(new SoundEvent(type, position, radius));
     }
 
-    public List<SoundEvent> GetRecentSounds(float maxAge = 2.0f)
+    public List<SoundEvent> GetRecentSounds(float maxAge = 1.0f)
     {
-        // List<SoundEvent> recentSounds = activeSounds;
+        List<SoundEvent> recentSoundsList = activeSounds;
 
-        activeSounds.RemoveAll(s => Time.time - s.timestamp > maxAge);
-        return activeSounds;
+        recentSoundsList.RemoveAll(s => Time.time - s.timestamp > maxAge);
+
+        if (recentSoundsList == null)
+            noSounds = true;
+
+        return recentSoundsList;
     }
 
     // Public Functions

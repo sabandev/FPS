@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         };
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
-        playerSFX.UpdateSFX(state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump);
+        playerSFX.UpdateSFX(playerCharacter.transform, state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump, state.Stance is Stance.Crouch);
 
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)

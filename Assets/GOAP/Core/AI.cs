@@ -236,6 +236,14 @@ public class AI: MonoBehaviour
                 Gizmos.DrawSphere(effectiveCenter, 0.5f);
             }
         }
+
+        // if (GOAP_World.Instance == null) { return; } 
+
+        // Gizmos.color = Color.red;
+        // foreach (SoundEvent sound in GOAP_World.Instance.GetRecentSounds())
+        // {
+        //     Gizmos.DrawSphere(sound.position, 1.0f);
+        // }
     }
 
     private void CreatePlan()
