@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using Unity.AI.Navigation;
 using JetBrains.Annotations;
 using System.Threading;
+using System.Linq.Expressions;
 
 /// <summary>
 /// AIType.
@@ -74,6 +75,8 @@ public class AI: MonoBehaviour
     [SerializeField] private bool drawInSightGizmos = true;
     [SerializeField] private float updatePathCooldown = 0.25f;
     [SerializeField] public bool vision = true;
+    [SerializeField] public bool hearing = true;
+    [SerializeField] private float hearingRange = 12.5f;
     #endregion
 
     #region Private Properties
@@ -558,14 +561,25 @@ public class AI: MonoBehaviour
 
     private void ListenForSounds()
     {
-        foreach (SoundEvent sound in GOAP_World.Instance.GetRecentSounds())
+        if (!hearing) { return; }
+
+        foreach (SoundEvent sound in GOAP_World.ActiveSounds)
         {
-            if (Vector3.Distance(transform.position, sound.position) <= sound.radius)
+            float effectiveRadius = sound.volume;
+            float distance = Vector3.Distance(transform.position, sound.position);
+
+            if (distance <= Mathf.Min(effectiveRadius, hearingRange))
             {
-                Debug.Log("hear");
-                AddState("seePlayer");
-                _hasSeenPlayer = true;
-                break;
+                if (sound.type == SoundType.Player)
+                {
+                    Debug.Log($"{name} heard the player at distance {distance}");
+
+                    AddState("seePlayer");
+                    _hasSeenPlayer = true;
+
+                    GOAP_World.ClearActiveSounds();
+                    return;
+                }
             }
         }
     }

@@ -68,7 +68,7 @@ public class PlayerSFX : MonoBehaviour
         {
             sfxSource.volume = footstepSFX.volume;
             sfxSource.Play();
-            GOAP_World.Instance.EmitSound(SoundType.Player, playerPosition.position, footstepSoundRadius);
+            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, footstepSoundRadius, playerPosition.gameObject);
         }
     }
 
@@ -98,7 +98,7 @@ public class PlayerSFX : MonoBehaviour
         {
             sfxSource.volume = jumpSFX.volume;
             sfxSource.Play();
-            GOAP_World.Instance.EmitSound(SoundType.Player, playerPosition.position, jumpSoundRadius);
+            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, jumpSoundRadius, playerPosition.gameObject);
         }
     }
 }

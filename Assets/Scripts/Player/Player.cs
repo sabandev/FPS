@@ -1,6 +1,6 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -40,7 +40,10 @@ public class Player : MonoBehaviour
         var state = playerCharacter.GetState();
 
         // Get camera input and update its rotations
-        var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>() };
+
+        var device = input.Look.activeControl?.device;
+        var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>(), usingController = device is Gamepad};
+
         playerCamera.UpdateRotation(cameraInput);
 
         // Get character input and update it

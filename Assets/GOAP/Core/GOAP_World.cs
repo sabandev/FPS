@@ -22,15 +22,15 @@ public class SoundEvent
 {
     public SoundType type;
     public Vector3 position;
-    public float radius;
-    public float timestamp;
+    public float volume;
+    public GameObject source;
 
-    public SoundEvent(SoundType t, Vector3 pos, float rad)
+    public SoundEvent(SoundType t, Vector3 pos, float vol, GameObject src)
     {
         type = t;
         position = pos;
-        radius = rad;
-        timestamp = Time.time;
+        volume = vol;
+        source = src;
     }
 }
 
@@ -52,7 +52,7 @@ public sealed class GOAP_World : MonoBehaviour
     public List<GOAP_WorldState> worldStates = new List<GOAP_WorldState>();
 
     // Private Variables
-    private List<SoundEvent> activeSounds = new List<SoundEvent>();
+    public static List<SoundEvent> ActiveSounds = new List<SoundEvent>();
 
     public bool noSounds = false;
 
@@ -72,29 +72,35 @@ public sealed class GOAP_World : MonoBehaviour
             worldStatesClass.states[ws.key] = ws.value;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        // Clear and update the world states
         worldStates.Clear();
         foreach (var pair in worldStatesClass.states)
             worldStates.Add(new GOAP_WorldState { key = pair.Key, value = pair.Value });
     }
 
-    public void EmitSound(SoundType type, Vector3 position, float radius)
+    public static void EmitSound(SoundType type, Vector3 position, float volume, GameObject source)
     {
-        activeSounds.Add(new SoundEvent(type, position, radius));
+        ActiveSounds.Add(new SoundEvent(type, position, volume, source));
     }
 
-    public List<SoundEvent> GetRecentSounds(float maxAge = 1.0f)
+    public static void ClearActiveSounds()
     {
-        List<SoundEvent> recentSoundsList = activeSounds;
-
-        recentSoundsList.RemoveAll(s => Time.time - s.timestamp > maxAge);
-
-        if (recentSoundsList == null)
-            noSounds = true;
-
-        return recentSoundsList;
+        ActiveSounds.Clear();
     }
+
+    // public List<SoundEvent> GetRecentSounds(float maxAge = 1.0f)
+    // {
+    //     List<SoundEvent> recentSoundsList = activeSounds;
+
+    //     recentSoundsList.RemoveAll(s => Time.time - s.timestamp > maxAge);
+
+    //     if (recentSoundsList == null)
+    //         noSounds = true;
+
+    //     return recentSoundsList;
+    // }
 
     // Public Functions
 }

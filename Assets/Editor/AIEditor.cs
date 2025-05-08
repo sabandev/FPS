@@ -44,6 +44,8 @@ public class AIEditor : Editor
     SerializedProperty currentlyVisibleTargetObjects;
     SerializedProperty updatePathCooldown;
     SerializedProperty vision;
+    SerializedProperty hearing;
+    SerializedProperty hearingRange;
     #endregion
 
     #region Private Properties
@@ -122,6 +124,8 @@ public class AIEditor : Editor
         currentlyVisibleTargetObjects = serializedObject.FindProperty("currentlyVisibleTargetObjects");
         updatePathCooldown = serializedObject.FindProperty("updatePathCooldown");
         vision = serializedObject.FindProperty("vision");
+        hearing = serializedObject.FindProperty("hearing");
+        hearingRange = serializedObject.FindProperty("hearingRange");
         #endregion
     }
 
@@ -196,6 +200,27 @@ public class AIEditor : Editor
             EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
 
             if (!_ai.vision)
+                EditorGUI.EndDisabledGroup();
+
+            EditorGUILayout.Space(5.0f);
+
+
+            EditorGUILayout.BeginHorizontal();
+
+            GUILayout.Label("Hearing", CustomEditorStyles.header2Style);
+
+            GUILayout.FlexibleSpace();
+
+            EditorGUILayout.PropertyField(hearing, new GUIContent(""), GUILayout.Width(20));
+
+            EditorGUILayout.EndHorizontal();
+
+            if (!_ai.hearing)
+                EditorGUI.BeginDisabledGroup(true);
+
+            EditorGUILayout.Slider(hearingRange, 0.0f, 100.0f, new GUIContent("Hearing Range"));
+
+            if (!_ai.hearing)
                 EditorGUI.EndDisabledGroup();
         }
 
