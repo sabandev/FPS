@@ -7,7 +7,7 @@ public class CameraLean : MonoBehaviour
     [SerializeField] private float decayDamping = 0.3f;
     [SerializeField] private float strength = 3f;
     // [SerializeField] private float slideStrength = 0.075f;
-    [SerializeField] private float strengthResponse = 5.0f;
+    // [SerializeField] private float strengthResponse = 5.0f;
 
     private Vector3 _dampedAcceleration;
     private Vector3 _dampedAccelerationVel;

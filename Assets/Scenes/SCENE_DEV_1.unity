@@ -3508,7 +3508,6 @@ MonoBehaviour:
   attackDamping: 1
   decayDamping: 0.5
   strength: 3
-  strengthResponse: 10
 --- !u!4 &472924394
 Transform:
   m_ObjectHideFlags: 0

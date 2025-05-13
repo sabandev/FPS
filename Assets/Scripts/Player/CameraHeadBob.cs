@@ -9,7 +9,7 @@ public class CameraHeadBob : MonoBehaviour
     [SerializeField] private float startHeadbobSpeed = 3.0f;
     // [SerializeField] private Transform cameraTarget;
 
-    private bool _invoked = false;
+    // private bool _invoked = false;
 
     public void Initialise(Transform cameraTarget)
     {
@@ -41,7 +41,7 @@ public class CameraHeadBob : MonoBehaviour
     public void ResetPosition(Transform target)
     {
         transform.position = target.position;
-        _invoked = false;
+        // _invoked = false;
     }
 
     private Vector3 FootStepMotion()
