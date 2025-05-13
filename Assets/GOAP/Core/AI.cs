@@ -77,6 +77,8 @@ public class AI: MonoBehaviour
     [SerializeField] public bool vision = true;
     [SerializeField] public bool hearing = true;
     [SerializeField] private float hearingRange = 12.5f;
+    [SerializeField] private bool drawHearingRadiusGizmo = true;
+    [SerializeField] private Color hearingRadiusColor = Color.red;
     #endregion
 
     #region Private Properties
@@ -214,7 +216,7 @@ public class AI: MonoBehaviour
             Gizmos.color = visionConeColor;
             Gizmos.DrawMesh(_mesh, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), transform.rotation);
 
-            Gizmos.DrawWireSphere(transform.position, visionDistance);
+            // Gizmos.DrawWireSphere(transform.position, visionDistance);
         }
 
         // In sensor / sight
@@ -238,6 +240,12 @@ public class AI: MonoBehaviour
                 effectiveCenter.y += 1f;
                 Gizmos.DrawSphere(effectiveCenter, 0.5f);
             }
+        }
+
+        if (drawHearingRadiusGizmo && hearing)
+        {
+            Gizmos.color = hearingRadiusColor;
+            Gizmos.DrawWireSphere(transform.position, hearingRange);
         }
 
         // if (GOAP_World.Instance == null) { return; } 

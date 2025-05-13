@@ -46,6 +46,8 @@ public class AIEditor : Editor
     SerializedProperty vision;
     SerializedProperty hearing;
     SerializedProperty hearingRange;
+    SerializedProperty drawHearingRadiusGizmo;
+    SerializedProperty hearingRadiusColor;
     #endregion
 
     #region Private Properties
@@ -126,6 +128,8 @@ public class AIEditor : Editor
         vision = serializedObject.FindProperty("vision");
         hearing = serializedObject.FindProperty("hearing");
         hearingRange = serializedObject.FindProperty("hearingRange");
+        drawHearingRadiusGizmo = serializedObject.FindProperty("drawHearingRadiusGizmo");
+        hearingRadiusColor = serializedObject.FindProperty("hearingRadiusColor");
         #endregion
     }
 
@@ -189,14 +193,18 @@ public class AIEditor : Editor
             EditorGUILayout.Slider(visionAngle, 0.0f, 90.0f, new GUIContent("Viewing Angle"));
             EditorGUILayout.PropertyField(visionHeight, new GUIContent("View Height"));
             EditorGUILayout.PropertyField(visionScanFrequency, new GUIContent("Scan View Frequency"));
-            EditorGUILayout.PropertyField(visionConeColor, new GUIContent("View Cone Color"));
             EditorGUILayout.PropertyField(visionTargetLayers, new GUIContent("View Target Layers"));
             EditorGUILayout.PropertyField(visionOcclusionLayers, new GUIContent("View Occlusion Layers"));
 
             EditorGUILayout.Space(5.0f);
 
             GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
+
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(drawViewCone, new GUIContent("Draw View Cone Gizmo"));
+            EditorGUILayout.PropertyField(visionConeColor, new GUIContent(""));
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.PropertyField(drawInSightGizmos, new GUIContent("Draw In Sight Gizmos"));
 
             if (!_ai.vision)
@@ -206,19 +214,26 @@ public class AIEditor : Editor
 
 
             EditorGUILayout.BeginHorizontal();
-
             GUILayout.Label("Hearing", CustomEditorStyles.header2Style);
 
             GUILayout.FlexibleSpace();
 
             EditorGUILayout.PropertyField(hearing, new GUIContent(""), GUILayout.Width(20));
-
             EditorGUILayout.EndHorizontal();
 
             if (!_ai.hearing)
                 EditorGUI.BeginDisabledGroup(true);
 
             EditorGUILayout.Slider(hearingRange, 0.0f, 100.0f, new GUIContent("Hearing Range"));
+
+            EditorGUILayout.Space(5.0f);
+
+            GUILayout.Label("Draw Gizmos", CustomEditorStyles.header2Style);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(drawHearingRadiusGizmo, new GUIContent("Draw Hearing Radius Gizmo"));
+            EditorGUILayout.PropertyField(hearingRadiusColor, new GUIContent(""));
+            EditorGUILayout.EndHorizontal();
 
             if (!_ai.hearing)
                 EditorGUI.EndDisabledGroup();

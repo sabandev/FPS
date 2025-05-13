@@ -432,9 +432,9 @@ MonoBehaviour:
   footstepSFX: {fileID: 1314050515}
   walkStepInterval: 0.7
   speedThreshold: 4
-  footstepSoundRadius: 10
+  footstepSoundRadius: 15
   jumpSFX: {fileID: 1809390426}
-  jumpSoundRadius: 5
+  jumpSoundRadius: 7
 --- !u!1 &14588871
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,7 +3505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doLean: 1
-  attackDamping: 0.5
+  attackDamping: 1
   decayDamping: 0.5
   strength: 3
   strengthResponse: 10
@@ -4673,7 +4673,7 @@ Transform:
   m_GameObject: {fileID: 583137802}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 4.53, y: -2.39, z: 15.1}
+  m_LocalPosition: {x: 4.53, y: -2.39, z: 15.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5201,7 +5201,7 @@ MonoBehaviour:
   doSpring: 1
   halfLife: 0.075
   frequency: 18
-  angularDisplacement: 1
+  angularDisplacement: 5
   linearDisplacement: 0.05
 --- !u!1 &764368380
 GameObject:
@@ -9064,7 +9064,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 83c58d64f2e240c41b1f2c2885b253a6, type: 3}
   - {fileID: 8300000, guid: 3610d597db7918e44906d575bd074616, type: 3}
   - {fileID: 8300000, guid: 149e8ca9df68d744e9722158daa78ab1, type: 3}
-  volume: 0.5
+  - {fileID: 8300000, guid: d25a8335420d09f43bedf446e2deffa0, type: 3}
+  - {fileID: 8300000, guid: cb111f071b2e63844afba5ac99aceb2b, type: 3}
+  - {fileID: 8300000, guid: 2c32dcddf9cd3a944a54728c2c878557, type: 3}
+  - {fileID: 8300000, guid: 2705e9a452d315940a37bf3403ce5927, type: 3}
+  - {fileID: 8300000, guid: e80de9a8752d20e4d97ab928d318adb3, type: 3}
+  - {fileID: 8300000, guid: 4290a2df9f7c8ee4fbe7fee539c5bf30, type: 3}
+  - {fileID: 8300000, guid: 63218441cc62b42499a5df11d6393821, type: 3}
+  volume: 1
 --- !u!1 &1367200143
 GameObject:
   m_ObjectHideFlags: 0
@@ -30116,12 +30123,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1806275818}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: vision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: hearing
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: drawViewCone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: hearingRange
-      value: 12.5
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: drawInSightGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: hearingRadiusColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: hearingRadiusColor.g
+      value: 0.09860484
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: drawHearingRadiusGizmo
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7709641086831674564, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
