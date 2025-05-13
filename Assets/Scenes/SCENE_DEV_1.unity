@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 6205997}
   footstepSFX: {fileID: 1314050515}
-  walkStepInterval: 0.7
+  walkStepInterval: 0.68
   speedThreshold: 4
   footstepSoundRadius: 15
   jumpSFX: {fileID: 1809390426}
@@ -3504,7 +3504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df93f909028b6476f9bd2db7ff7a5e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doLean: 1
+  doLean: 0
   attackDamping: 1
   decayDamping: 0.5
   strength: 3
@@ -30074,6 +30074,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201775740913448040, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 583122704321529530, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}
       propertyPath: m_Name
       value: Pathfinder

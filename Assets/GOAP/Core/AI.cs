@@ -573,7 +573,7 @@ public class AI: MonoBehaviour
 
         foreach (SoundEvent sound in GOAP_World.ActiveSounds)
         {
-            float effectiveRadius = sound.volume;
+            float effectiveRadius = sound.soundRadius;
             float distance = Vector3.Distance(transform.position, sound.position);
 
             if (distance <= Mathf.Min(effectiveRadius, hearingRange))

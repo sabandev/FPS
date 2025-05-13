@@ -22,14 +22,14 @@ public class SoundEvent
 {
     public SoundType type;
     public Vector3 position;
-    public float volume;
+    public float soundRadius;
     public GameObject source;
 
     public SoundEvent(SoundType t, Vector3 pos, float vol, GameObject src)
     {
         type = t;
         position = pos;
-        volume = vol;
+        soundRadius = vol;
         source = src;
     }
 }
