@@ -248,13 +248,13 @@ public class AI: MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, hearingRange);
         }
 
-        if (GOAP_World.Instance == null) { return; } 
+        // if (GOAP_World.Instance == null) { return; } 
 
-        Gizmos.color = Color.red;
-        foreach (SoundEvent sound in GOAP_World.ActiveSounds)
-        {
-            Gizmos.DrawSphere(sound.position, 1.0f);
-        }
+        // Gizmos.color = Color.red;
+        // foreach (SoundEvent sound in GOAP_World.Instance.GetRecentSounds())
+        // {
+        //     Gizmos.DrawSphere(sound.position, 1.0f);
+        // }
     }
 
     private void CreatePlan()
@@ -580,8 +580,6 @@ public class AI: MonoBehaviour
             {
                 if (sound.type == SoundType.Player)
                 {
-                    Debug.Log($"{name} heard the player at distance {distance}");
-
                     AddState("seePlayer");
                     _hasSeenPlayer = true;
 

@@ -11,14 +11,12 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private float walkStepInterval = 0.65f;
     [SerializeField] private float speedThreshold = 4.0f;
     [SerializeField] private float footstepSoundRadius = 10.0f;
-    [SerializeField] private float footstepSoundDuration = 1.0f;
 
     [Space]
 
     [Header("Jump sounds")]
     [SerializeField] private PlayerJumpSFX jumpSFX;
     [SerializeField] private float jumpSoundRadius = 7.5f;
-    [SerializeField] private float jumpSoundDuration = 0.5f;
 
     private int _lastPlayedFootstepIndex = -1;
     private int _lastPlayedJumpIndex = -1;
@@ -70,7 +68,7 @@ public class PlayerSFX : MonoBehaviour
         {
             sfxSource.volume = footstepSFX.volume;
             sfxSource.Play();
-            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, footstepSoundRadius, footstepSoundDuration);
+            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, footstepSoundRadius, playerPosition.gameObject);
         }
     }
 
@@ -100,7 +98,7 @@ public class PlayerSFX : MonoBehaviour
         {
             sfxSource.volume = jumpSFX.volume;
             sfxSource.Play();
-            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, jumpSoundRadius, jumpSoundDuration);
+            GOAP_World.EmitSound(SoundType.Player, playerPosition.position, jumpSoundRadius, playerPosition.gameObject);
         }
     }
 }

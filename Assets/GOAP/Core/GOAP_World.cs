@@ -23,21 +23,14 @@ public class SoundEvent
     public SoundType type;
     public Vector3 position;
     public float soundRadius;
-    public float duration;
-    public float timestamp;
+    public GameObject source;
 
-    public SoundEvent(SoundType t, Vector3 pos, float vol, float dur)
+    public SoundEvent(SoundType t, Vector3 pos, float vol, GameObject src)
     {
         type = t;
         position = pos;
         soundRadius = vol;
-        duration = dur;
-        timestamp = Time.time;
-    }
-
-    public bool IsExpired()
-    {
-        return Time.time > timestamp + duration;
+        source = src;
     }
 }
 
@@ -79,28 +72,17 @@ public sealed class GOAP_World : MonoBehaviour
             worldStatesClass.states[ws.key] = ws.value;
     }
 
-    private void Update()
-    {
-        for (int i = ActiveSounds.Count - 1; i >= 0; i--)
-        {
-            if (ActiveSounds[i].IsExpired())
-                ActiveSounds.RemoveAt(i);
-        }
-    }
-
     private void LateUpdate()
     {
         // Clear and update the world states
         worldStates.Clear();
         foreach (var pair in worldStatesClass.states)
             worldStates.Add(new GOAP_WorldState { key = pair.Key, value = pair.Value });
-
-        
     }
 
-    public static void EmitSound(SoundType type, Vector3 position, float volume, float duration)
+    public static void EmitSound(SoundType type, Vector3 position, float volume, GameObject source)
     {
-        ActiveSounds.Add(new SoundEvent(type, position, volume, duration));
+        ActiveSounds.Add(new SoundEvent(type, position, volume, source));
     }
 
     public static void ClearActiveSounds()
