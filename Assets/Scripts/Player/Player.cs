@@ -6,8 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
-    [SerializeField] private CameraSpring cameraSpring;
-    [SerializeField] private CameraLean cameraLean;
+    // [SerializeField] private CameraSpring cameraSpring;
+    // [SerializeField] private CameraLean cameraLean;
     [SerializeField] private PlayerSFX playerSFX;
 
     private PlayerInputActions _inputActions;
@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
         playerCharacter.Initialise();
         playerCamera.Initialise(playerCharacter.GetCameraTarget());
 
-        cameraSpring.Initialise();
-        cameraLean.Initialise();
+        // cameraSpring.Initialise();
+        // cameraLean.Initialise();
 
         playerSFX.Initialise();
     }
@@ -79,8 +79,8 @@ public class Player : MonoBehaviour
         var state = playerCharacter.GetState();
 
         playerCamera.UpdatePosition(cameraTarget);
-        cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
-        cameraLean.UpdateLean(deltaTime, state.Acceleration, cameraTarget.up);
+        // cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
+        // cameraLean.UpdateLean(deltaTime, state.Acceleration, cameraTarget.up);
 
         // stanceVignette.UpdateVignette(deltaTime, state.Stance);
     }
