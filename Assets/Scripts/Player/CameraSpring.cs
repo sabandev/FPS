@@ -1,18 +1,18 @@
 using Mono.Cecil;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraSpring : MonoBehaviour
 {
     [SerializeField] private bool doSpring = true;
 
     [Min(0.01f)] [SerializeField] private float halfLife = 0.075f;
-    [Min(0.01f)] [SerializeField] private float frequency = 18.0f;
+    [Min(0.01f)] [SerializeField] private float springFrequency = 18.0f;
     [Min(0.01f)] [SerializeField] private float angularDisplacement = 2.0f;
     [Min(0.01f)] [SerializeField] private float linearDisplacement = 0.05f;
 
     private Vector3 _springPosition;
     private Vector3 _springVelocity;
-
 
     public void Initialise()
     {
@@ -26,7 +26,7 @@ public class CameraSpring : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
 
-        Spring(ref _springPosition, ref _springVelocity, transform.position, halfLife, frequency, deltaTime);
+        Spring(ref _springPosition, ref _springVelocity, transform.position, halfLife, springFrequency, deltaTime);
 
         var localSpringPosition = _springPosition - transform.position;
         var springHeight = Vector3.Dot(localSpringPosition, up);

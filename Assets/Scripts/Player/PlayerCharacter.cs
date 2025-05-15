@@ -27,12 +27,13 @@ public struct CharacterState
 public struct CharacterInput
 {
     public Quaternion Rotation;
-    public Vector2 Move;
 
+    public Vector2 Move;
     public bool Jump;
     public bool JumpSustain;
-
     public CrouchInput Crouch;
+
+    public bool Shoot;
 }
 
 public class PlayerCharacter : MonoBehaviour, ICharacterController
@@ -80,6 +81,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private float _timeSinceUngrounded;
     private float _timeSinceJumpRequest;
+
+    private float cameraTargetHeight;
 
     private bool _requestedJump;
     private bool _requestedSustainedJump;
@@ -147,7 +150,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         var currentHeight = motor.Capsule.height;
         var normalisedHeight = currentHeight / standHeight;
 
-        var cameraTargetHeight = currentHeight * 
+        cameraTargetHeight = currentHeight * 
         (
             _state.Stance is Stance.Stand
             ? standCameraTargetHeight
@@ -550,4 +553,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public CharacterState GetState() => _state;
     public CharacterState GetLastState() => _lastState;
+
+    public float GetCameraTargetHeight() => cameraTargetHeight;
 }

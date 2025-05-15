@@ -6,9 +6,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
-    // [SerializeField] private CameraSpring cameraSpring;
+    [SerializeField] private CameraSpring cameraSpring;
     // [SerializeField] private CameraLean cameraLean;
+    [SerializeField] private CameraHeadBob cameraHeadBob;
     [SerializeField] private PlayerSFX playerSFX;
+    [SerializeField] private PlayerWeapon playerWeapon;
 
     private PlayerInputActions _inputActions;
 
@@ -22,7 +24,10 @@ public class Player : MonoBehaviour
         playerCharacter.Initialise();
         playerCamera.Initialise(playerCharacter.GetCameraTarget());
 
-        // cameraSpring.Initialise();
+        playerWeapon.Initialise();
+        cameraHeadBob.Initialise();
+
+        cameraSpring.Initialise();
         // cameraLean.Initialise();
 
         playerSFX.Initialise();
@@ -54,10 +59,16 @@ public class Player : MonoBehaviour
             Jump = input.Jump.WasPressedThisFrame(),
             JumpSustain = input.Jump.IsPressed(),
             Crouch = input.Crouch.WasPressedThisFrame()
-            ? CrouchInput.Toggle : CrouchInput.None
+            ? CrouchInput.Toggle : CrouchInput.None,
+            Shoot = input.Shoot.WasPressedThisFrame()
         };
+
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
+
+        playerWeapon.UpdateInput(characterInput);
+        playerWeapon.UpdateWeapon();
+
         playerSFX.UpdateSFX(playerCharacter.transform, state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump, state.Stance is Stance.Crouch);
 
         #if UNITY_EDITOR
@@ -79,7 +90,8 @@ public class Player : MonoBehaviour
         var state = playerCharacter.GetState();
 
         playerCamera.UpdatePosition(cameraTarget);
-        // cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
+        cameraHeadBob.UpdateHeadbob(state.Velocity, state.Grounded);
+        cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
         // cameraLean.UpdateLean(deltaTime, state.Acceleration, cameraTarget.up);
 
         // stanceVignette.UpdateVignette(deltaTime, state.Stance);

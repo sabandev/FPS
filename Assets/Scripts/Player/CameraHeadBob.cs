@@ -6,49 +6,55 @@ public class CameraHeadBob : MonoBehaviour
     [SerializeField] private bool doHeadbob = true;
     [SerializeField] private float amplitude = 0.015f;
     [SerializeField] private float frequency = 10.0f;
-    [SerializeField] private float startHeadbobSpeed = 3.0f;
-    // [SerializeField] private Transform cameraTarget;
+    [SerializeField] private float verticalMultiplier = 2.0f;
+    [SerializeField] private float horizontalMultiplier = 2.0f;
+    [SerializeField] private float headbobSpeedThreshold = 3.0f;
 
-    // private bool _invoked = false;
+    private Vector3 _startPos;
 
-    public void Initialise(Transform cameraTarget)
+    public void Initialise()
     {
-        transform.position = cameraTarget.transform.position;
+        _startPos = Vector3.zero;
     }
 
-    public void UpdateHeadbob(Transform target, Vector3 characterVelocity, bool grounded)
+    public void UpdateHeadbob(Vector3 characterVelocity, bool grounded)
     {
         if (!doHeadbob) { return; }
 
-        CheckMotion(target, characterVelocity, grounded);
-    }
-
-    private void CheckMotion(Transform cameraTarget, Vector3 characterVelocity, bool grounded)
-    {
         float speed = new Vector3(characterVelocity.x, 0, characterVelocity.z).magnitude;
 
-        if (speed < startHeadbobSpeed) { return; }
-        if (!grounded) { return; }
+        if (speed < headbobSpeedThreshold) { return; }
 
-        PlayMotion(FootStepMotion());
+        ResetPosition();
+
+        Debug.Log(speed);
+
+        if (grounded)
+            PlayMotion(FootStepMotion());
+
+        ResetPosition();
     }
 
     private void PlayMotion(Vector3 motion)
     {
-        transform.position += motion;
+        transform.localPosition += motion;
     }
 
-    public void ResetPosition(Transform target)
+    public void ResetPosition()
     {
-        transform.position = target.position;
-        // _invoked = false;
+        transform.localPosition = Vector3.Lerp
+        (
+            a: transform.localPosition,
+            b: _startPos,
+            t: 1.0f - Mathf.Exp(-20 * Time.deltaTime)
+        );
     }
 
     private Vector3 FootStepMotion()
     {
         Vector3 pos = Vector3.zero;
-        pos.y += Mathf.Sin(Time.time * frequency) * amplitude;
-        pos.x += Mathf.Cos(Time.time * frequency / 2) * amplitude * 2;
+        pos.y += Mathf.Sin(Time.time * frequency) * amplitude * verticalMultiplier;
+        pos.x += Mathf.Cos(Time.time * frequency) * amplitude * horizontalMultiplier;
         return pos;
     }
 }

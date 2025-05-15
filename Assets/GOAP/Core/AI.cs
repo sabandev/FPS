@@ -580,8 +580,6 @@ public class AI: MonoBehaviour
             {
                 if (sound.type == SoundType.Player)
                 {
-                    Debug.Log($"{name} heard the player at distance {distance}");
-
                     AddState("seePlayer");
                     _hasSeenPlayer = true;
 
