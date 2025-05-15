@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         playerCharacter.UpdateBody(deltaTime);
 
         playerWeapon.UpdateInput(state, characterInput, cameraInput);
-        playerWeapon.UpdateWeapon(state.Grounded);
+        playerWeapon.UpdateWeapon(state.Grounded, state.Stance is Stance.Crouch);
 
         playerSFX.UpdateSFX(playerCharacter.transform, state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump, state.Stance is Stance.Crouch);
 

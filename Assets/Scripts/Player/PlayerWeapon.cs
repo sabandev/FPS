@@ -9,7 +9,8 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private float weaponSwaySmoothness = 1.0f;
 
     [SerializeField] private bool doWeaponBob = true;
-    [SerializeField] private float weaponBobbingSpeed = 5.0f;
+    [SerializeField] private float weaponBobbingWalkingSpeed = 5.0f;
+    [SerializeField] private float weaponBobbingCrouchingSpeed = 6.0f;
     [SerializeField] private float weaponBobbingAmount = 5.0f;
     [SerializeField] private float weaponBobThreshold = 3.0f;
 
@@ -51,10 +52,10 @@ public class PlayerWeapon : MonoBehaviour
         _lookY = cameraInput.Look.y;
     }
 
-    public void UpdateWeapon(bool grounded)
+    public void UpdateWeapon(bool grounded, bool crouching)
     {
         ApplyWeaponSway();
-        ApplyWeaponBob(grounded);
+        ApplyWeaponBob(grounded, crouching);
         ApplyRecoil();
 
         if (_requestedShoot)
@@ -73,7 +74,7 @@ public class PlayerWeapon : MonoBehaviour
         transform.localRotation = Quaternion.Lerp(transform.localRotation, initialRotation * rotationOffset, Time.deltaTime * weaponSwaySmoothness);
     }
 
-    private void ApplyWeaponBob(bool grounded)
+    private void ApplyWeaponBob(bool grounded, bool crouching)
     {
         if (!doWeaponBob) { return; }
 
@@ -81,7 +82,8 @@ public class PlayerWeapon : MonoBehaviour
 
         if (_moveSpeed > weaponBobThreshold && grounded)
         {
-            _bobTimer += Time.deltaTime * weaponBobbingSpeed;
+            float effectiveBobbingSpeed = crouching ? weaponBobbingCrouchingSpeed : weaponBobbingWalkingSpeed;
+            _bobTimer += Time.deltaTime * effectiveBobbingSpeed;
             bobOffset = Mathf.Sin(_bobTimer) * weaponBobbingAmount;
         }
         else
