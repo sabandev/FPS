@@ -28201,10 +28201,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doHeadbob: 1
   amplitude: 0.005
-  frequency: 11
-  verticalMultiplier: 2
+  frequency: 12
+  verticalMultiplier: 3
   horizontalMultiplier: 0.1
-  headbobSpeedThreshold: 1
+  headbobSpeedThreshold: 3
 --- !u!4 &1790743137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1219650921280839303, guid: aaee7aff4a1c8480795ccf3c3bd8943f, type: 3}

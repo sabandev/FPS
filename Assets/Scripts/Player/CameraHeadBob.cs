@@ -22,12 +22,9 @@ public class CameraHeadBob : MonoBehaviour
         if (!doHeadbob) { return; }
 
         float speed = new Vector3(characterVelocity.x, 0, characterVelocity.z).magnitude;
-
         if (speed < headbobSpeedThreshold) { return; }
 
         ResetPosition();
-
-        Debug.Log(speed);
 
         if (grounded)
             PlayMotion(FootStepMotion());
