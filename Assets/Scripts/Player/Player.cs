@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
 
-        playerWeapon.UpdateInput(characterInput);
+        playerWeapon.UpdateInput(characterInput, cameraInput);
         playerWeapon.UpdateWeapon();
 
         playerSFX.UpdateSFX(playerCharacter.transform, state.InputVelocity, state.Velocity, playerCharacter.GetLastState().Grounded, state.InputJump, state.Stance is Stance.Crouch);
@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         var state = playerCharacter.GetState();
 
         playerCamera.UpdatePosition(cameraTarget);
-        cameraHeadBob.UpdateHeadbob(state.Velocity, state.Grounded);
+        cameraHeadBob.UpdateHeadbob(state.Velocity, state.Grounded, state.Stance is Stance.Crouch);
         cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
         // cameraLean.UpdateLean(deltaTime, state.Acceleration, cameraTarget.up);
 

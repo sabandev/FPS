@@ -150,7 +150,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         var currentHeight = motor.Capsule.height;
         var normalisedHeight = currentHeight / standHeight;
 
-        cameraTargetHeight = currentHeight * 
+        cameraTargetHeight = currentHeight *
         (
             _state.Stance is Stance.Stand
             ? standCameraTargetHeight
