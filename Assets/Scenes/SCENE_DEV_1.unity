@@ -8972,6 +8972,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: guntest
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: be2ed72d9d30d4382bee2dafa184a3d9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29435,9 +29439,21 @@ PrefabInstance:
       propertyPath: crouchingFrequency
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2026499434046990964, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037145532700047574, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3037145532700047574, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: field of view
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037145532700047574, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: m_FOVAxisMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3677902335710263928, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29504,12 +29520,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: maxRecoil
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: recoilAmount
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: positionalSway
       value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: rotationalSway
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: recoilSmoothness
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: weaponBobbingSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
+      propertyPath: weaponBobbingAmount
+      value: 0.0009
       objectReference: {fileID: 0}
     - target: {fileID: 9113631704835010318, guid: 8f9f858f58a934ce8afe3e76e79f944f, type: 3}
       propertyPath: weaponSwayMultiplier
